@@ -1,6 +1,6 @@
 import { RuntimeConfig, getRunTimeConfig } from "./config/RuntimeConfig"
 
-const TARGET_ENV = process.env.TARGET_ENV ?? 'qa1'
+const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
 
 const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 
