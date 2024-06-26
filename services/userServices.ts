@@ -8,7 +8,9 @@ const getUsers = async (): Promise<User[]> => {
     })
     return data.users as User[]
   } catch (error: any) {
-    errorHandler(error)
+    console.log(error);
+
+    // errorHandler(error)
   }
   return []
 }
