@@ -5,13 +5,17 @@
 </template>
 
 <script setup lang="ts">
-const { status, data } = await useAsyncData(
-  'users',
-  () => {
-    return $userService.getUsers()
-  },
-  { server: false }
-)
+// const { status, data } = await useAsyncData(
+//   'users',
+//   () => {
+//     return $userService.getUsers()
+//   },
+//   { server: false }
+// )
+onMounted(async () => {
+  const data = await $userService.getUsers()
+  console.log(data)
+})
 
 async function onChange(event: Event) {
   const files = (event.target as HTMLInputElement)?.files
