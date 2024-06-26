@@ -64,14 +64,14 @@ jobs:
       - name: prepare nuxt
         run: npx nuxi prepare
       - name: Static HTML export with Nuxt
-        run: NUXT_APP_BASE_URL=/napricot-web/ npx nuxt build --preset github_pages
+        run: NUXT_APP_BASE_URL=/napricot-web/ npx nuxt generate --preset github_pages
         env:
           API_URL: ${{ secrets.API_URL }}
           TARGET_ENV: ${{ secrets.TARGET_ENV }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./.output/public
+          path: ./dist
 
   # Deployment job
   deploy:
