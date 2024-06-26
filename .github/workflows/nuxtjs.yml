@@ -59,19 +59,10 @@ jobs:
           #
           # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: nuxt
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            output
-            .nuxt
-          key: ${{ runner.os }}-nuxt-build-${{ hashFiles('output') }}
-          restore-keys: |
-            ${{ runner.os }}-nuxt-build-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Static HTML export with Nuxt
-        run: npx nuxt build --preset github_pages
+        run: NUXT_APP_BASE_URL=/napricot-web/ npx nuxt build --preset github_pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
