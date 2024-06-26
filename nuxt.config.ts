@@ -11,13 +11,13 @@ export default defineNuxtConfig({
   /*
    ** SSL on local development (checkout README.md for instructions)
    */
-  devServer: {
-    port: Number(process.env.NUXT_PORT),
-    https: {
-      key: '.ssl/localhost.key',
-      cert: '.ssl/localhost.crt'
-    }
-  },
+  // devServer: {
+  //   port: Number(process.env.NUXT_PORT),
+  //   https: {
+  //     key: '.ssl/localhost.key',
+  //     cert: '.ssl/localhost.crt'
+  //   }
+  // },
 
   runtimeConfig: {
     app: {
@@ -28,6 +28,10 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
   ],
+
+  imports: {
+    dirs: ['store/*.ts', 'models/*.ts', 'services/*.ts']
+  },
 
   postcss: {
     plugins: {
