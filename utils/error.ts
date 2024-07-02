@@ -1,12 +1,12 @@
 import { FetchError } from 'ohmyfetch'
 
-export const errorHandler = (error: Error) => {
+export const errorHandler = (error: FetchError) => {
   throw createError({
-    statusCode: (error as FetchError).response?.status,
-    message: (error as FetchError).data.error,
+    statusCode: error.response?.status,
+    message: error.data.error,
     data: {
-      statusCode: (error as FetchError).response?.status,
-      responseBody: (error as FetchError).data,
+      statusCode: error.response?.status,
+      responseBody: error.data,
     },
   })
 }
