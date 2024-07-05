@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main">
     <h1>Welcome to my Vue app!</h1>
-    <stripe-payment-form />
+    <input type="file" @change="onChange" />
   </div>
 </template>
 
@@ -21,6 +21,8 @@
 async function onChange(event: Event) {
   const files = (event.target as HTMLInputElement)?.files
   if (!files) return
+
+  await $uploadService.uploadImage(files[0])
 }
 </script>
 

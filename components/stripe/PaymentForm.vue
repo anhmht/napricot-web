@@ -74,8 +74,12 @@ const handleServerResponse = async (response: any) => {
     } else {
       // Actions handled, show success message
       console.log(paymentIntent)
+      navigateTo('/success')
     }
+  } else if (response.status === 'succeeded') {
+    navigateTo('/success')
   }
+  isLoading.value = false
 }
 
 const handleSubmit = async (event: Event) => {
