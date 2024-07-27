@@ -1,0 +1,57 @@
+@import './icon/style.css';
+
+@font-face {
+  font-family: 'SVN-Circular';
+  src: url('SVN-Circular Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SVN-Circular';
+  src: url('SVN-Circular Regular Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SVN-Circular';
+  src: url('SVN-Circular Medium.ttf') format('truetype');
+  font-weight: 450;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SVN-Circular';
+  src: url('SVN-Circular Medium Italic.ttf') format('truetype');
+  font-weight: 450;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SVN-Circular';
+  src: url('SVN-Circular Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SVN-Circular';
+  src: url('SVN-Circular Bold Italic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SVN-Circular';
+  src: url('SVN-Circular Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SVN-Circular';
+  src: url('SVN-Circular Black Italic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+}

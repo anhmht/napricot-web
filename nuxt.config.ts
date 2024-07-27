@@ -27,12 +27,15 @@ export default defineNuxtConfig({
 
   components: true,
 
-  modules: [
-    '@pinia/nuxt',
+  css: [
+    // CSS file in the project
+    '~/assets/styles/main.css'
   ],
 
+  modules: ['@pinia/nuxt', "@nuxt/image"],
+
   imports: {
-    dirs: ['store/*.ts', 'models/*.ts', 'services/*.ts']
+    dirs: ['store/*.ts', 'models/*.ts', 'services/*.ts', 'data/*.ts']
   },
 
   postcss: {

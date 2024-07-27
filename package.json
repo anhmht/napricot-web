@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^6.0.0",
+    "@nuxt/image": "^1.7.0",
     "@pinia/nuxt": "^0.5.1",
     "ckeditor5": "^42.0.0",
     "nuxt": "^3.12.2",
