@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     app: {
       ...runtimeConfig
-    }
+    },
   },
 
   components: true,
@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     '~/assets/styles/main.css'
   ],
 
-  modules: ['@pinia/nuxt', "@nuxt/image"],
+  modules: ['@pinia/nuxt', "@nuxt/image", "@element-plus/nuxt"],
 
   imports: {
     dirs: ['store/*.ts', 'models/*.ts', 'services/*.ts', 'data/*.ts']

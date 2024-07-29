@@ -12,6 +12,7 @@ body {
   font-weight: 450;
   font-size: 1.6rem;
   margin: 0;
+  --el-color-primary: #ec5825;
 }
 
 h1 {
@@ -42,4 +43,9 @@ h5 {
 h6 {
   font-size: 1.8rem;
   margin: 0;
+}
+
+.container {
+  max-width: 1410px;
+  margin: 0 auto;
 }

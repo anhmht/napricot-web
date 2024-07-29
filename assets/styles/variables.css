@@ -5,10 +5,12 @@
   /**
    * Primary
    */
+  --el-color-primary: #ec5825;
 
   --color-primary: #ec5825;
   --color-secondary: #2b2b2b;
   --color-text: #1f1f1f;
+  --color-icon: #8b8b8b;
 
   /**
    * Other
