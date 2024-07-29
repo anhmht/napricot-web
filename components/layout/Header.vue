@@ -33,6 +33,10 @@
 <style lang="postcss" module>
 .header {
   border-bottom: 1px solid #dcdcdc;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
 }
 .headerWrapper {
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.05);

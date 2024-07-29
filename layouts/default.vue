@@ -5,6 +5,7 @@
     <div class="container">
       <slot />
     </div>
+    <layout-footer />
   </div>
 </template>
 

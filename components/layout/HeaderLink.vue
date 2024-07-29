@@ -7,19 +7,7 @@
       <NuxtLink to="/tracking"> Best seller </NuxtLink>
       <NuxtLink to="/tracking"> New arrival </NuxtLink>
     </div>
-    <div :class="$style.lang">
-      <span><i class="icon-global" /> United State</span>
-      <span>
-        <NuxtPicture
-          src="/images/usa-flag.webp"
-          alt="United State"
-          width="24"
-          height="24"
-        />
-        English (EN-US)
-      </span>
-      <span> $ (USD) </span>
-    </div>
+    <layout-language />
   </div>
 </template>
 
@@ -46,28 +34,6 @@
     :hover {
       color: var(--color-primary);
     }
-  }
-}
-.lang {
-  display: flex;
-  align-items: center;
-  padding: 4px 16px;
-  gap: 24px;
-  border-radius: 64px;
-  background-color: var(--color-background);
-  span {
-    display: flex;
-    align-items: center;
-    font-size: 1.4rem;
-    font-weight: 400;
-    gap: 4px;
-  }
-  picture {
-    display: flex;
-  }
-  i {
-    font-size: 2.4rem;
-    color: var(--color-icon);
   }
 }
 </style>

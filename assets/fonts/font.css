@@ -2,6 +2,20 @@
 
 @font-face {
   font-family: 'SVN-Circular';
+  src: url('SVN-Circular Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SVN-Circular';
+  src: url('SVN-Circular Light Italic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SVN-Circular';
   src: url('SVN-Circular Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;

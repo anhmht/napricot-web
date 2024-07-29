@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main">
-    <h1>Welcome to my Vue app!</h1>
-    <input type="file" @change="onChange" />
+    <!-- <h1>Welcome to my Vue app!</h1>
+    <input type="file" @change="onChange" /> -->
   </div>
 </template>
 
@@ -29,5 +29,6 @@ async function onChange(event: Event) {
 <style lang="postcss" module>
 .main {
   display: block;
+  height: 500px;
 }
 </style>
