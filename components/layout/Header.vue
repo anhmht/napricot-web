@@ -4,6 +4,7 @@
       <div :class="[$style.mainHeader, 'container']">
         <NuxtLink to="/">
           <NuxtPicture
+            format="webp"
             src="Logo-color.svg"
             alt="Napricot"
             width="158"
@@ -35,7 +36,7 @@
   border-bottom: 1px solid #dcdcdc;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   background: #fff;
 }
 .headerWrapper {

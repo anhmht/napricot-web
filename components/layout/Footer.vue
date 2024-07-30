@@ -5,6 +5,8 @@
     <div :class="$style.logo">
       <NuxtLink to="/">
         <NuxtPicture
+          loading="lazy"
+          format="webp"
           src="Logo-color.svg"
           alt="Napricot"
           width="210"
@@ -29,6 +31,8 @@
           <div>
             <NuxtLink to="#">
               <NuxtPicture
+                format="webp"
+                loading="lazy"
                 src="images/card/dmca.png"
                 alt="Napricot DMCA"
                 width="66"
@@ -38,6 +42,8 @@
           </div>
           <div>
             <NuxtPicture
+              format="webp"
+              loading="lazy"
               src="images/card/visa.svg"
               alt="Napricot Visa"
               width="46"
@@ -46,6 +52,8 @@
           </div>
           <div>
             <NuxtPicture
+              format="webp"
+              loading="lazy"
               src="images/card/master.svg"
               alt="Napricot Mastercard"
               width="46"
@@ -54,6 +62,8 @@
           </div>
           <div>
             <NuxtPicture
+              format="webp"
+              loading="lazy"
               src="images/card/amex.svg"
               alt="Napricot Discover"
               width="46"
@@ -62,6 +72,8 @@
           </div>
           <div>
             <NuxtPicture
+              format="webp"
+              loading="lazy"
               src="images/card/paypal.svg"
               alt="Napricot Paypal"
               width="46"
@@ -70,6 +82,8 @@
           </div>
           <div>
             <NuxtPicture
+              format="webp"
+              loading="lazy"
               src="images/card/apple.svg"
               alt="Napricot Apple Pay"
               width="46"
@@ -78,6 +92,8 @@
           </div>
           <div>
             <NuxtPicture
+              format="webp"
+              loading="lazy"
               src="images/card/google.svg"
               alt="Napricot Google Pay"
               width="46"
