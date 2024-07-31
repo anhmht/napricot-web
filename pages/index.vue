@@ -1,6 +1,8 @@
 <template>
   <div :class="$style.main">
     <carousel />
+    <sales />
+    <trending />
   </div>
 </template>
 
@@ -9,6 +11,5 @@
 <style lang="postcss" module>
 .main {
   display: block;
-  height: 500px;
 }
 </style>

@@ -27,6 +27,9 @@
           <NuxtLink to="#" _target="blank">
             <i class="icon-walmart"></i>
           </NuxtLink>
+          <NuxtLink to="#" _target="blank">
+            <i class="icon-tiktok"></i>
+          </NuxtLink>
         </div>
         <div :class="$style.napricot">
           Nappricot © 2024. All Rights Reserved

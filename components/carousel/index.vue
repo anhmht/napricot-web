@@ -1,11 +1,6 @@
 <template>
   <div :class="$style.carousel">
-    <el-carousel
-      :interval="3000"
-      arrow="never"
-      height="340px"
-      :autoplay="false"
-    >
+    <el-carousel :interval="3000" arrow="never" height="340px">
       <el-carousel-item>
         <div :class="$style.wrapper">
           <NuxtPicture
@@ -30,12 +25,14 @@
         </div>
       </el-carousel-item>
       <el-carousel-item>
-        <NuxtPicture
-          src="images/banner/banner-2.png"
-          format="webp"
-          loading="lazy"
-          alt="Napricot Banner 2"
-        />
+        <NuxtLink to="#">
+          <NuxtPicture
+            src="images/banner/banner-2.png"
+            format="webp"
+            loading="lazy"
+            alt="Napricot Banner 2"
+          />
+        </NuxtLink>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -55,6 +52,9 @@
       width: 100%;
       height: 340px;
     }
+  }
+  a:hover {
+    opacity: 0.8;
   }
 }
 .wrapper {
