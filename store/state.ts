@@ -3,7 +3,7 @@ export const states = defineStore({
 
   state: () => {
     return {
-
+      currentUser: undefined
     }
   }
 })

@@ -1,21 +1,17 @@
 <template>
   <div :class="$style.main">
-    <h1>Welcome to my Vue app!</h1>
-    <p>{{ message }}</p>
+    <carousel />
+    <sales />
+    <trending />
+    <shop-by-product />
+    <best-seller />
   </div>
 </template>
 
-<script lang="ts">
-export default defineNuxtComponent({
-  data() {
-    return {
-      message: 'Hello, world!'
-    }
-  }
-})
-</script>
+<script setup lang="ts"></script>
 
 <style lang="postcss" module>
 .main {
+  display: block;
 }
 </style>
