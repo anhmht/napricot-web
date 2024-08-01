@@ -3,7 +3,6 @@
     <NuxtLink to="#" v-for="item in data">
       <NuxtPicture
         format="webp"
-        loading="lazy"
         :src="item.src"
         :alt="item.alt"
         width="330"
@@ -17,27 +16,19 @@
 const data = ref([
   {
     src: 'images/sales/sale-1.png',
-    alt: 'Napricot Sales',
-    width: 330,
-    height: 330
+    alt: 'Napricot Sales'
   },
   {
     src: 'images/sales/sale-2.png',
-    alt: 'Napricot Sales',
-    width: 330,
-    height: 330
+    alt: 'Napricot Sales'
   },
   {
     src: 'images/sales/sale-3.png',
-    alt: 'Napricot Sales',
-    width: 330,
-    height: 330
+    alt: 'Napricot Sales'
   },
   {
     src: 'images/sales/sale-4.png',
-    alt: 'Napricot Sales',
-    width: 330,
-    height: 330
+    alt: 'Napricot Sales'
   }
 ])
 </script>
@@ -46,7 +37,8 @@ const data = ref([
 .sales {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  gap: 30px;
   a:hover {
     opacity: 0.8;
   }

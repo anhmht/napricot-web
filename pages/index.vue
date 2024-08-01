@@ -3,6 +3,8 @@
     <carousel />
     <sales />
     <trending />
+    <shop-by-product />
+    <best-seller />
   </div>
 </template>
 

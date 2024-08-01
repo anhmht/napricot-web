@@ -1,12 +1,11 @@
 <template>
   <div :class="$style.carousel">
-    <el-carousel :interval="3000" arrow="never" height="340px">
+    <el-carousel motion-blur :interval="3000" arrow="never" height="340px">
       <el-carousel-item>
         <div :class="$style.wrapper">
           <NuxtPicture
             src="images/banner/banner-1.png"
             format="webp"
-            loading="lazy"
             alt="Napricot Banner 1"
           />
           <div :class="$style.overlay">
@@ -29,7 +28,6 @@
           <NuxtPicture
             src="images/banner/banner-2.png"
             format="webp"
-            loading="lazy"
             alt="Napricot Banner 2"
           />
         </NuxtLink>

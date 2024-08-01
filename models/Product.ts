@@ -4,4 +4,6 @@ export interface Product {
   slug: string
   price: number
   image: string
+  sale?: boolean
+  new?: boolean
 }
