@@ -10,6 +10,7 @@
     <new-arrival />
     <ad-banner />
     <newsletter />
+    <happy-customer />
   </div>
 </template>
 
