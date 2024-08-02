@@ -40,7 +40,6 @@
 
 <style lang="postcss" module>
 .carousel {
-  padding: 36px 0;
   picture {
     position: relative;
     display: flex;

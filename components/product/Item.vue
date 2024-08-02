@@ -12,7 +12,9 @@
     </div>
 
     <p>{{ data.name }}</p>
-    <div :class="$style.price">${{ price }}</div>
+    <div :class="$style.price">
+      ${{ price }} <span v-if="data.sale">${{ oldPrice }}</span>
+    </div>
     <ClientOnly>
       <el-rate v-model="rate" disabled show-score score-template="({value})" />
     </ClientOnly>
@@ -37,6 +39,7 @@ const props = defineProps({
 })
 
 const price = computed(() => props.data.price.toFixed(2))
+const oldPrice = computed(() => (props.data.price * 1.8).toFixed(2))
 </script>
 
 <style lang="postcss" module scoped>
@@ -64,6 +67,15 @@ const price = computed(() => props.data.price.toFixed(2))
     font-size: 2.4rem;
     color: var(--color-primary);
     line-height: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    span {
+      font-size: 1.6rem;
+      color: var(--color-icon);
+      font-weight: 400;
+      text-decoration: line-through;
+    }
   }
   picture {
     display: flex;

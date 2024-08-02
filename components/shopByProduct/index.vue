@@ -137,8 +137,6 @@ const next = () => carousel.value?.next()
   a {
     font-size: 1.6rem;
     font-weight: 400;
-    display: flex;
-    align-items: center;
     text-decoration: none;
     color: inherit;
     display: flex;

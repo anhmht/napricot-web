@@ -12,7 +12,10 @@ body {
   font-weight: 450;
   font-size: 1.6rem;
   margin: 0;
+  --el-font-size-base: 1.6rem;
   --el-color-primary: #ec5825;
+  --el-color-primary-light-3: var(--color-primary-light) !important;
+  --el-color-primary-dark-2: var(--color-primary-light) !important;
 }
 
 h1 {

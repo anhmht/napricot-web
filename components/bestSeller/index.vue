@@ -23,7 +23,6 @@
 <style lang="postcss" module scoped>
 .bestSeller {
   position: relative;
-  padding: 36px 0;
 }
 .title {
   display: flex;
@@ -39,8 +38,6 @@
     align-items: center;
     text-decoration: none;
     color: inherit;
-    display: flex;
-    align-items: baseline;
     gap: 4px;
     i {
       font-size: 1.2rem;
