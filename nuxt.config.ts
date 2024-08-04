@@ -19,6 +19,10 @@ export default defineNuxtConfig({
   //   }
   // },
 
+  nitro: {
+    compressPublicAssets: true,
+  },
+
   runtimeConfig: {
     app: {
       ...runtimeConfig
