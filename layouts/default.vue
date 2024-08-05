@@ -2,9 +2,7 @@
   <div :class="$style.main">
     <announcement />
     <layout-header />
-    <div :class="$style.breadcrumb">
-      <slot name="breadcrumb" />
-    </div>
+    <slot name="breadcrumb" />
     <div class="container">
       <slot />
     </div>
@@ -17,10 +15,5 @@
 <style lang="postcss" module>
 .main {
   position: relative;
-}
-.breadcrumb {
-  background-color: var(--color-background);
-  color: var(--color-icon);
-  padding: 8px 0;
 }
 </style>

@@ -90,7 +90,7 @@ onMounted(() => {
 }
 .hr {
   position: absolute;
-  bottom: 0;
+  bottom: -2px;
   left: 0;
   height: 2px;
   background-color: var(--color-primary);

@@ -79,7 +79,7 @@ const data = ref([
 ])
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" module scoped>
 .link {
   padding: 48px 0 36px 0;
   display: flex;
