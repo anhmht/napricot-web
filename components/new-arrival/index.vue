@@ -1,7 +1,7 @@
 <template>
   <div id="new-arrival" :class="$style.newArrival">
     <div :class="$style.title">
-      <h4>Shop by Recipient</h4>
+      <h4>New arrival</h4>
       <NuxtLink to="#"
         >See all
         <i class="icon-arrow-down"></i>
@@ -43,8 +43,9 @@ const changeTab = (index: number) => {
 </script>
 
 <style lang="postcss" module>
-.recipient {
+.newArrival {
   display: block;
+  scroll-margin-top: 150px;
 }
 .title {
   display: flex;

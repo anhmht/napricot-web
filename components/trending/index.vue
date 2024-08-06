@@ -18,6 +18,7 @@
 <style lang="postcss" module>
 .trending {
   display: block;
+  scroll-margin-top: 150px;
 }
 .title {
   display: flex;

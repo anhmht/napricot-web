@@ -108,6 +108,7 @@ const customers = [
   picture {
     border-radius: 8px;
     overflow: hidden;
+    display: flex;
   }
 }
 </style>

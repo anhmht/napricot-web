@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.banner">
+  <div id="hot-offers" :class="$style.banner">
     <NuxtPicture
       format="webp"
       loading="lazy"
@@ -23,6 +23,7 @@
 
 <style lang="postcss" module>
 .banner {
+  scroll-margin-top: 150px;
   position: relative;
   display: flex;
   justify-content: space-evenly;

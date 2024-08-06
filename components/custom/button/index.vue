@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.button">
-    <el-button :type="type" @click="$emit('click')">
+    <el-button v-bind="$attrs" :type="type" @click="$emit('click')">
       <slot />
     </el-button>
   </div>
@@ -39,6 +39,14 @@ defineProps({
     i {
       margin-left: 8px;
     }
+  }
+  :global(.el-button--primary) {
+    --el-color-primary-light-5: var(--color-bg-disabled);
+    --el-button-disabled-text-color: var(--color-icon);
+    --el-button-disabled-border-color: var(--color-bg-disabled);
+  }
+  :global(.el-button) {
+    --el-button-disabled-bg-color: var(--color-bg-disabled);
   }
 }
 </style>

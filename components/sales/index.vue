@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.sales">
+  <div id="sales" :class="$style.sales">
     <NuxtLink to="#" v-for="item in data">
       <NuxtPicture
         format="webp"
@@ -35,6 +35,7 @@ const data = ref([
 
 <style lang="postcss" module>
 .sales {
+  scroll-margin-top: 150px;
   position: relative;
   display: flex;
   justify-content: space-evenly;

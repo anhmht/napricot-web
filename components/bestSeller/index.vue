@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.bestSeller">
+  <div id="best-seller" :class="$style.bestSeller">
     <div :class="$style.title">
       <h4>Best Sellers</h4>
       <NuxtLink to="#"
@@ -23,6 +23,7 @@
 <style lang="postcss" module scoped>
 .bestSeller {
   position: relative;
+  scroll-margin-top: 150px;
 }
 .title {
   display: flex;
