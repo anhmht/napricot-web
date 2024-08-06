@@ -4,7 +4,7 @@
       <el-carousel-item>
         <div :class="$style.wrapper">
           <NuxtPicture
-            src="images/banner/banner-1.png"
+            src="https://imagedelivery.net/veUt9FrhEFdGkfvZziYqkw/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public"
             format="webp"
             alt="Napricot Banner 1"
           />
