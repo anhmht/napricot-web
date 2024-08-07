@@ -6,6 +6,7 @@
         :label="label"
         size="large"
         @change="(value) => $emit('update:modelValue', value)"
+        v-bind="$attrs"
       />
     </el-form-item>
   </div>
@@ -30,6 +31,7 @@ const props = defineProps({
     default: false
   }
 })
+defineEmits(['update:modelValue'])
 </script>
 
 <style lang="postcss" module>

@@ -4,9 +4,10 @@
       <el-carousel-item>
         <div :class="$style.wrapper">
           <NuxtPicture
-            src="https://imagedelivery.net/veUt9FrhEFdGkfvZziYqkw/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public"
-            format="webp"
+            src="https://staging.napricot.com/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public"
+            format="avif,webp"
             alt="Napricot Banner 1"
+            :preload="{ fetchPriority: 'high' }"
           />
           <div :class="$style.overlay">
             <div :class="$style.contentWrapper">

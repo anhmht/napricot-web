@@ -21,6 +21,7 @@ defineProps({
     default: 'primary'
   }
 })
+defineEmits(['click'])
 </script>
 
 <style lang="postcss" module>

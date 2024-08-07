@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.field, !showRequired && $style.hideRequired]">
+  <div :class="$style.field">
     <el-form-item :label="label" :prop="name" label-position="top">
       <el-input
         ref="inputRef"
@@ -7,6 +7,7 @@
         :model-value="modelValue"
         :type="typeRef"
         @input="(value) => $emit('update:modelValue', value)"
+        v-bind="$attrs"
       >
         <template v-if="type === 'password'" #suffix>
           <i
@@ -33,15 +34,12 @@ const props = defineProps({
     type: String,
     required: true
   },
-  showRequired: {
-    type: Boolean,
-    default: false
-  },
   type: {
     type: String,
     default: 'text'
   }
 })
+defineEmits(['update:modelValue'])
 const inputRef = ref()
 
 const visible = ref(false)
@@ -57,13 +55,6 @@ const handlePasswordVisibility = () => {
   position: relative;
   :global(.el-form-item) {
     margin-bottom: 16px;
-  }
-}
-.hideRequired {
-  label {
-    &::before {
-      content: '' !important;
-    }
   }
 }
 .input {

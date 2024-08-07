@@ -14,9 +14,12 @@ body {
   margin: 0;
   --el-font-size-base: 1.6rem;
   --el-text-color-regular: var(--color-text);
-  --el-color-primary: #ec5825;
+  --el-color-primary: var(--color-primary);
   --el-color-primary-light-3: var(--color-primary-light) !important;
   --el-color-primary-dark-2: var(--color-primary-light) !important;
+  --el-mask-color: rgb(255 255 255 / 50%);
+  --el-color-success: var(--color-success);
+  --el-color-danger: var(--color-error);
 }
 
 h1 {
@@ -56,4 +59,19 @@ p {
 .container {
   max-width: 1410px;
   margin: 0 auto;
+}
+
+.el-form-item__error {
+  font-weight: 400;
+}
+
+.el-notification {
+  padding: 16px;
+  border-radius: 4px !important;
+}
+
+.el-notification__content {
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-top: 0 !important;
 }

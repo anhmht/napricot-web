@@ -1,27 +1,36 @@
 <template>
   <div :class="$style.signIn">
-    <el-form ref="formRef" :model="form" :rules="rules">
-      <custom-field v-model="form.email" name="email" label="Email Address" />
+    <el-form ref="formRef" :model="form" :rules="rules" hide-required-asterisk>
+      <custom-alert v-if="errorMessage" type="error" :title="errorMessage" />
+      <custom-field
+        :disabled="isLoading"
+        v-model="form.email"
+        name="email"
+        label="Email Address"
+      />
       <custom-field
         v-model="form.password"
         name="password"
         label="Password"
         type="password"
+        :disabled="isLoading"
       />
       <div :class="$style.remember">
         <custom-checkbox
           v-model="form.rememberMe"
           name="rememberMe"
           label="Remember me"
+          :disabled="isLoading"
         />
-        <NuxtLink to="/forgot-password">
+        <NuxtLink to="/forgot-password" disabled>
           <i class="icon-lock" />
           Forgot password?
         </NuxtLink>
       </div>
-      <custom-button type="primary" @click="submitForm"
+      <custom-button type="primary" @click="submitForm" :disabled="isLoading"
         >Sign in
-        <i class="icon-arrow-right" />
+        <i class="icon-arrow-right" v-if="!isLoading" />
+        <custom-loading :class="$style.loading" v-if="isLoading" />
       </custom-button>
     </el-form>
   </div>
@@ -29,12 +38,17 @@
 
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
+import { NuxtError } from 'nuxt/app'
+
 const formRef = ref<FormInstance>()
 const form = reactive({
   email: '',
   password: '',
   rememberMe: false
 })
+const isLoading = ref(false)
+const errorMessage = ref('')
+const emit = defineEmits(['loading'])
 const rules = reactive<FormRules>({
   email: [
     {
@@ -52,19 +66,28 @@ const rules = reactive<FormRules>({
     {
       required: true,
       message: 'Please input password',
-      trigger: 'blur'
+      trigger: ['blur', 'change']
     }
   ]
 })
 
-const submitForm = () => {
+function submitForm() {
   return new Promise<void>((resolve) => {
-    formRef.value?.validate((valid: boolean) => {
+    formRef.value?.validate(async (valid: boolean) => {
       if (valid) {
-        console.log('Form is valid')
+        isLoading.value = true
+        emit('loading', true)
+        try {
+          const user = await $userService.signIn(form.email, form.password)
+        } catch (error: any) {
+          errorMessage.value = error.message
+        }
+
+        isLoading.value = false
+        emit('loading', false)
+
         resolve()
       } else {
-        console.log('Form is invalid')
         resolve()
       }
     })
@@ -106,5 +129,8 @@ const submitForm = () => {
     font-weight: 500;
     color: var(--color-icon);
   }
+}
+.loading {
+  margin-left: 4px;
 }
 </style>

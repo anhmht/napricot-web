@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.form">
+  <div v-loading="loading" :class="$style.form">
     <div :class="$style.header">
       <div
         :class="[$style.item, active === 'sign-in' && $style.active]"
@@ -16,7 +16,7 @@
       <div :class="[$style.hr, active === 'sign-up' && $style.signUp]"></div>
     </div>
     <div :class="$style.content">
-      <sign-in v-if="active === 'sign-in'" />
+      <sign-in v-if="active === 'sign-in'" @loading="(e) => (loading = e)" />
       <sign-up v-else-if="active === 'sign-up'" />
     </div>
   </div>
@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 const active = ref('sign-in')
+const loading = ref(false)
 </script>
 
 <style lang="postcss" module>
