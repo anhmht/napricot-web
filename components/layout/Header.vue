@@ -5,7 +5,7 @@
         <NuxtLink to="/">
           <NuxtPicture
             format="webp"
-            src="Logo-color.svg"
+            :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/thumbnail`"
             alt="Napricot"
             width="158"
             height="39"
@@ -29,7 +29,9 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const config = useRuntimeConfig()
+</script>
 
 <style lang="postcss" module>
 .header {

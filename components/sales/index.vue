@@ -13,21 +13,22 @@
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig()
 const data = ref([
   {
-    src: 'images/sales/sale-1.png',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/1ea8e709-d58d-4d54-dfb3-ff4e73853a00/thumbnail`,
     alt: 'Napricot Sales'
   },
   {
-    src: 'images/sales/sale-2.png',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/bf639e4d-df76-4ff5-4f4c-2a68291efb00/thumbnail`,
     alt: 'Napricot Sales'
   },
   {
-    src: 'images/sales/sale-3.png',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/fd4b8a82-6bc0-4199-0921-dec68dccb800/thumbnail`,
     alt: 'Napricot Sales'
   },
   {
-    src: 'images/sales/sale-4.png',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/5d87daf0-6b42-4aeb-cbbe-be950c15bd00/thumbnail`,
     alt: 'Napricot Sales'
   }
 ])
