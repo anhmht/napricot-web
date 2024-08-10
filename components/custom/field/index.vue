@@ -7,6 +7,7 @@
         :model-value="modelValue"
         :type="typeRef"
         @input="(value) => $emit('update:modelValue', value)"
+        @keyup.enter="$emit('keyup')"
         v-bind="$attrs"
       >
         <template v-if="type === 'password'" #suffix>
@@ -17,6 +18,7 @@
         </template>
       </el-input>
     </el-form-item>
+    <slot name="button" />
   </div>
 </template>
 
@@ -39,7 +41,7 @@ const props = defineProps({
     default: 'text'
   }
 })
-defineEmits(['update:modelValue'])
+defineEmits(['update:modelValue', 'keyup'])
 const inputRef = ref()
 
 const visible = ref(false)

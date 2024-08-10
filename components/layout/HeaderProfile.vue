@@ -1,24 +1,54 @@
 <template>
   <div :class="$style.profile">
-    <div :class="$style.link">
-      <NuxtLink to="/sign-in"> Sign in </NuxtLink>
-      <NuxtLink to="/tracking"> Tracking </NuxtLink>
-    </div>
-    <div :class="$style.icon">
-      <NuxtLink to="/favorite">
-        <i class="icon-favorite"></i>
-      </NuxtLink>
-      <NuxtLink to="/cart">
-        <i class="icon-shopping-cart"></i>
-      </NuxtLink>
-      <NuxtLink to="/profile">
-        <i class="icon-person"></i>
-      </NuxtLink>
-    </div>
+    <ClientOnly>
+      <div :class="$style.link">
+        <NuxtLink v-if="!currentUser" to="/sign-in"> Sign in </NuxtLink>
+        <NuxtLink v-else to="/tracking"> Tracking </NuxtLink>
+      </div>
+      <div :class="$style.icon">
+        <NuxtLink to="/favorite">
+          <i class="icon-favorite"></i>
+        </NuxtLink>
+        <NuxtLink to="/cart">
+          <i class="icon-shopping-cart"></i>
+        </NuxtLink>
+        <NuxtLink
+          v-if="currentUser"
+          to="#"
+          ref="buttonRef"
+          v-click-outside="onClickOutside"
+        >
+          <i class="icon-person"></i>
+        </NuxtLink>
+        <el-popover
+          ref="popoverRef"
+          :virtual-ref="buttonRef"
+          trigger="click"
+          placement="bottom-end"
+          :show-arrow="false"
+          virtual-triggering
+          :teleported="false"
+          :width="200"
+        >
+          <layout-header-account @close="popoverRef.hide()" />
+        </el-popover>
+      </div>
+    </ClientOnly>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ClickOutside as vClickOutside } from 'element-plus'
+
+const buttonRef = ref()
+const popoverRef = ref()
+
+const onClickOutside = () => {
+  unref(popoverRef).popperRef?.delayHide?.()
+}
+const store = useMainStore()
+const currentUser = computed(() => store.currentUser)
+</script>
 
 <style lang="postcss" module>
 .profile {
@@ -49,5 +79,8 @@
     font-size: 2rem;
     color: var(--color-icon);
   }
+}
+:global(.el-popover.el-popper) {
+  padding: 0;
 }
 </style>

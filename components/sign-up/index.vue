@@ -1,19 +1,32 @@
 <template>
   <div :class="$style.signUp">
-    <el-form ref="formRef" :model="form" :rules="rules">
-      <custom-field v-model="form.fullName" name="fullName" label="Full Name" />
-      <custom-field v-model="form.email" name="email" label="Email Address" />
+    <el-form ref="formRef" :model="form" :rules="rules" hide-required-asterisk>
+      <custom-alert v-if="errorMessage" type="error" :title="errorMessage" />
+      <custom-field
+        v-model="form.fullName"
+        name="fullName"
+        label="Full Name"
+        :disabled="isLoading"
+      />
+      <custom-field
+        v-model="form.email"
+        name="email"
+        label="Email Address"
+        :disabled="isLoading"
+      />
       <custom-field
         v-model="form.password"
         name="password"
         label="Password"
         type="password"
+        :disabled="isLoading"
       />
       <custom-field
         v-model="form.confirmPassword"
         name="confirmPassword"
         label="Confirm Password"
         type="password"
+        :disabled="isLoading"
       />
       <div :class="$style.agreement">
         <custom-checkbox
@@ -21,6 +34,7 @@
           v-model="form.agree"
           name="agree"
           label=""
+          :disabled="isLoading"
         />
         <span>
           I agree to Napricot
@@ -28,7 +42,10 @@
           <NuxtLink to="/privacy"> Privacy Policy </NuxtLink></span
         >
       </div>
-      <custom-button type="primary" @click="submitForm" :disabled="!form.agree"
+      <custom-button
+        type="primary"
+        @click="submitForm"
+        :disabled="!form.agree || isLoading"
         >Sign up
         <i class="icon-arrow-right" />
       </custom-button>
@@ -39,6 +56,10 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
 const formRef = ref<FormInstance>()
+const isLoading = ref(false)
+const errorMessage = ref('')
+const emit = defineEmits(['loading'])
+const store = useMainStore()
 const form = reactive({
   fullName: '',
   email: '',
@@ -51,14 +72,14 @@ const rules = reactive<FormRules>({
     {
       required: true,
       message: 'Please input full name',
-      trigger: 'blur'
+      trigger: ['blur', 'change']
     }
   ],
   email: [
     {
       required: true,
       message: 'Please input email address',
-      trigger: 'blur'
+      trigger: ['blur', 'change']
     },
     {
       type: 'email',
@@ -70,33 +91,61 @@ const rules = reactive<FormRules>({
     {
       required: true,
       message: 'Please input password',
-      trigger: 'blur'
+      trigger: ['blur', 'change']
     }
   ],
   confirmPassword: [
     {
       required: true,
       message: 'Please input confirm password',
-      trigger: 'blur'
+      trigger: ['blur', 'change']
     },
     {
       validator: (rule, value, callback) => {
         if (value === form.password) {
           callback()
         } else {
-          callback(new Error('The two passwords do not match'))
+          callback(new Error('The password does not match'))
         }
       },
-      trigger: 'blur'
+      trigger: ['blur', 'change']
+    }
+  ],
+  agree: [
+    {
+      required: true,
+      message: 'Please agree to the terms of service and privacy policy'
     }
   ]
 })
 
 const submitForm = () => {
   return new Promise<void>((resolve) => {
-    formRef.value?.validate((valid: boolean) => {
+    formRef.value?.validate(async (valid: boolean) => {
       if (valid) {
-        console.log('Form is valid')
+        isLoading.value = true
+        emit('loading', true)
+        try {
+          const user = await $userService.register({
+            name: form.fullName,
+            email: form.email,
+            password: form.password
+          })
+
+          ElNotification.success({
+            title: 'Sign up successfully',
+            message: `An email has been sent to you`
+          })
+
+          store.setCurrentUser(user as User)
+          localStorage.setItem('user', JSON.stringify(user))
+          navigateTo('/email-verification')
+        } catch (error: any) {
+          errorMessage.value = error.message
+        }
+
+        isLoading.value = false
+        emit('loading', false)
         resolve()
       } else {
         console.log('Form is invalid')

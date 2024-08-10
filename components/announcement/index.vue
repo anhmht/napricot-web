@@ -1,7 +1,7 @@
 <template>
   <div v-show="isOpen" :class="$style.announcement">
     Sign up and get 20% off to your first order.
-    <nuxt-link to="/signup">Sign up now</nuxt-link>
+    <nuxt-link to="/sign-in?active=sign-up">Sign up now</nuxt-link>
     <i class="icon-close-fill" @click="close" />
   </div>
 </template>

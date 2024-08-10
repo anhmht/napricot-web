@@ -7,6 +7,7 @@
         v-model="form.email"
         name="email"
         label="Email Address"
+        @keyup="submitForm"
       />
       <custom-field
         v-model="form.password"
@@ -14,6 +15,7 @@
         label="Password"
         type="password"
         :disabled="isLoading"
+        @keyup="submitForm"
       />
       <div :class="$style.remember">
         <custom-checkbox
@@ -38,8 +40,7 @@
 
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
-import { NuxtError } from 'nuxt/app'
-
+const store = useMainStore()
 const formRef = ref<FormInstance>()
 const form = reactive({
   email: '',
@@ -79,13 +80,18 @@ function submitForm() {
         emit('loading', true)
         try {
           const user = await $userService.signIn(form.email, form.password)
+          store.setCurrentUser(user as User)
+          localStorage.setItem('user', JSON.stringify(user))
+          ElNotification.success({
+            title: 'Sign in successfully',
+            message: `Welcome back ${user?.name}`
+          })
+          navigateTo('/')
         } catch (error: any) {
           errorMessage.value = error.message
         }
-
         isLoading.value = false
         emit('loading', false)
-
         resolve()
       } else {
         resolve()

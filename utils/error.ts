@@ -4,12 +4,12 @@ import { ElNotification } from 'element-plus'
 export const errorHandler = (error: FetchError) => {
   const errorData = createError({
     statusCode: error.response?.status,
-    message: error.data.message,
+    message: error.data?.message ?? 'An error occurred while processing your request. Please try again later.',
     data: {
       statusCode: error.response?.status,
       responseBody: error.data,
       error: true,
-      message: error.data.message
+      message: error.data?.message ?? 'An error occurred while processing your request. Please try again later.',
     },
   })
   if (import.meta.server) return errorData

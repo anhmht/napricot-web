@@ -3,13 +3,13 @@
     <div :class="$style.header">
       <div
         :class="[$style.item, active === 'sign-in' && $style.active]"
-        @click="active = 'sign-in'"
+        @click="headerClick('sign-in')"
       >
         <h5>Sign In</h5>
       </div>
       <div
         :class="[$style.item, active === 'sign-up' && $style.active]"
-        @click="active = 'sign-up'"
+        @click="headerClick('sign-up')"
       >
         <h5>Sign Up</h5>
       </div>
@@ -17,14 +17,26 @@
     </div>
     <div :class="$style.content">
       <sign-in v-if="active === 'sign-in'" @loading="(e) => (loading = e)" />
-      <sign-up v-else-if="active === 'sign-up'" />
+      <sign-up
+        v-else-if="active === 'sign-up'"
+        @loading="(e) => (loading = e)"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const active = ref('sign-in')
+const route = useRoute()
+const router = useRouter()
+active.value =
+  (route.query.active as string | 'sign-in' | 'sign-up') || 'sign-in'
 const loading = ref(false)
+
+const headerClick = (type: 'sign-in' | 'sign-up') => {
+  active.value = type
+  router.push({ query: { active: type } })
+}
 </script>
 
 <style lang="postcss" module>

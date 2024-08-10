@@ -1,15 +1,19 @@
 <template>
-  <div :class="$style.signIn">
+  <div :class="$style.emailVerification">
     <NuxtLayout name="default">
       <template #breadcrumb>
         <div :class="$style.breadcrumb">
           <div class="container">
-            <breadcrumb :links="[{ name: 'Sign in', path: '/sign-in' }]" />
+            <breadcrumb
+              :links="[
+                { name: 'Email Verification', path: '/email-verification' }
+              ]"
+            />
           </div>
         </div>
       </template>
       <div :class="$style.wrapper">
-        <sign-in-form />
+        <email-verification />
       </div>
     </NuxtLayout>
   </div>
@@ -17,13 +21,12 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: false,
-  middleware: 'auth'
+  layout: false
 })
 </script>
 
 <style lang="postcss" module>
-.signIn {
+.emailVerification {
   position: relative;
 }
 .breadcrumb {
