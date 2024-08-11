@@ -8,7 +8,7 @@
       </NuxtLink>
     </div>
     <div :class="$style.content">
-      <NuxtLink v-for="(item, index) in recipients" to="#" :key="index">
+      <NuxtLink v-for="(item, index) in recipients(config)" to="#" :key="index">
         <div>
           <NuxtPicture
             :src="item.src"
@@ -25,7 +25,9 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const config = useRuntimeConfig()
+</script>
 
 <style lang="postcss" module>
 .recipient {

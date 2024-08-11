@@ -17,7 +17,10 @@
         arrow="never"
         height="936px"
       >
-        <el-carousel-item v-for="(item, index) in newArrival" :key="index">
+        <el-carousel-item
+          v-for="(item, index) in newArrival(config)"
+          :key="index"
+        >
           <div :class="$style.wrapper">
             <product-item
               v-for="(product, i) in item.products"
@@ -34,7 +37,8 @@
 <script setup lang="ts">
 import { ElCarousel } from 'element-plus'
 
-const tabs = newArrival.map((item) => item.name)
+const config = useRuntimeConfig()
+const tabs = newArrival(config).map((item) => item.name)
 const carousel = ref<typeof ElCarousel>()
 
 const changeTab = (index: number) => {

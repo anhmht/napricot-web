@@ -3,7 +3,9 @@
     <div><i class="icon-global" /> United State</div>
     <div :class="$style.locale">
       <NuxtPicture
-        src="/images/usa-flag.webp"
+        :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/589c67ca-0c9d-4104-7be3-6334f0155800/avatar40`"
+        loading="lazy"
+        format="avif,webp"
         alt="United State"
         width="24"
         height="24"
@@ -14,7 +16,9 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const config = useRuntimeConfig()
+</script>
 
 <style lang="postcss" module>
 .language {

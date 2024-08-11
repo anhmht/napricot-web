@@ -9,7 +9,7 @@
     </div>
     <div :class="$style.content">
       <product-item
-        v-for="item in bestSeller"
+        v-for="item in bestSeller(config)"
         best-selling
         :key="item.id"
         :data="item"
@@ -18,7 +18,9 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const config = useRuntimeConfig()
+</script>
 
 <style lang="postcss" module scoped>
 .bestSeller {

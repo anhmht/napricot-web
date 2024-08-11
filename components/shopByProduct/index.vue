@@ -67,34 +67,35 @@
 
 <script setup lang="ts">
 import { ElCarousel } from 'element-plus'
+const config = useRuntimeConfig()
 const page1 = ref([
   {
-    src: 'images/categories/category-1.png',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/961a4543-42cb-4e59-bda9-49caa4de8c00/hero`,
     slug: 'category-1',
     name: 'Hanging Suncatcher'
   },
   {
-    src: 'images/categories/category-2.png',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/3b49c6d4-805a-4e96-adc5-b96f41aefa00/hero`,
     slug: 'category-1',
     name: 'Glass Cup'
   },
   {
-    src: 'images/categories/category-3.png',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/faaf5686-b294-4115-cf33-a22b8862c300/hero`,
     slug: 'category-1',
     name: 'Whiskey Glass'
   },
   {
-    src: 'images/categories/category-4.png',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/fba3e489-8489-4836-6a45-36ea881a0a00/hero`,
     slug: 'category-1',
     name: 'Leather Belt'
   },
   {
-    src: 'images/categories/category-5.png',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/f23b31ed-4079-439a-9f26-4ceaaf434800/hero`,
     slug: 'category-1',
     name: 'Solar Light'
   },
   {
-    src: 'images/categories/category-6.png',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/7a20bfa3-6b4a-4708-be3d-1447688aaf00/hero`,
     slug: 'category-1',
     name: 'Mug'
   }
@@ -102,17 +103,17 @@ const page1 = ref([
 
 const page2 = ref([
   {
-    src: 'images/categories/category-7.webp',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/eb0fc99c-7de9-47c8-37e1-a9f43223ab00/hero`,
     slug: 'category-1',
     name: 'Ornament'
   },
   {
-    src: 'images/categories/category-8.webp',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/81cd0e9d-7ac0-4d23-7854-47913eef6000/hero`,
     slug: 'category-1',
     name: 'T-shirt'
   },
   {
-    src: 'images/categories/category-9.webp',
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/3c03ce56-a8fd-4920-6f69-52a071afab00/hero`,
     slug: 'category-1',
     name: 'Doormat'
   }
