@@ -26,7 +26,7 @@
               <NuxtPicture
                 :src="category.src"
                 format="webp"
-                :alt="category.name"
+                :alt="`${category.name} image`"
                 width="210"
                 height="210"
                 :class="$style.picture"
@@ -45,7 +45,7 @@
               <NuxtPicture
                 :src="category.src"
                 format="webp"
-                :alt="category.name"
+                :alt="`${category.name} image`"
                 width="210"
                 height="210"
               />
@@ -55,10 +55,10 @@
           </NuxtLink>
         </el-carousel-item>
       </el-carousel>
-      <button name="left" :class="$style.left" @click="prev">
+      <button aria-label="Left" :class="$style.left" @click="prev">
         <i class="icon-arrow-right" />
       </button>
-      <button name="right" :class="$style.right" @click="next">
+      <button aria-label="Right" :class="$style.right" @click="next">
         <i class="icon-arrow-right" />
       </button>
     </div>

@@ -19,6 +19,21 @@ export default defineNuxtConfig({
   //   }
   // },
 
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'en'
+      },
+      title: 'Napricot | The best place to find gifts for your loved ones',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: 'Napricot is the best place to find gifts for your loved ones' }
+      ],
+    },
+  },
+
+
   nitro: {
     compressPublicAssets: true,
     minify: true

@@ -72,7 +72,7 @@ const oldPrice = computed(() => (props.data.price * 1.8).toFixed(2))
     gap: 24px;
     span {
       font-size: 1.6rem;
-      color: var(--color-icon);
+      color: #595959;
       font-weight: 400;
       text-decoration: line-through;
     }
