@@ -14,7 +14,7 @@
             :src="item.src"
             format="webp"
             loading="lazy"
-            :alt="item.title"
+            :alt="`${item.title} image`"
             width="330"
             height="330"
           />

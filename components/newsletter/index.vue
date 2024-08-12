@@ -72,5 +72,13 @@ const input = ref('')
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
+  background-image: linear-gradient(
+    90deg,
+    var(--color-primary) 20%,
+    rgba(241, 184, 91, 1) 100%
+  );
+  &:hover {
+    opacity: 0.8;
+  }
 }
 </style>
