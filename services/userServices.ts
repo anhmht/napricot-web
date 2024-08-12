@@ -1,11 +1,7 @@
 
 const getUsers = async (): Promise<User[]> => {
   try {
-    const data = await $api('/users', {
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njc0NzBmYzkxZTgzNDMzNzc3MTI3NDYiLCJlbWFpbCI6ImFuaG1odEBnbWFpbC5jb20iLCJpYXQiOjE3MTkwNTM4Mzd9.I0AzxndokVrZnnMnK7niAYoEeTAdQWNlRxJot869Jw4`
-      }
-    })
+    const data = await $api('/users')
     return data.users as User[]
   } catch (error: any) {
     console.log(error);
@@ -73,9 +69,36 @@ const getMe = async (): Promise<User | undefined> => {
 const signOut = async (): Promise<void> => {
   try {
     const store = useMainStore()
-    store.setCurrentUser(undefined)
+    store.setCurrentUser()
     window.localStorage.removeItem('user')
     navigateTo('/')
+    return
+  } catch (error: any) {
+    throw errorHandler(error)
+  }
+}
+
+const forgotPassword = async (email: string): Promise<void> => {
+  try {
+    await $api('/users/send-reset-password-link', {
+      method: 'POST',
+      body: { email }
+    })
+    return
+  } catch (error: any) {
+    throw errorHandler(error)
+  }
+}
+
+const resetPassword = async (password: string, token: string): Promise<void> => {
+  try {
+    await $api('/users/reset-password', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      body: { password }
+    })
     return
   } catch (error: any) {
     throw errorHandler(error)
@@ -90,6 +113,8 @@ interface UserService {
   resendCode: (email: string) => Promise<void>
   getMe: () => Promise<User | undefined>
   signOut: () => Promise<void>
+  forgotPassword: (email: string) => Promise<void>
+  resetPassword: (password: string, token: string) => Promise<void>
 }
 
 export const $userService: UserService = {
@@ -99,5 +124,7 @@ export const $userService: UserService = {
   verifyCode: (code, email) => verifyCode(code, email),
   resendCode: (email) => resendCode(email),
   getMe: () => getMe(),
-  signOut: () => signOut()
+  signOut: () => signOut(),
+  forgotPassword: (email) => forgotPassword(email),
+  resetPassword: (password, token) => resetPassword(password, token)
 }

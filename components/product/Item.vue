@@ -116,12 +116,15 @@ p {
     rgba(241, 184, 91, 1) 100%
   );
   text-align: center;
+  box-shadow: 0px 1px 5px 0px #00000080;
 }
 .new {
   border-radius: 64px;
-  background: var(--color-success);
+  background: #a3fe9a;
+  color: #235323;
   padding: 4px 12px;
   display: flex;
   margin-left: auto;
+  box-shadow: 0px 1px 5px 0px #00000080;
 }
 </style>

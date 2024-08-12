@@ -55,10 +55,10 @@
           </NuxtLink>
         </el-carousel-item>
       </el-carousel>
-      <button :class="$style.left" @click="prev">
+      <button name="left" :class="$style.left" @click="prev">
         <i class="icon-arrow-right" />
       </button>
-      <button :class="$style.right" @click="next">
+      <button name="right" :class="$style.right" @click="next">
         <i class="icon-arrow-right" />
       </button>
     </div>

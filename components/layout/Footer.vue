@@ -29,7 +29,7 @@
         </div>
         <div :class="$style.card">
           <div>
-            <NuxtLink to="#">
+            <NuxtLink to="#" aria-label="DMCA">
               <NuxtPicture
                 format="webp"
                 loading="lazy"

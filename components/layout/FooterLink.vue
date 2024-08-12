@@ -12,22 +12,22 @@
       <div>
         <div :class="[$style.title, $style.follow]">Follow Us</div>
         <div :class="$style.social">
-          <NuxtLink to="#" _target="blank">
+          <NuxtLink to="#" _target="blank" aria-label="Facebook">
             <i class="icon-facebook"></i>
           </NuxtLink>
-          <NuxtLink to="#" _target="blank">
+          <NuxtLink to="#" _target="blank" aria-label="Twitter">
             <i class="icon-twitter"></i>
           </NuxtLink>
-          <NuxtLink to="#" _target="blank">
+          <NuxtLink to="#" _target="blank" aria-label="Amazon">
             <i class="icon-amazon"></i>
           </NuxtLink>
-          <NuxtLink to="#" _target="blank">
+          <NuxtLink to="#" _target="blank" aria-label="Etsy">
             <i class="icon-etsy"></i>
           </NuxtLink>
-          <NuxtLink to="#" _target="blank">
+          <NuxtLink to="#" _target="blank" aria-label="Walmart">
             <i class="icon-walmart"></i>
           </NuxtLink>
-          <NuxtLink to="#" _target="blank">
+          <NuxtLink to="#" _target="blank" aria-label="Tiktok">
             <i class="icon-tiktok"></i>
           </NuxtLink>
         </div>

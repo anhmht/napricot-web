@@ -6,10 +6,10 @@
         <NuxtLink v-else to="/tracking"> Tracking </NuxtLink>
       </div>
       <div :class="$style.icon">
-        <NuxtLink to="/favorite">
+        <NuxtLink to="/favorite" aria-label="Wishlist">
           <i class="icon-favorite"></i>
         </NuxtLink>
-        <NuxtLink to="/cart">
+        <NuxtLink to="/cart" aria-label="Cart">
           <i class="icon-shopping-cart"></i>
         </NuxtLink>
         <NuxtLink

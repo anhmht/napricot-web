@@ -20,6 +20,7 @@
         label="Password"
         type="password"
         :disabled="isLoading"
+        placeholder="8+ characters"
       />
       <custom-field
         v-model="form.confirmPassword"
@@ -91,6 +92,11 @@ const rules = reactive<FormRules>({
     {
       required: true,
       message: 'Please input password',
+      trigger: ['blur', 'change']
+    },
+    {
+      min: 8,
+      message: 'Password must be at least 8 characters',
       trigger: ['blur', 'change']
     }
   ],
