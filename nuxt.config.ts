@@ -25,10 +25,9 @@ export default defineNuxtConfig({
         lang: 'en'
       },
       title: 'Napricot | The best place to find gifts for your loved ones',
+      charset: 'utf-8',
       meta: [
-        { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: 'Napricot is the best place to find gifts for your loved ones' }
       ],
     },
   },
