@@ -7,7 +7,20 @@ export const actions = defineStore('actions', () => {
     state.currentUser = user
   }
 
+  const displayOverlay = () => {
+    state.showOverlay = !state.showOverlay
+  }
+
+  const setCategories = (cat: any) => {
+    state.categories = {
+      categories: cat.categories,
+      treeCategories: cat.treeCategories
+    }
+  }
+
   return {
     setCurrentUser,
+    displayOverlay,
+    setCategories
   }
 })

@@ -16,6 +16,7 @@ const close = () => {
 
 <style lang="postcss" module>
 .announcement {
+  z-index: 3;
   position: relative;
   padding: 8px;
   color: #fff;

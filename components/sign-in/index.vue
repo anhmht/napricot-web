@@ -81,11 +81,13 @@ function submitForm() {
         try {
           const user = await $userService.signIn(form.email, form.password)
           store.setCurrentUser(user as User)
-          localStorage.setItem('user', JSON.stringify(user))
           ElNotification.success({
             title: 'Sign in successfully',
             message: `Welcome back ${user?.name}`
           })
+          if (form.rememberMe) {
+            localStorage.setItem('user', JSON.stringify(user))
+          }
           navigateTo('/')
         } catch (error: any) {
           errorMessage.value = error.message
