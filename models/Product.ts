@@ -7,3 +7,8 @@ export interface Product {
   sale?: boolean
   new?: boolean
 }
+
+export interface Collection {
+  name: string
+  products: Product[]
+}

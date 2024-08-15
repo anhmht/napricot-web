@@ -8,17 +8,23 @@
       </NuxtLink>
     </div>
     <div :class="$style.content">
-      <product-item v-for="item in trending" :key="item.id" :data="item" />
+      <product-item
+        v-for="item in trending(config)"
+        :key="item.id"
+        :data="item"
+      />
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const config = useRuntimeConfig()
+</script>
 
 <style lang="postcss" module>
 .trending {
   display: block;
-  padding: 36px 0;
+  scroll-margin-top: 150px;
 }
 .title {
   display: flex;
@@ -34,8 +40,6 @@
     align-items: center;
     text-decoration: none;
     color: inherit;
-    display: flex;
-    align-items: baseline;
     gap: 4px;
     i {
       font-size: 1.2rem;

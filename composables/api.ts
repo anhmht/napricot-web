@@ -3,11 +3,11 @@ export function $api<T>(
   opts?: Parameters<typeof $fetch<T>>[1],
 ): Promise<any> {
   const config = useRuntimeConfig()
-
+  const store = useMainStore()
   return $fetch<T>(`${config.app.apiBaseUrl}${request}`, {
     ...opts,
     headers: {
-      // Authorization: auth.logged ? `Bearer ${auth.accessToken}` : '',
+      Authorization: store.currentUser ? `Bearer ${store.currentUser.token}` : '',
       ...opts?.headers,
     },
   })

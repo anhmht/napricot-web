@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.bestSeller">
+  <div id="best-seller" :class="$style.bestSeller">
     <div :class="$style.title">
       <h4>Best Sellers</h4>
       <NuxtLink to="#"
@@ -9,7 +9,7 @@
     </div>
     <div :class="$style.content">
       <product-item
-        v-for="item in bestSeller"
+        v-for="item in bestSeller(config)"
         best-selling
         :key="item.id"
         :data="item"
@@ -18,12 +18,14 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const config = useRuntimeConfig()
+</script>
 
 <style lang="postcss" module scoped>
 .bestSeller {
   position: relative;
-  padding: 36px 0;
+  scroll-margin-top: 150px;
 }
 .title {
   display: flex;
@@ -39,8 +41,6 @@
     align-items: center;
     text-decoration: none;
     color: inherit;
-    display: flex;
-    align-items: baseline;
     gap: 4px;
     i {
       font-size: 1.2rem;

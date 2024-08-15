@@ -1,12 +1,42 @@
 <template>
   <div :class="$style.carousel">
-    <el-carousel motion-blur :interval="3000" arrow="never" height="340px">
+    <div :class="$style.wrapper" v-if="loading">
+      <NuxtPicture
+        :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public`"
+        format="avif,webp"
+        alt="Napricot Banner 1"
+        :preload="{ fetchPriority: 'high' }"
+        @load="loading = false"
+      />
+      <div :class="$style.overlay">
+        <div :class="$style.contentWrapper">
+          <div :class="$style.content">
+            <p><i class="icon-verified_user" /> napricot GUARANTEED FIT</p>
+            <h3>Rev up your T-shirt</h3>
+            <h6>
+              Unique gift ideas, and beautiful design for shopping on Napricot
+            </h6>
+            <button>Shop Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <el-carousel
+      v-else
+      motion-blur
+      :interval="3000"
+      arrow="never"
+      height="340px"
+    >
       <el-carousel-item>
         <div :class="$style.wrapper">
           <NuxtPicture
-            src="images/banner/banner-1.png"
-            format="webp"
+            :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public`"
+            format="avif,webp"
             alt="Napricot Banner 1"
+            width="1410"
+            height="340"
+            :preload="{ fetchPriority: 'high' }"
           />
           <div :class="$style.overlay">
             <div :class="$style.contentWrapper">
@@ -26,9 +56,12 @@
       <el-carousel-item>
         <NuxtLink to="#">
           <NuxtPicture
-            src="images/banner/banner-2.png"
+            :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/51f64545-6417-4083-5e4e-c3d211e16e00/public`"
             format="webp"
             alt="Napricot Banner 2"
+            width="1410"
+            height="340"
+            :preload="{ fetchPriority: 'high' }"
           />
         </NuxtLink>
       </el-carousel-item>
@@ -36,11 +69,14 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const config = useRuntimeConfig()
+const loading = ref(true)
+</script>
 
 <style lang="postcss" module>
 .carousel {
-  padding: 36px 0;
+  height: 340px;
   picture {
     position: relative;
     display: flex;

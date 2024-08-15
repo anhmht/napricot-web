@@ -1,11 +1,15 @@
 <template>
   <div :class="$style.link">
     <div :class="$style.anchor">
-      <NuxtLink to="/sign-in"> Hot offers </NuxtLink>
-      <NuxtLink to="/tracking"> Sales </NuxtLink>
-      <NuxtLink to="/tracking"> Trends </NuxtLink>
-      <NuxtLink to="/tracking"> Best seller </NuxtLink>
-      <NuxtLink to="/tracking"> New arrival </NuxtLink>
+      <NuxtLink :to="{ path: '/', hash: '#hot-offers' }"> Hot offers </NuxtLink>
+      <NuxtLink :to="{ path: '/', hash: '#sales' }"> Sales </NuxtLink>
+      <NuxtLink :to="{ path: '/', hash: '#trending' }"> Trends </NuxtLink>
+      <NuxtLink :to="{ path: '/', hash: '#best-seller' }">
+        Best seller
+      </NuxtLink>
+      <NuxtLink :to="{ path: '/', hash: '#new-arrival' }">
+        New arrival
+      </NuxtLink>
     </div>
     <layout-language />
   </div>
@@ -27,7 +31,7 @@
   a {
     text-decoration: none;
     color: var(--color-text);
-    font-weight: 700;
+    font-weight: 500;
     font-size: 1.6rem;
     display: flex;
     &:hover,

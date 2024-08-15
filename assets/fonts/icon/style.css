@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src: url('fonts/icomoon.eot?jc3i1g');
-  src: url('fonts/icomoon.eot?jc3i1g#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?jc3i1g') format('truetype'),
-    url('fonts/icomoon.woff?jc3i1g') format('woff'),
-    url('fonts/icomoon.svg?jc3i1g#icomoon') format('svg');
+  src: url('fonts/icomoon.eot?whks5u');
+  src: url('fonts/icomoon.eot?whks5u#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?whks5u') format('truetype'),
+    url('fonts/icomoon.woff?whks5u') format('woff'),
+    url('fonts/icomoon.svg?whks5u#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -26,6 +26,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-query_builder:before {
+  content: '\e930';
+}
+.icon-book:before {
+  content: '\e92e';
+}
+.icon-history:before {
+  content: '\e92f';
+}
+.icon-pin_drop:before {
+  content: '\e931';
+}
+.icon-lock:before {
+  content: '\e92c';
+}
+.icon-home_filled:before {
+  content: '\e92d';
+}
 .icon-tiktok:before {
   content: '\e92a';
 }

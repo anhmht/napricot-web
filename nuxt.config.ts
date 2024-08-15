@@ -19,6 +19,34 @@ export default defineNuxtConfig({
   //   }
   // },
 
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'en'
+      },
+      title: 'Napricot | The best place to find gifts for your loved ones',
+      charset: 'utf-8',
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: 'Napricot is the best place to find gifts for your loved ones. We have a wide range of gifts for all occasions.' }
+      ],
+    },
+  },
+
+
+  nitro: {
+    compressPublicAssets: true,
+    minify: true
+  },
+
+  routeRules: {
+    '/': { isr: true, prerender: true },
+    '/sign-in': { appMiddleware: 'auth', isr: true, prerender: true },
+    '/email-verification': { isr: true, prerender: true },
+    '/forgot-password': { isr: true, prerender: true },
+    '/reset-password': { isr: true, prerender: true },
+  },
+
   runtimeConfig: {
     app: {
       ...runtimeConfig
