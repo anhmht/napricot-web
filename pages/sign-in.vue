@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.signIn">
-    <NuxtLayout name="default">
+    <NuxtLayout v-if="!user" name="default">
       <template #breadcrumb>
         <div :class="$style.breadcrumb">
           <div class="container">
@@ -17,9 +17,13 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: false,
-  middleware: 'auth'
+  middleware: 'auth',
+  layout: false
 })
+const user = ref<string | null>('null')
+if (import.meta.client) {
+  user.value = window.localStorage.getItem('user')
+}
 </script>
 
 <style lang="postcss" module>

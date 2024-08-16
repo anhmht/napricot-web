@@ -13,9 +13,19 @@
 
 <script setup lang="ts">
 const store = useMainStore()
-
-const { data, error } = await useAsyncData('categories', () =>
-  $categoryService.getAllCategories()
+const nuxtApp = useNuxtApp()
+const { data, error } = await useAsyncData(
+  'categories',
+  () => $categoryService.getAllCategories(),
+  {
+    getCachedData(key) {
+      const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+      if (!data) {
+        return
+      }
+      return data
+    }
+  }
 )
 if (data.value) store.setCategories(data.value)
 </script>
