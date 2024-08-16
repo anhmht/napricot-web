@@ -1,27 +1,21 @@
 <template>
   <div :class="$style.forgotPass">
-    <NuxtLayout name="default">
-      <template #breadcrumb>
-        <div :class="$style.breadcrumb">
-          <div class="container">
-            <breadcrumb
-              :links="[{ name: 'Forgot password', path: '/forgot-password' }]"
-            />
-          </div>
-        </div>
-      </template>
+    <div :class="$style.breadcrumb">
+      <div class="container">
+        <breadcrumb
+          :links="[{ name: 'Forgot password', path: '/forgot-password' }]"
+        />
+      </div>
+    </div>
+    <div class="container">
       <div :class="$style.wrapper">
         <forgot-password />
       </div>
-    </NuxtLayout>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
-definePageMeta({
-  layout: false
-})
-</script>
+<script setup lang="ts"></script>
 
 <style lang="postcss" module>
 .forgotPass {

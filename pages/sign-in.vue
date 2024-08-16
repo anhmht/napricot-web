@@ -1,24 +1,22 @@
 <template>
   <div :class="$style.signIn">
-    <NuxtLayout v-if="!user" name="default">
-      <template #breadcrumb>
-        <div :class="$style.breadcrumb">
-          <div class="container">
-            <breadcrumb :links="[{ name: 'Sign in', path: '/sign-in' }]" />
-          </div>
-        </div>
-      </template>
+    <div :class="$style.breadcrumb">
+      <div class="container">
+        <breadcrumb :links="[{ name: 'Sign in', path: '/sign-in' }]" />
+      </div>
+    </div>
+    <div class="container">
       <div :class="$style.wrapper">
         <sign-in-form />
       </div>
-    </NuxtLayout>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'auth',
-  layout: false
+  middleware: 'auth'
+  // layout: false
 })
 const user = ref<string | null>('null')
 if (import.meta.client) {

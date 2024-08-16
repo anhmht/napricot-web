@@ -41,7 +41,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { isr: true, prerender: true },
-    '/sign-in': { appMiddleware: 'auth', isr: true, prerender: true },
+    '/sign-in': { isr: true, prerender: true },
     '/email-verification': { isr: true, prerender: true },
     '/forgot-password': { isr: true, prerender: true },
     '/reset-password': { isr: true, prerender: true },

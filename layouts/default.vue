@@ -3,10 +3,7 @@
     <announcement />
     <layout-header />
     <div v-if="store.showOverlay" :class="$style.overlay"></div>
-    <slot name="breadcrumb" />
-    <div class="container">
-      <slot />
-    </div>
+    <slot />
     <layout-footer />
   </div>
 </template>
@@ -14,7 +11,8 @@
 <script setup lang="ts">
 const store = useMainStore()
 const nuxtApp = useNuxtApp()
-const { data, error } = await useAsyncData(
+
+const { data } = await useAsyncData(
   'categories',
   () => $categoryService.getAllCategories(),
   {
@@ -27,6 +25,7 @@ const { data, error } = await useAsyncData(
     }
   }
 )
+
 if (data.value) store.setCategories(data.value)
 </script>
 
