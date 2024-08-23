@@ -6,6 +6,8 @@
         format="avif,webp"
         alt="Napricot Banner 1"
         :preload="{ fetchPriority: 'high' }"
+        width="1410"
+        height="340"
         @load="loading = false"
       />
       <div :class="$style.overlay">
@@ -21,7 +23,13 @@
         </div>
       </div>
     </div>
-    <el-carousel motion-blur :interval="3000" arrow="never" height="340px">
+    <el-carousel
+      v-else
+      motion-blur
+      :interval="3000"
+      arrow="never"
+      height="340px"
+    >
       <el-carousel-item>
         <div :class="$style.wrapper">
           <NuxtPicture

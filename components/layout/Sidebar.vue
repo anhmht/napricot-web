@@ -14,7 +14,7 @@
 
 <script setup lang="ts"></script>
 
-<style lang="postcss" module>
+<style lang="postcss" module scoped>
 .sidebar {
   position: relative;
   display: block;
