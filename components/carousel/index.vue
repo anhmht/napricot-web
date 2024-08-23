@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.carousel">
-    <!-- <div :class="$style.wrapper" v-if="loading">
+    <div :class="$style.wrapper" v-if="loading">
       <NuxtPicture
         :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public`"
         format="avif,webp"
@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
     <el-carousel motion-blur :interval="3000" arrow="never" height="340px">
       <el-carousel-item>
         <div :class="$style.wrapper">
