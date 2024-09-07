@@ -70,7 +70,6 @@ const store = useMainStore()
 .category {
   margin-left: 44px;
   display: flex;
-  align-items: center;
 }
 .search {
   margin-left: 44px;

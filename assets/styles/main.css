@@ -17,6 +17,8 @@ body {
   --el-color-primary: var(--color-primary);
   --el-color-primary-light-3: var(--color-primary-light) !important;
   --el-color-primary-dark-2: var(--color-primary-light) !important;
+  --el-color-primary-light-9: #ec582508;
+  --el-color-primary-light-7: #ec582536;
   --el-mask-color: rgb(255 255 255 / 50%);
   --el-color-success: var(--color-success);
   --el-color-danger: var(--color-error);

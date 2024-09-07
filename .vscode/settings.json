@@ -31,5 +31,6 @@
     "rgba(173, 232, 244, 0.2)",
     "rgba(202, 240, 248, 0.2)"
   ],
-  "git.mergeEditor": false
+  "git.mergeEditor": false,
+  "cSpell.words": ["dedupe"]
 }

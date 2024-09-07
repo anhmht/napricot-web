@@ -50,4 +50,18 @@ defineEmits(['click'])
     --el-button-disabled-bg-color: var(--color-bg-disabled);
   }
 }
+:global(.dashboard) {
+  button {
+    border-radius: 12px;
+    height: 52px;
+    span {
+      font-weight: 400;
+      display: flex;
+      gap: 8px;
+      i {
+        margin: 0;
+      }
+    }
+  }
+}
 </style>
