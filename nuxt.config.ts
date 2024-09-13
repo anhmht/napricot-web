@@ -8,6 +8,10 @@ const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
+  experimental: {
+    componentIslands: true
+  },
+
   /*
    ** SSL on local development (checkout README.md for instructions)
    */
@@ -71,5 +75,5 @@ export default defineNuxtConfig({
     }
   },
 
-  compatibilityDate: '2024-09-07'
+  compatibilityDate: '2024-09-13',
 })

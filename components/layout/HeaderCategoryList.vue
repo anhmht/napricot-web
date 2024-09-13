@@ -22,7 +22,7 @@ const categories = computed(() => store.categories?.treeCategories)
 
 const active = ref<Number | undefined>(undefined)
 const show = ref(false)
-const category = ref<Category | undefined>(categories.value?.[0])
+const category = ref<ICategory | undefined>(categories.value?.[0])
 
 const handleMouseOver = (index: number) => {
   active.value = index

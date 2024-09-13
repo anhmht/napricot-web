@@ -16,7 +16,6 @@
 <script setup lang="ts">
 definePageMeta({
   middleware: 'auth'
-  // layout: false
 })
 const user = ref<string | null>('null')
 if (import.meta.client) {

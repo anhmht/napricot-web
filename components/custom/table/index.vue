@@ -1,54 +1,52 @@
 <template>
   <div :class="$style.table">
-    <el-table
-      :data="props.data"
-      style="width: 100%"
-      :class="$style.elTable"
-      table-layout="auto"
-      :height="height"
-      scrollbar-always-on
-    >
-      <el-table-column type="selection" width="55"> </el-table-column>
-      <slot />
-      <el-table-column label="Action" width="220">
-        <template #default>
-          <div :class="$style.action">
-            <slot name="action" />
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
-    <div :class="$style.pagination">
-      <div :class="$style.display">
-        Page {{ page }} of {{ Math.ceil(total / limit) }}
+    <client-only>
+      <el-table
+        :data="props.data"
+        style="width: 100%"
+        :class="$style.elTable"
+        table-layout="auto"
+        :height="height"
+        scrollbar-always-on
+      >
+        <el-table-column type="selection" width="55"> </el-table-column>
+        <slot />
+      </el-table>
+      <div :class="$style.pagination">
+        <div :class="$style.display">
+          Page {{ page }} of {{ Math.ceil(total / limit) }}
+        </div>
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :default-current-page="1"
+          :page-size="limit"
+          :current-page="page"
+          :total="total"
+          @current-change="emit('current-change', $event)"
+        />
+        <div :class="$style.limit">
+          <el-select
+            v-model="pageSize"
+            placeholder="Select"
+            size="large"
+            style="width: 170px"
+            @change="emit('limit-change', $event)"
+          >
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              :class="$style.option"
+            />
+          </el-select>
+        </div>
       </div>
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :default-current-page="1"
-        :page-size="limit"
-        :current-page="page"
-        :total="total"
-        @current-change="emit('current-change', $event)"
-      />
-      <div :class="$style.limit">
-        <el-select
-          v-model="pageSize"
-          placeholder="Select"
-          size="large"
-          style="width: 170px"
-          @change="emit('limit-change', $event)"
-        >
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-            :class="$style.option"
-          />
-        </el-select>
-      </div>
-    </div>
+      <template #fallback>
+        <custom-table-loading />
+      </template>
+    </client-only>
   </div>
 </template>
 
@@ -102,7 +100,7 @@ const pageSize = ref(props.limit)
   border-radius: 8px;
   :global(.el-table__body-header .el-table__cell) {
     background-color: var(--color-grayscale-25);
-    padding: 14px 16px;
+    padding: 12px 16px;
     :global(.cell) {
       padding: 0;
       color: var(--color-grayscale-900);
@@ -128,10 +126,6 @@ const pageSize = ref(props.limit)
       }
     }
   }
-}
-.action {
-  display: flex;
-  gap: 16px;
 }
 .pagination {
   display: flex;

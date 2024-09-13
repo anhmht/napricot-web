@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware((to) => {
         return to.redirectedFrom
       }
     } else {
-      return '/'
+      return abortNavigation()
     }
   }
 })

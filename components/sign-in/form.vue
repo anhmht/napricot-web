@@ -16,10 +16,13 @@
       <div :class="[$style.hr, active === 'sign-up' && $style.signUp]"></div>
     </div>
     <div :class="$style.content">
-      <sign-in v-if="active === 'sign-in'" @loading="(e) => (loading = e)" />
+      <sign-in
+        v-if="active === 'sign-in'"
+        @loading="(e: boolean) => (loading = e)"
+      />
       <sign-up
         v-else-if="active === 'sign-up'"
-        @loading="(e) => (loading = e)"
+        @loading="(e: boolean) => (loading = e)"
       />
     </div>
   </div>

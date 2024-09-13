@@ -6,7 +6,7 @@
         :class="$style.input"
         :model-value="modelValue"
         :type="typeRef"
-        @input="(value) => $emit('update:modelValue', value)"
+        @input="(value: string) => $emit('update:modelValue', value)"
         @keyup.enter="$emit('keyup')"
         v-bind="$attrs"
       >
@@ -26,7 +26,7 @@
 const props = defineProps({
   modelValue: {
     type: String,
-    required: true
+    default: ''
   },
   name: {
     type: String,

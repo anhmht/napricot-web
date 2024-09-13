@@ -17,25 +17,24 @@
     height: inherit;
     :global(.el-input__wrapper) {
       padding: 1px 16px;
-      background-color: var(--color-background-grayscale-50);
       border-radius: 12px;
       transition: all 0.3s ease;
-      &:focus-within {
-        background-color: #fff;
-      }
     }
     :global(.el-input__inner) {
-      font-size: 1.6rem;
-      &::placeholder {
-        color: var(--color-icon);
-      }
+      font-size: 1.4rem;
     }
     :global(.el-input__prefix) {
       span {
         font-size: 2rem;
-        color: var(--color-icon);
       }
     }
+  }
+  :global(.el-select__wrapper) {
+    min-height: 44px;
+    border-radius: 12px;
+  }
+  :global(.el-form-item--label-top .el-form-item__label) {
+    font-weight: 400;
   }
 }
 .content {

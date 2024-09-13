@@ -2,9 +2,9 @@
   <div :class="$style.categories">
     <layout-dashboard-header title="Categories">
       <template #action>
-        <custom-button type="primary">
+        <custom-button type="primary" @click="isOpen = true">
           <i class="icon-add"></i>
-          Add Category</custom-button
+          Add ICategory</custom-button
         >
       </template>
     </layout-dashboard-header>
@@ -13,8 +13,13 @@
       <layout-dashboard-category-table
         :list="data"
         v-model:pagination="pagination"
+        @edit="isOpen = true"
       />
     </div>
+
+    <custom-modal v-model:open="isOpen" :title="title">
+      <layout-dashboard-category-form />
+    </custom-modal>
   </div>
 </template>
 
@@ -25,26 +30,18 @@ definePageMeta({
   layout: 'dashboard'
 })
 
+const isOpen = ref<boolean>(false)
+const title = ref<string>('Add ICategory')
+
+const filter = ref<CategoryFilter>({
+  name: '',
+  sort: ''
+})
+
 const pagination = ref<Pagination>({
   page: 1,
   limit: 10
 })
-
-const filter = ref<GetCategoryRequest>({
-  name: '',
-  ...pagination.value
-})
-
-const { data, status } = await useAsyncData(
-  'category',
-  async () => {
-    return await $categoryService.getCategories(filter.value)
-  },
-  {
-    watch: [filter],
-    deep: false
-  }
-)
 
 const handleSearch = debounce((query: string) => {
   filter.value.name = query || undefined
@@ -66,13 +63,15 @@ const handleSort = (sort: string) => {
   }
 }
 
-watchEffect(() => {
-  filter.value = {
-    ...filter.value,
-    page: pagination.value.page,
-    limit: pagination.value.limit
+const { data, status } = await useAsyncData(
+  'category',
+  async () => {
+    return await $categoryService.getCategories(filter.value, pagination.value)
+  },
+  {
+    watch: [filter, pagination]
   }
-})
+)
 </script>
 
 <style lang="postcss" module>

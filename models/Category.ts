@@ -1,25 +1,28 @@
-export interface Category {
-  id: string
+export interface ICategory {
+  _id?: string
   name: string
   slug: string
-  desc: string
-  image: string
+  desc?: string
+  image?: string
   parentId?: string
-  type: string
-  children?: Category[]
-  createdAt: string
-  updatedAt: string
+  type: CategoryType
+  children?: ICategory[]
+  createdAt?: string
+  updatedAt?: string
+}
+
+export enum CategoryType {
+  Product = 'product',
+  Post = 'post'
 }
 
 export interface ListCategories {
-  categories: Category[]
+  categories: ICategory[]
   total: number
   totalPages: number
 }
 
-export interface GetCategoryRequest {
+export interface CategoryFilter {
   name?: string
-  page: number
-  limit: number
   sort?: string
 }

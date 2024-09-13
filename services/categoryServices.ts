@@ -1,21 +1,25 @@
-import { GetCategoryRequest } from "~/models/Category"
 
 const getAllCategories = async (): Promise<{
-  categories: Category[],
-  treeCategories: Category[]
+  categories: ICategory[],
+  treeCategories: ICategory[]
 }> => {
   try {
     const data = await $api('/categories')
-    return data as { categories: Category[], treeCategories: Category[] }
+    return {
+      categories: data.categories,
+      treeCategories: data.treeCategories
+    } as { categories: ICategory[], treeCategories: ICategory[] }
   } catch (error: any) {
+    console.log(error);
+
     throw errorHandler(error)
   }
 }
 
-const getCategories = async (request: GetCategoryRequest): Promise<ListCategories> => {
+const getCategories = async (filter: CategoryFilter, pagination: Pagination): Promise<ListCategories> => {
   try {
     const data = await $api('/categories', {
-      query: createPayload(request)
+      query: createPayload(filter, pagination)
     })
     return data as ListCategories
   } catch (error: any) {
@@ -23,15 +27,29 @@ const getCategories = async (request: GetCategoryRequest): Promise<ListCategorie
   }
 }
 
+const createCategory = async (category: ICategory): Promise<ICategory> => {
+  try {
+    const data = await $api('/categories', {
+      method: 'POST',
+      body: category
+    })
+    return data as ICategory
+  } catch (error: any) {
+    throw errorHandler(error)
+  }
+}
+
 interface CategoryService {
   getAllCategories: () => Promise<{
-    categories: Category[],
-    treeCategories: Category[]
+    categories: ICategory[],
+    treeCategories: ICategory[]
   }>
-  getCategories: (pagination: Pagination) => Promise<ListCategories>
+  getCategories: (filter: CategoryFilter, pagination: Pagination) => Promise<ListCategories>
+  createCategory: (category: ICategory) => Promise<ICategory>
 }
 
 export const $categoryService: CategoryService = {
   getAllCategories: () => getAllCategories(),
-  getCategories: (pagination: Pagination) => getCategories(pagination)
+  getCategories: (filter: CategoryFilter, pagination: Pagination) => getCategories(filter, pagination),
+  createCategory: (category: ICategory) => createCategory(category)
 }

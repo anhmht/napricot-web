@@ -12,32 +12,8 @@
 const store = useMainStore()
 const nuxtApp = useNuxtApp()
 
-const { data } = await useAsyncData(
-  'categories',
-  () => $categoryService.getAllCategories(),
-  {
-    transform(input) {
-      return {
-        ...input,
-        fetchedAt: new Date()
-      }
-    },
-    getCachedData(key) {
-      const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
-      // fetch new Data
-      if (!data) {
-        return
-      }
-      const expirationTime = new Date(data.fetchedAt)
-      expirationTime.setTime(expirationTime.getTime() + 1000 * 10)
-      const isExpired = Date.now() > expirationTime.getTime()
-      // fetch new Data
-      if (isExpired) {
-        return
-      }
-      return data
-    }
-  }
+const { data } = await useAsyncData('categories', () =>
+  $categoryService.getAllCategories()
 )
 
 if (data.value) store.setCategories(data.value)
