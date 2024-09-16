@@ -15,12 +15,8 @@
 
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'no-auth'
 })
-const user = ref<string | null>('null')
-if (import.meta.client) {
-  user.value = window.localStorage.getItem('user')
-}
 </script>
 
 <style lang="postcss" module>

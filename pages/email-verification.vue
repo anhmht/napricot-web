@@ -15,7 +15,11 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+definePageMeta({
+  middleware: 'no-auth'
+})
+</script>
 
 <style lang="postcss" module>
 .emailVerification {

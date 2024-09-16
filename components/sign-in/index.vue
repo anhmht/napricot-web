@@ -86,7 +86,10 @@ function submitForm() {
             message: `Welcome back ${user?.name}`
           })
           if (form.rememberMe) {
-            localStorage.setItem('user', JSON.stringify(user))
+            const cookie = useCookie('token')
+            if (user?.token) {
+              cookie.value = user.token.replaceAll('.', '-')
+            }
           }
           navigateTo('/')
         } catch (error: any) {

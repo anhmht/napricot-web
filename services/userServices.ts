@@ -70,7 +70,7 @@ const signOut = async (): Promise<void> => {
   try {
     const store = useMainStore()
     store.setCurrentUser()
-    window.localStorage.removeItem('user')
+    useCookie('token').value = undefined
     navigateTo('/')
     return
   } catch (error: any) {
