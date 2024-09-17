@@ -144,7 +144,8 @@ const submitForm = () => {
           })
 
           store.setCurrentUser(user as User)
-          localStorage.setItem('user', JSON.stringify(user))
+          const cookie = useCookie('token')
+          cookie.value = user?.token?.replaceAll('.', '*napricot*')
           navigateTo('/email-verification')
         } catch (error: any) {
           errorMessage.value = error.message

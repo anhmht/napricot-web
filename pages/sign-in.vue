@@ -1,24 +1,21 @@
 <template>
   <div :class="$style.signIn">
-    <NuxtLayout name="default">
-      <template #breadcrumb>
-        <div :class="$style.breadcrumb">
-          <div class="container">
-            <breadcrumb :links="[{ name: 'Sign in', path: '/sign-in' }]" />
-          </div>
-        </div>
-      </template>
+    <div :class="$style.breadcrumb">
+      <div class="container">
+        <breadcrumb :links="[{ name: 'Sign in', path: '/sign-in' }]" />
+      </div>
+    </div>
+    <div class="container">
       <div :class="$style.wrapper">
         <sign-in-form />
       </div>
-    </NuxtLayout>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  layout: false,
-  middleware: 'auth'
+  middleware: 'no-auth'
 })
 </script>
 

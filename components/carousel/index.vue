@@ -6,6 +6,8 @@
         format="avif,webp"
         alt="Napricot Banner 1"
         :preload="{ fetchPriority: 'high' }"
+        width="1410"
+        height="340"
         @load="loading = false"
       />
       <div :class="$style.overlay">

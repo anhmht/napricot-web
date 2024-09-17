@@ -1,39 +1,37 @@
 <template>
   <div :class="$style.profile">
-    <ClientOnly>
-      <div :class="$style.link">
-        <NuxtLink v-if="!currentUser" to="/sign-in"> Sign in </NuxtLink>
-        <NuxtLink v-else to="/tracking"> Tracking </NuxtLink>
-      </div>
-      <div :class="$style.icon">
-        <NuxtLink to="/favorite" aria-label="Wishlist">
-          <i class="icon-favorite"></i>
-        </NuxtLink>
-        <NuxtLink to="/cart" aria-label="Cart">
-          <i class="icon-shopping-cart"></i>
-        </NuxtLink>
-        <NuxtLink
-          v-if="currentUser"
-          to="#"
-          ref="buttonRef"
-          v-click-outside="onClickOutside"
-        >
-          <i class="icon-person"></i>
-        </NuxtLink>
-        <el-popover
-          ref="popoverRef"
-          :virtual-ref="buttonRef"
-          trigger="click"
-          placement="bottom-end"
-          :show-arrow="false"
-          virtual-triggering
-          :teleported="false"
-          :width="200"
-        >
-          <layout-header-account @close="popoverRef.hide()" />
-        </el-popover>
-      </div>
-    </ClientOnly>
+    <div :class="$style.link">
+      <NuxtLink v-show="!currentUser" to="/sign-in"> Sign in </NuxtLink>
+      <NuxtLink v-show="currentUser" to="/tracking"> Tracking </NuxtLink>
+    </div>
+    <div :class="$style.icon">
+      <NuxtLink to="/favorite" aria-label="Wishlist">
+        <i class="icon-favorite"></i>
+      </NuxtLink>
+      <NuxtLink to="/cart" aria-label="Cart">
+        <i class="icon-shopping-cart"></i>
+      </NuxtLink>
+      <NuxtLink
+        v-show="currentUser"
+        to="#"
+        ref="buttonRef"
+        v-click-outside="onClickOutside"
+      >
+        <i class="icon-person"></i>
+      </NuxtLink>
+      <el-popover
+        ref="popoverRef"
+        :virtual-ref="buttonRef"
+        trigger="click"
+        placement="bottom-end"
+        :show-arrow="false"
+        virtual-triggering
+        :teleported="false"
+        :width="200"
+      >
+        <layout-header-account @close="popoverRef.hide()" />
+      </el-popover>
+    </div>
   </div>
 </template>
 

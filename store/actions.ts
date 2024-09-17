@@ -11,7 +11,10 @@ export const actions = defineStore('actions', () => {
     state.showOverlay = !state.showOverlay
   }
 
-  const setCategories = (cat: any) => {
+  const setCategories = (cat: {
+    categories: ICategory[]
+    treeCategories: ICategory[]
+  }) => {
     state.categories = {
       categories: cat.categories,
       treeCategories: cat.treeCategories

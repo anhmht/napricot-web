@@ -75,12 +75,12 @@ const active = ref<Number | undefined>(undefined)
 
 const props = defineProps({
   categories: {
-    type: Array as () => Category[],
+    type: Array as () => ICategory[],
     required: true
   }
 })
 
-const handleMouseOver = (item: Category, index: number) => {
+const handleMouseOver = (item: ICategory, index: number) => {
   active.value = index
 }
 </script>

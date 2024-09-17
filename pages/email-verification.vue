@@ -1,27 +1,23 @@
 <template>
   <div :class="$style.emailVerification">
-    <NuxtLayout name="default">
-      <template #breadcrumb>
-        <div :class="$style.breadcrumb">
-          <div class="container">
-            <breadcrumb
-              :links="[
-                { name: 'Email Verification', path: '/email-verification' }
-              ]"
-            />
-          </div>
-        </div>
-      </template>
+    <div :class="$style.breadcrumb">
+      <div class="container">
+        <breadcrumb
+          :links="[{ name: 'Email Verification', path: '/email-verification' }]"
+        />
+      </div>
+    </div>
+    <div class="container">
       <div :class="$style.wrapper">
         <email-verification />
       </div>
-    </NuxtLayout>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  layout: false
+  middleware: 'no-auth'
 })
 </script>
 

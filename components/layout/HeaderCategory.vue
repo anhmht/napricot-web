@@ -7,7 +7,7 @@
       :show-arrow="false"
       popper-class="customPopper"
       transition="el-zoom-in-top"
-      :offset="28"
+      :offset="17"
       @before-enter="store.displayOverlay()"
       @before-leave="store.displayOverlay()"
     >
@@ -29,6 +29,7 @@ const store = useMainStore()
 <style lang="postcss" module>
 .category {
   position: relative;
+  display: flex;
 }
 .title {
   i {

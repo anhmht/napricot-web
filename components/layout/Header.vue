@@ -1,28 +1,32 @@
 <template>
   <div :class="$style.header">
     <div :class="$style.headerWrapper">
-      <ClientOnly>
-        <div :class="[$style.mainHeader, 'container']">
-          <NuxtLink to="/">
-            <NuxtPicture
-              format="webp"
-              :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/thumbnail`"
-              alt="Napricot"
-              width="158"
-              height="39"
-            />
-          </NuxtLink>
-          <div :class="$style.category">
+      <div :class="[$style.mainHeader, 'container']">
+        <NuxtLink to="/">
+          <NuxtPicture
+            format="webp"
+            :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/thumbnail`"
+            alt="Napricot"
+            width="158"
+            height="39"
+          />
+        </NuxtLink>
+        <div :class="$style.category">
+          <ClientOnly>
             <layout-header-category />
-          </div>
-          <div :class="$style.search">
-            <layout-header-search />
-          </div>
-          <div :class="$style.profile">
-            <layout-header-profile />
-          </div>
+          </ClientOnly>
         </div>
-      </ClientOnly>
+        <div :class="$style.search">
+          <ClientOnly>
+            <layout-header-search />
+          </ClientOnly>
+        </div>
+        <div :class="$style.profile">
+          <ClientOnly>
+            <layout-header-profile />
+          </ClientOnly>
+        </div>
+      </div>
     </div>
     <div v-if="store.showOverlay" :class="$style.overlay"></div>
 
@@ -50,10 +54,10 @@ const store = useMainStore()
 }
 .overlay {
   position: absolute;
-  top: 78px;
+  top: 76px;
   left: 0;
   width: 100%;
-  height: 54px;
+  height: 56px;
   z-index: 3;
   background: rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease;
@@ -66,7 +70,6 @@ const store = useMainStore()
 .category {
   margin-left: 44px;
   display: flex;
-  align-items: center;
 }
 .search {
   margin-left: 44px;

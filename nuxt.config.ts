@@ -8,16 +8,20 @@ const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
+  experimental: {
+    componentIslands: true
+  },
+
   /*
    ** SSL on local development (checkout README.md for instructions)
    */
-  // devServer: {
-  //   port: Number(process.env.NUXT_PORT),
-  //   https: {
-  //     key: '.ssl/localhost.key',
-  //     cert: '.ssl/localhost.crt'
-  //   }
-  // },
+  devServer: {
+    port: Number(process.env.NUXT_PORT),
+    https: {
+      key: '.ssl/localhost.key',
+      cert: '.ssl/localhost.crt'
+    }
+  },
 
   app: {
     head: {
@@ -33,18 +37,17 @@ export default defineNuxtConfig({
     },
   },
 
-
   nitro: {
     compressPublicAssets: true,
     minify: true
   },
 
   routeRules: {
-    '/': { isr: true, prerender: true },
-    '/sign-in': { appMiddleware: 'auth', isr: true, prerender: true },
-    '/email-verification': { isr: true, prerender: true },
-    '/forgot-password': { isr: true, prerender: true },
-    '/reset-password': { isr: true, prerender: true },
+    '/': { prerender: true },
+    '/sign-in': { prerender: true },
+    '/email-verification': { prerender: true },
+    '/forgot-password': { prerender: true },
+    '/reset-password': { prerender: true },
   },
 
   runtimeConfig: {
@@ -70,5 +73,7 @@ export default defineNuxtConfig({
     plugins: {
       'postcss-nested': {}
     }
-  }
+  },
+
+  compatibilityDate: '2024-09-13',
 })

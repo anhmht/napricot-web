@@ -17,6 +17,9 @@ body {
   --el-color-primary: var(--color-primary);
   --el-color-primary-light-3: var(--color-primary-light) !important;
   --el-color-primary-dark-2: var(--color-primary-light) !important;
+  --el-color-primary-light-9: #ec582508;
+  --el-color-primary-light-7: #ec582536;
+  --el-color-primary-light-5: #ff7b4f;
   --el-mask-color: rgb(255 255 255 / 50%);
   --el-color-success: var(--color-success);
   --el-color-danger: var(--color-error);
@@ -75,4 +78,8 @@ p {
   font-size: 1.6rem;
   font-weight: 400;
   margin-top: 0 !important;
+}
+
+.el-tooltip__trigger:focus-visible {
+  outline: none;
 }

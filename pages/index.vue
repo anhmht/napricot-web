@@ -1,16 +1,18 @@
 <template>
-  <div :class="$style.home">
-    <carousel />
-    <sales />
-    <trending />
-    <shop-by-product />
-    <best-seller />
-    <banner />
-    <shop-by-recipient />
-    <new-arrival />
-    <ad-banner />
-    <newsletter />
-    <happy-customer />
+  <div class="container">
+    <div :class="$style.home">
+      <carousel />
+      <sales />
+      <trending />
+      <shop-by-product />
+      <best-seller />
+      <banner />
+      <shop-by-recipient />
+      <new-arrival />
+      <ad-banner />
+      <newsletter />
+      <happy-customer />
+    </div>
   </div>
 </template>
 

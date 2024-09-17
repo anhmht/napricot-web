@@ -55,6 +55,7 @@
           </NuxtLink>
         </el-carousel-item>
       </el-carousel>
+
       <button aria-label="Left" :class="$style.left" @click="prev">
         <i class="icon-arrow-right" />
       </button>

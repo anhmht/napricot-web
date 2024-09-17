@@ -2,8 +2,8 @@ export interface State {
   currentUser: User | undefined
   showOverlay: boolean
   categories?: {
-    categories: Category[]
-    treeCategories: Category[]
+    categories: ICategory[]
+    treeCategories: ICategory[]
   }
 }
 
