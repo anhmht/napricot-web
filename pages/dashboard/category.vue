@@ -27,7 +27,8 @@
 import debounce from 'lodash/debounce'
 
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'dashboard',
+  middleware: 'authorize'
 })
 
 const isOpen = ref<boolean>(false)
