@@ -8,6 +8,7 @@
         table-layout="auto"
         :height="height"
         scrollbar-always-on
+        @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55"> </el-table-column>
         <slot />
@@ -71,10 +72,14 @@ const props = defineProps({
   total: {
     type: Number,
     default: 0
+  },
+  selectedRows: {
+    type: Array as () => any[],
+    default: () => []
   }
 })
 
-const emit = defineEmits(['current-change', 'limit-change'])
+const emit = defineEmits(['current-change', 'limit-change', 'selection-change'])
 
 const options = [
   { value: 10, label: '10 rows per page' },
@@ -84,6 +89,10 @@ const options = [
 ]
 
 const pageSize = ref(props.limit)
+
+const handleSelectionChange = (rows: any[]) => {
+  emit('selection-change', rows)
+}
 </script>
 
 <style lang="postcss" module>

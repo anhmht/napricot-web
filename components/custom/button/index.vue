@@ -48,6 +48,7 @@ defineEmits(['click'])
   }
   :global(.el-button) {
     --el-button-disabled-bg-color: var(--color-bg-disabled);
+    --el-button-disabled-border-color: var(--color-bg-disabled);
   }
 }
 :global(.dashboard) {

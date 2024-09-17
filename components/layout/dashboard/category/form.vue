@@ -13,7 +13,7 @@
       <custom-field
         v-model="form.name"
         name="name"
-        label="ICategory Name"
+        label="Category Name"
         placeholder="Enter category name"
       />
       <custom-field
@@ -30,17 +30,18 @@
         placeholder="Enter category description"
       />
       <custom-select
+        v-model="form.type"
+        name="type"
+        label="Type"
+        :options="categoryTypes"
+        :disabled="props.id"
+      />
+      <custom-select
         v-model="form.parentId"
         name="parentId"
         label="Parent ID"
         placeholder="No Parent"
         :options="categoriesOptions"
-      />
-      <custom-select
-        v-model="form.type"
-        name="type"
-        label="Type"
-        :options="categoryTypes"
       />
       <div :class="$style.button">
         <custom-button :disabled="isLoading" native-type="submit">
@@ -57,6 +58,10 @@ import type { FormInstance, FormRules } from 'element-plus'
 import { OptionType } from 'element-plus/lib/components/select-v2/src/select.types.js'
 
 const props = defineProps({
+  id: {
+    type: String,
+    default: undefined
+  },
   loading: {
     type: Boolean,
     default: false
@@ -81,7 +86,7 @@ const form = reactive<ICategory>({
 const isLoading = ref<boolean>(false)
 const errorMessage = ref<string>('')
 const buttonTitle = ref<string>('Create')
-const categoriesOptions = ref<OptionType[]>([])
+const categories = ref<ICategory[]>([])
 
 const rules = reactive<FormRules>({
   name: [
@@ -100,17 +105,35 @@ const rules = reactive<FormRules>({
   ]
 })
 
+const categoriesOptions = computed<OptionType[]>(() => {
+  return [
+    { value: undefined, label: 'No Parent' },
+    ...categories.value
+      .filter((cat) => cat.type === form.type)
+      .map((category) => ({
+        value: category._id,
+        label: category.name
+      }))
+  ]
+})
+
 const handleSubmit = () => {
   formRef.value?.validate(async (valid: boolean) => {
     if (valid) {
       isLoading.value = true
       emit('update:loading', true)
       try {
-        const category = await $categoryService.createCategory(form)
+        const category = props.id
+          ? await $categoryService.updateCategory(props.id, form)
+          : await $categoryService.createCategory(form)
         emit('submit-success', category)
         ElNotification.success({
-          title: 'ICategory created successfully',
-          message: `ICategory ${category.name} has been created`
+          title: props.id
+            ? 'Category updated successfully'
+            : 'Category created successfully',
+          message: `Category '${category.name}' has been ${
+            props.id ? 'updated' : 'created'
+          }`
         })
         formRef.value?.resetFields()
       } catch (error: any) {
@@ -123,19 +146,45 @@ const handleSubmit = () => {
   })
 }
 
+const getCategory = async (id: string) => {
+  try {
+    const category = await $categoryService.getCategory(id)
+    form.name = category.name
+    form.slug = category.slug
+    form.desc = category.desc
+    form.type = category.type
+    form.parentId = category.parentId
+  } catch (error: any) {
+    errorMessage.value = error.message
+  }
+}
+
 watchEffect(() => {
   form.slug = slugify(form.name, { lower: true, strict: true, trim: true })
 })
 
+watch(
+  () => props.id,
+  async (id) => {
+    if (id) {
+      buttonTitle.value = 'Update'
+      isLoading.value = true
+      emit('update:loading', true)
+
+      await getCategory(id)
+
+      isLoading.value = false
+      emit('update:loading', false)
+    } else {
+      buttonTitle.value = 'Create'
+      formRef.value?.resetFields()
+    }
+  },
+  { immediate: true }
+)
+
 onMounted(async () => {
-  const data = await $categoryService.getAllCategories()
-  categoriesOptions.value = [
-    { value: undefined, label: 'No Parent' },
-    ...data.categories.map((category) => ({
-      value: category._id,
-      label: category.name
-    }))
-  ]
+  categories.value = (await $categoryService.getAllCategories()).categories
 })
 </script>
 

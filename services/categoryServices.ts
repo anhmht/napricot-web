@@ -27,13 +27,45 @@ const getCategories = async (filter: CategoryFilter, pagination: Pagination): Pr
   }
 }
 
+const getCategory = async (id: string): Promise<ICategory> => {
+  try {
+    const data = await $api(`/categories/${id}`)
+    return data as ICategory
+  } catch (error: any) {
+    throw errorHandler(error)
+  }
+}
+
 const createCategory = async (category: ICategory): Promise<ICategory> => {
   try {
     const data = await $api('/categories', {
       method: 'POST',
       body: category
     })
-    return data as ICategory
+    return data.category as ICategory
+  } catch (error: any) {
+    throw errorHandler(error)
+  }
+}
+
+const updateCategory = async (id: string, category: ICategory): Promise<ICategory> => {
+  try {
+    const data = await $api(`/categories/${id}`, {
+      method: 'PUT',
+      body: category
+    })
+    return data.category as ICategory
+  } catch (error: any) {
+    throw errorHandler(error)
+  }
+}
+
+const deleteCategories = async (ids: string[]): Promise<void> => {
+  try {
+    await $api('/categories', {
+      method: 'DELETE',
+      body: { ids }
+    })
   } catch (error: any) {
     throw errorHandler(error)
   }
@@ -45,11 +77,17 @@ interface CategoryService {
     treeCategories: ICategory[]
   }>
   getCategories: (filter: CategoryFilter, pagination: Pagination) => Promise<ListCategories>
+  getCategory: (id: string) => Promise<ICategory>
   createCategory: (category: ICategory) => Promise<ICategory>
+  updateCategory: (id: string, category: ICategory) => Promise<ICategory>
+  deleteCategories: (id: string[]) => Promise<void>
 }
 
 export const $categoryService: CategoryService = {
   getAllCategories: () => getAllCategories(),
   getCategories: (filter: CategoryFilter, pagination: Pagination) => getCategories(filter, pagination),
-  createCategory: (category: ICategory) => createCategory(category)
+  getCategory: (id: string) => getCategory(id),
+  createCategory: (category: ICategory) => createCategory(category),
+  updateCategory: (id: string, category: ICategory) => updateCategory(id, category),
+  deleteCategories: (id: string[]) => deleteCategories(id)
 }

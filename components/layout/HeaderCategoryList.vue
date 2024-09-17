@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.categoryList">
-    <ul>
+    <ul v-if="categories">
       <li
         v-for="(item, index) in categories"
         :key="index"
@@ -18,7 +18,9 @@
 
 <script setup lang="ts">
 const store = useMainStore()
-const categories = computed(() => store.categories?.treeCategories)
+const categories = computed<ICategory[] | undefined>(() =>
+  store.getTreeCategories()
+)
 
 const active = ref<Number | undefined>(undefined)
 const show = ref(false)

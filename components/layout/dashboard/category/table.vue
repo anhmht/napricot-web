@@ -5,6 +5,8 @@
       :page="pagination.page"
       :limit="pagination.limit"
       :total="list?.total"
+      :selected-rows="selectedRows"
+      @selection-change="emit('update:selectedRows', $event)"
       @current-change="updateCurrentPage"
       @limit-change="updateLimit"
     >
@@ -55,10 +57,19 @@ const props = defineProps({
   pagination: {
     type: Object as () => Pagination,
     required: true
+  },
+  selectedRows: {
+    type: Array as () => ICategory[],
+    default: []
   }
 })
 
-const emit = defineEmits(['update:pagination', 'edit', 'delete'])
+const emit = defineEmits([
+  'update:pagination',
+  'edit',
+  'delete',
+  'update:selectedRows'
+])
 
 const categories = computed(() => props.list?.categories || [])
 
