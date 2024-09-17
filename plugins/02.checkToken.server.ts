@@ -4,7 +4,7 @@ export default defineNuxtPlugin(async (nuxt: any) => {
   if (token.value) {
     const store = useMainStore()
     try {
-      const jwt = token.value.replaceAll('-', '.')
+      const jwt = token.value.replaceAll('*napricot*', '.')
       // set the api header token
       store.setCurrentUser({ token: jwt })
       const user = await $userService.getMe()

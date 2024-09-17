@@ -88,7 +88,7 @@ function submitForm() {
           if (form.rememberMe) {
             const cookie = useCookie('token')
             if (user?.token) {
-              cookie.value = user.token.replaceAll('.', '-')
+              cookie.value = user.token.replaceAll('.', '*napricot*')
             }
           }
           navigateTo('/')

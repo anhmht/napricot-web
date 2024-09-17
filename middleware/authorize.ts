@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware((to) => {
       return navigateTo('/', { external: true })
     }
 
-    if (user.token !== token.value.replaceAll('-', '.')) {
+    if (user.token !== token.value.replaceAll('*napricot*', '.')) {
       return navigateTo('/', { external: true })
     }
 
