@@ -1,5 +1,5 @@
 export interface Image {
-  url: string
-  thumbnailUrl: string
-  path: string
+  url: string //dropbox url
+  path: string // dropbox path
+  cloudflareUrl: string // cloudflare url
 }

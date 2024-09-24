@@ -6,7 +6,10 @@
         :class="$style.input"
         :model-value="modelValue"
         :type="typeRef"
-        @input="(value: string) => $emit('update:modelValue', value)"
+        @input="(value: string) => {
+          $emit('update:modelValue', value)
+          $emit('input', value)
+        }"
         @keyup.enter="$emit('keyup')"
         v-bind="$attrs"
       >
@@ -41,7 +44,7 @@ const props = defineProps({
     default: 'text'
   }
 })
-defineEmits(['update:modelValue', 'keyup'])
+defineEmits(['update:modelValue', 'keyup', 'input'])
 const inputRef = ref()
 
 const visible = ref(false)

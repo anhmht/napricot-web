@@ -74,7 +74,7 @@ class UploadAdapter {
 
 export default defineNuxtComponent({
   components: {
-    ckeditor: CKEditor.component
+    ckeditor: CKEditor
   },
   props: {
     modelValue: {

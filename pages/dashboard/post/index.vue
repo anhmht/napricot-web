@@ -1,44 +1,33 @@
 <template>
-  <div :class="$style.categories">
-    <layout-dashboard-header title="Categories">
+  <div :class="$style.post">
+    <layout-dashboard-header title="Posts">
       <template #action>
-        <custom-button
-          type="danger"
-          :disabled="!selectedRows.length"
-          @click="handleDelete(selectedRows.map((c) => c._id!))"
-        >
+        <custom-button type="danger" :disabled="!selectedRows.length" @click="">
           <i class="icon-delete"></i>
           Delete</custom-button
         >
-        <custom-button type="primary" @click="handleEdit">
+        <custom-button
+          type="primary"
+          @click="navigateTo('/dashboard/post/create')"
+        >
           <i class="icon-add"></i>
-          Add Category</custom-button
+          Add Post</custom-button
         >
       </template>
     </layout-dashboard-header>
     <div :class="$style.content" v-loading="status === 'pending'">
       <layout-dashboard-filter
-        search-name="Categories"
+        search-name="Posts"
         @search="search"
         @sort="handleSort"
       />
-      <dashboard-category-table
+      <dashboard-post-table
         :list="data"
         v-model:pagination="pagination"
         v-model:selected-rows="selectedRows"
-        @edit="handleEdit"
         @delete="handleDelete([$event])"
       />
     </div>
-
-    <custom-modal v-model:open="isOpen" :title="title" :loading="isLoading">
-      <dashboard-category-form
-        v-loading="isLoading"
-        @submit-success="reloadList"
-        v-model:loading="isLoading"
-        :id="currentId"
-      />
-    </custom-modal>
   </div>
 </template>
 
@@ -51,17 +40,11 @@ definePageMeta({
 })
 
 /** Table ref */
-const selectedRows = ref<ICategory[]>([])
-
-/** Modal ref */
-const isOpen = ref<boolean>(false)
-const isLoading = ref<boolean>(false)
-const title = ref<string>('Add Category')
-const currentId = ref<string | undefined>(undefined)
+const selectedRows = ref<IPost[]>([])
 
 /** Filter and pagination */
-const filter = ref<CategoryFilter>({
-  name: '',
+const filter = ref<PostFilter>({
+  title: '',
   sort: ''
 })
 const pagination = ref<Pagination>({
@@ -70,7 +53,7 @@ const pagination = ref<Pagination>({
 })
 
 const handleSearch = debounce((query: string) => {
-  filter.value.name = query || undefined
+  filter.value.title = query || undefined
   pagination.value = {
     ...pagination.value,
     page: 1
@@ -89,20 +72,13 @@ const handleSort = (sort: string) => {
   }
 }
 
-const handleEdit = (id?: string) => {
-  isOpen.value = true
-  title.value = id ? 'Edit Category' : 'Add Category'
-  currentId.value = id
-}
-
 const handleDelete = async (ids: string[]) => {
-  ElMessageBox.confirm('Do you want to delete this category?', 'Confirm', {
+  ElMessageBox.confirm('Do you want to delete this post?', 'Confirm', {
     type: 'warning',
     beforeClose: async (action, instance, done) => {
       if (action === 'confirm') {
         instance.confirmButtonLoading = true
         instance.confirmButtonText = 'Loading...'
-        await $categoryService.deleteCategories(ids)
         done()
       } else {
         done()
@@ -122,14 +98,13 @@ const handleDelete = async (ids: string[]) => {
 }
 
 const reloadList = () => {
-  isOpen.value = false
   refresh()
 }
 
 const { data, status, refresh } = await useAsyncData(
-  'category',
+  'post',
   async () => {
-    return await $categoryService.getCategories(filter.value, pagination.value)
+    return await $postService.getPosts(filter.value, pagination.value)
   },
   {
     watch: [filter, pagination]
@@ -138,8 +113,8 @@ const { data, status, refresh } = await useAsyncData(
 </script>
 
 <style lang="postcss" module>
-.categories {
-  display: block;
+.post {
+  position: relative;
 }
 .content {
   padding: 16px 32px;
