@@ -17,3 +17,16 @@ export const createPayload = (filter: any, pagination: Pagination) => {
   }
   return payload;
 }
+
+export const generateUniqSerial= () => {
+  return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, (c) => {
+    const r = Math.floor(Math.random() * 16);
+    return r.toString(16);
+  });
+}
+
+export const sleep = (duration: number): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, duration)
+  })
+}

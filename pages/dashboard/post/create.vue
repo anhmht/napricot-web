@@ -54,6 +54,7 @@ watch(post, (value) => {
 .form {
   flex: 1;
   height: calc(100vh - 77px);
+  overflow: auto;
 }
 .config {
   width: 400px;

@@ -77,5 +77,8 @@ const handlePasswordVisibility = () => {
   :global(.el-icon) {
     display: none;
   }
+  :global(.el-textarea__inner) {
+    border-radius: 12px;
+  }
 }
 </style>

@@ -1,3 +1,4 @@
+import axios, { AxiosProgressEvent } from 'axios'
 
 const uploadImage = async (file: File): Promise<Image | undefined> => {
   try {
@@ -20,10 +21,32 @@ const uploadImage = async (file: File): Promise<Image | undefined> => {
   return undefined
 }
 
+const uploadImageWithAxios = async (formData: FormData,
+  onUploadProgress: (progressEvent: AxiosProgressEvent) => void | undefined): Promise<Image | undefined> => {
+  const config = useRuntimeConfig()
+  try {
+    const { data } = await axios.post(config.app.apiBaseUrl +'/images/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        accept: '*/*',
+        Authorization: `Bearer ${useCookie('token').value}`,
+      },
+      onUploadProgress
+    })
+
+    return data as Image
+  } catch (error: any) {
+    errorHandler(error)
+  }
+  return undefined
+}
+
 interface UploadService {
   uploadImage: (file: File) => Promise<Image | undefined>
+  uploadImageWithAxios: (formData: FormData, onUploadProgress: (progressEvent: AxiosProgressEvent) => void | undefined) => Promise<Image | undefined>
 }
 
 export const $uploadService: UploadService = {
-  uploadImage: (file) => uploadImage(file)
+  uploadImage: (file) => uploadImage(file),
+  uploadImageWithAxios: (formData, onUploadProgress) => uploadImageWithAxios(formData, onUploadProgress)
 }

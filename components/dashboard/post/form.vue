@@ -31,6 +31,11 @@
         :rows="3"
         @input="updateForm('desc', $event)"
       />
+      <custom-image-upload
+        v-model:image="form.image"
+        name="image"
+        label="Feature Image"
+      />
     </el-form>
   </div>
 </template>
@@ -78,6 +83,13 @@ watch(
   (title) => {
     form.value.slug = slugify(title, { lower: true })
     updateForm('slug', form.value.slug)
+  },
+  { immediate: true }
+)
+watch(
+  () => form.value.image,
+  (image) => {
+    updateForm('image', image)
   },
   { immediate: true }
 )
