@@ -3,7 +3,7 @@ import axios, { AxiosProgressEvent } from 'axios'
 const uploadImage = async (file: File): Promise<Image | undefined> => {
   try {
     const formData = new FormData()
-    formData.append('files', file)
+    formData.append('files', file, `${generateUniqSerial()}_${file.name}`)
 
     const data = await $api('/images/upload', {
       headers: {

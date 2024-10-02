@@ -67,7 +67,6 @@
 </template>
 
 <script setup lang="ts">
-import { ElCarousel } from 'element-plus'
 const config = useRuntimeConfig()
 const page1 = ref([
   {
@@ -120,7 +119,7 @@ const page2 = ref([
   }
 ])
 
-const carousel = ref<typeof ElCarousel>()
+const carousel = ref()
 const prev = () => carousel.value?.prev()
 const next = () => carousel.value?.next()
 </script>

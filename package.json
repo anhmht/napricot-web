@@ -10,19 +10,23 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-vue": "^7.0.0",
-    "@element-plus/nuxt": "^1.0.9",
+    "@ckeditor/ckeditor5-vue": "^7.2.0",
+    "@element-plus/nuxt": "^1.0.10",
     "@nuxt/image": "^1.8.0",
-    "@pinia/nuxt": "^0.5.4",
+    "@pinia/nuxt": "^0.5.5",
     "axios": "^1.7.7",
-    "ckeditor5": "^43.1.0",
-    "element-plus": "2.8.2",
-    "nuxt": "^3.13.1",
+    "ckeditor5": "^43.2.0",
+    "element-plus": "^2.8.4",
+    "nuxt": "^3.13.2",
     "ohmyfetch": "^0.4.21",
-    "pinia": "^2.2.2",
+    "pinia": "^2.2.4",
     "postcss-nested": "^6.2.0",
     "slugify": "^1.6.6",
-    "vue": "^3.5.4",
-    "vue-router": "^4.4.4"
+    "vue": "^3.5.10",
+    "vue-router": "^4.4.5"
+  },
+  "resolutions": {
+    "element-plus": "^2.8.4",
+    "vue": "^3.5.10"
   }
 }

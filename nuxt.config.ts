@@ -48,6 +48,7 @@ export default defineNuxtConfig({
     '/email-verification': { prerender: true },
     '/forgot-password': { prerender: true },
     '/reset-password': { prerender: true },
+    '/dashboard/post/create': { ssr: false },
   },
 
   runtimeConfig: {
@@ -75,5 +76,5 @@ export default defineNuxtConfig({
     }
   },
 
-  compatibilityDate: '2024-09-13',
+  compatibilityDate: '2024-10-02',
 })

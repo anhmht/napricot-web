@@ -28,13 +28,21 @@
         name="desc"
         label="Meta Description"
         type="textarea"
-        :rows="3"
+        :rows="2"
         @input="updateForm('desc', $event)"
       />
       <custom-image-upload
         v-model:image="form.image"
         name="image"
         label="Feature Image"
+      />
+
+      <ckeditor-custom
+        name="content"
+        label="Content"
+        v-model="form.content"
+        v-model:images="form.images"
+        @input="updateForm('content', $event)"
       />
     </el-form>
   </div>
@@ -90,6 +98,13 @@ watch(
   () => form.value.image,
   (image) => {
     updateForm('image', image)
+  },
+  { immediate: true }
+)
+watch(
+  () => form.value.images,
+  (images) => {
+    updateForm('images', images)
   },
   { immediate: true }
 )

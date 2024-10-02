@@ -35,11 +35,9 @@
 </template>
 
 <script setup lang="ts">
-import { ElCarousel } from 'element-plus'
-
 const config = useRuntimeConfig()
 const tabs = newArrival(config).map((item) => item.name)
-const carousel = ref<typeof ElCarousel>()
+const carousel = ref()
 
 const changeTab = (index: number) => {
   carousel.value?.setActiveItem(index)
