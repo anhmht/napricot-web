@@ -1,6 +1,7 @@
 <template>
   <div :class="$style.upload">
     <el-form-item
+      ref="formItemRef"
       :label="label"
       :prop="name"
       label-position="top"
@@ -94,7 +95,7 @@ const props = defineProps({
     default: []
   }
 })
-
+const formItemRef = ref()
 const inputRef = ref<HTMLInputElement>()
 const selectedFiles = ref<IUploadFile[]>([])
 const uploadedImages = ref<Image[]>([])
@@ -123,6 +124,7 @@ const handleChange = async (e: Event) => {
         name: `${id}_${file.name}`
       } as IUploadFile
     })
+    formItemRef.value?.clearValidate()
     errorMessage.value = ''
 
     for await (const file of uploading) {

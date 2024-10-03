@@ -1,5 +1,6 @@
 <template>
   <el-form-item
+    ref="formItemRef"
     :class="$style.editor"
     :label="label"
     :prop="name"
@@ -13,6 +14,7 @@
         ($event: string) => {
           $emit('update:modelValue', $event)
           $emit('input', $event)
+          $refs.formItemRef?.clearValidate()
         }
       "
     ></ckeditor>
@@ -175,11 +177,6 @@ export default {
     setImages(image: CustomImage): void {
       const images = [...this.images, image]
       this.$emit('update:images', images)
-    },
-    getImages(): CustomImage[] {
-      return this.images.filter((image) => {
-        this.modelValue.includes(image.id)
-      })
     }
   },
   data() {

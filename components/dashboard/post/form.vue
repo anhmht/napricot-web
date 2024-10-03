@@ -1,55 +1,44 @@
 <template>
   <div :class="$style.form">
     <h4>Post</h4>
-    <el-form
-      action="submit"
-      ref="formRef"
-      :model="form"
-      :rules="rules"
-      :disabled="isLoading"
-      require-asterisk-position="right"
-    >
-      <custom-alert v-if="errorMessage" type="error" :title="errorMessage" />
-      <custom-field
-        v-model="form.title"
-        name="title"
-        label="Title"
-        placeholder="Input post title"
-        @input="updateForm('title', $event)"
-      />
-      <custom-field
-        v-model="form.slug"
-        name="slug"
-        label="Slug"
-        :disabled="true"
-      />
-      <custom-field
-        v-model="form.desc"
-        name="desc"
-        label="Meta Description"
-        type="textarea"
-        :rows="2"
-        @input="updateForm('desc', $event)"
-      />
-      <custom-image-upload
-        v-model:image="form.image"
-        name="image"
-        label="Feature Image"
-      />
+    <custom-field
+      v-model="form.title"
+      name="title"
+      label="Title"
+      placeholder="Input post title"
+      @input="updateForm('title', $event)"
+    />
+    <custom-field
+      v-model="form.slug"
+      name="slug"
+      label="Slug"
+      :disabled="true"
+    />
+    <custom-field
+      v-model="form.desc"
+      name="desc"
+      label="Meta Description"
+      type="textarea"
+      :rows="2"
+      @input="updateForm('desc', $event)"
+    />
+    <custom-image-upload
+      v-model:image="form.image"
+      name="image"
+      label="Feature Image"
+    />
 
-      <ckeditor-custom
-        name="content"
-        label="Content"
-        v-model="form.content"
-        v-model:images="form.images"
-        @input="updateForm('content', $event)"
-      />
-    </el-form>
+    <ckeditor-custom
+      name="content"
+      label="Content"
+      v-model="form.content"
+      v-model:images="form.images"
+      @input="updateForm('content', $event)"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules } from 'element-plus'
 import slugify from 'slugify'
 
 const props = defineProps({
@@ -61,20 +50,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:post'])
 
-const formRef = ref<FormInstance>()
 const form = ref<IPost>(props.post)
-const isLoading = ref<boolean>(false)
-const errorMessage = ref<string>('')
-
-const rules = reactive<FormRules>({
-  title: [
-    {
-      required: true,
-      message: 'Please input post title',
-      trigger: ['blur', 'change']
-    }
-  ]
-})
 
 const updateForm = (key: string, value: any) => {
   const updateForm: IPost = {
@@ -83,8 +59,6 @@ const updateForm = (key: string, value: any) => {
   }
   emit('update:post', updateForm)
 }
-
-const submitForm = () => {}
 
 watch(
   () => props.post.title,

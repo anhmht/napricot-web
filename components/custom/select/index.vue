@@ -8,6 +8,11 @@
         :clearable="clearable"
         v-bind="$attrs"
         :class="$style.select"
+        @change="
+          ($event) => {
+            $emit('update:modelValue', $event), $emit('input', $event)
+          }
+        "
       />
     </el-form-item>
   </div>
@@ -38,6 +43,8 @@ const props = defineProps({
     default: false
   }
 })
+
+const emit = defineEmits(['update:modelValue', 'input'])
 </script>
 
 <style lang="postcss" module>

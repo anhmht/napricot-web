@@ -1,30 +1,47 @@
 <template>
-  <div :class="$style.create">
+  <div :class="$style.create" v-loading="isLoading">
     <layout-dashboard-header title="Create Post">
       <template #action>
         <custom-button type="default" @click="navigateTo('/dashboard/post')">
           Discard</custom-button
         >
-        <custom-button type="primary" @click="">
+        <custom-button type="primary" @click="handleSubmit">
           <i class="icon-add"></i>
           Create</custom-button
         >
       </template>
     </layout-dashboard-header>
-    <div :class="$style.content">
-      <div :class="$style.form">
-        <dashboard-post-form v-model:post="post" />
+    <el-form
+      action="submit"
+      ref="formRef"
+      :model="post"
+      :rules="rules"
+      :disabled="isLoading"
+      require-asterisk-position="right"
+      scroll-to-error
+      :scroll-into-view-options="{ behavior: 'smooth', block: 'center' }"
+    >
+      <div :class="$style.content">
+        <div :class="$style.form">
+          <dashboard-post-form v-model:post="post" />
+        </div>
+        <div :class="$style.config">
+          <dashboard-post-config v-model:post="post" />
+        </div>
       </div>
-      <div :class="$style.config"></div>
-    </div>
+    </el-form>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { FormInstance, FormRules } from 'element-plus'
+
 definePageMeta({
   layout: 'dashboard',
   middleware: 'authorize'
 })
+
+const store = useMainStore()
 
 const post = ref<IPost>({
   title: '',
@@ -39,9 +56,61 @@ const post = ref<IPost>({
   tags: []
 })
 
-watch(post, (value) => {
-  console.log(value)
+const formRef = ref<FormInstance>()
+const isLoading = ref<boolean>(false)
+const rules = reactive<FormRules>({
+  title: [
+    {
+      required: true,
+      message: 'Please input post title',
+      trigger: ['blur', 'change']
+    }
+  ],
+  desc: [
+    {
+      required: true,
+      message: 'Please input post description',
+      trigger: ['blur', 'change']
+    }
+  ],
+  content: [
+    {
+      required: true,
+      message: 'Please input post content',
+      trigger: ['blur', 'change']
+    }
+  ],
+  image: [
+    {
+      required: true,
+      message: 'Please upload post image',
+      trigger: ['blur', 'change']
+    }
+  ],
+  categoryId: [
+    {
+      required: true,
+      message: 'Please select post category',
+      trigger: ['change']
+    }
+  ]
 })
+
+const handleSubmit = async () => {
+  formRef.value?.validate(async (valid) => {
+    if (!valid) return
+  })
+  post.value.images = post.value.images.filter((image) =>
+    post.value.content.includes(image.id)
+  )
+  post.value.author = store.currentUser?.userId
+  isLoading.value = true
+  console.log(post.value.content)
+
+  await $postService.createPost(post.value)
+  isLoading.value = false
+  navigateTo('/dashboard/post')
+}
 </script>
 
 <style lang="postcss" module>
