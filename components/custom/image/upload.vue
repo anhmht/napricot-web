@@ -143,8 +143,6 @@ const uploadFile = async (file: IUploadFile) => {
 
   const onUploadProgress = (progressEvent: AxiosProgressEvent) => {
     if (progressEvent.total) {
-      console.log(progressEvent.loaded, progressEvent.total)
-
       const value = (progressEvent.loaded * 100) / progressEvent.total
       let percent = Math.round(value)
       const uploadedFile = selectedFiles.value.find((f) => f.id === file.id)
@@ -161,7 +159,6 @@ const uploadFile = async (file: IUploadFile) => {
   if (uploadedFile && data?.url) {
     uploadedFile.url = data.url
     uploadedImages.value.push(data)
-    console.log(uploadedImages.value)
   } else {
     if (uploadedFile) {
       uploadedFile.url = 'error'

@@ -105,9 +105,11 @@ const handleSubmit = async () => {
   )
   post.value.author = store.currentUser?.userId
   isLoading.value = true
-  console.log(post.value.content)
-
   await $postService.createPost(post.value)
+  ElNotification.success({
+    title: 'Post created successfully',
+    message: `Post ${post.value.title} has been created`
+  })
   isLoading.value = false
   navigateTo('/dashboard/post')
 }

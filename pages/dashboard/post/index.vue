@@ -2,7 +2,11 @@
   <div :class="$style.post">
     <layout-dashboard-header title="Posts">
       <template #action>
-        <custom-button type="danger" :disabled="!selectedRows.length" @click="">
+        <custom-button
+          type="danger"
+          :disabled="!selectedRows.length"
+          @click="handleDelete(selectedRows.map((c) => c._id!))"
+        >
           <i class="icon-delete"></i>
           Delete</custom-button
         >
@@ -79,6 +83,7 @@ const handleDelete = async (ids: string[]) => {
       if (action === 'confirm') {
         instance.confirmButtonLoading = true
         instance.confirmButtonText = 'Loading...'
+        await $postService.deletePosts(ids)
         done()
       } else {
         done()
@@ -87,8 +92,8 @@ const handleDelete = async (ids: string[]) => {
   })
     .then(async () => {
       ElNotification.success({
-        title: 'Category deleted successfully',
-        message: 'Category has been deleted'
+        title: 'Post deleted successfully',
+        message: 'Post has been deleted'
       })
       reloadList()
     })
