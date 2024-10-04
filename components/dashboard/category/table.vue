@@ -17,9 +17,17 @@
         show-overflow-tooltip
       >
       </el-table-column>
-      <el-table-column prop="desc" label="Description" show-overflow-tooltip>
+      <el-table-column prop="slug" label="Slug" width="300"> </el-table-column>
+      <el-table-column prop="createdAt" label="Create" width="170">
+        <template #default="{ row }">
+          {{ fromNow(row.createdAt) }}
+        </template>
       </el-table-column>
-      <el-table-column prop="slug" label="Slug" width="200"> </el-table-column>
+      <el-table-column prop="updatedAt" label="Update" width="170">
+        <template #default="{ row }">
+          {{ fromNow(row.updatedAt) }}
+        </template>
+      </el-table-column>
       <el-table-column prop="type" label="Type" width="200">
         <template #default="{ row }">
           <el-tag

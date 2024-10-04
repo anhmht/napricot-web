@@ -23,13 +23,22 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="categoryId" label="Category" width="350">
+      <el-table-column prop="categoryId" label="Category" width="200">
         <template #default="{ row }">
           {{ getCategoryName(row.categoryId) }}
         </template>
       </el-table-column>
-      <el-table-column prop="slug" label="Slug" width="200"> </el-table-column>
-      <el-table-column prop="type" label="Type" width="200">
+      <el-table-column prop="createdAt" label="Create" width="170">
+        <template #default="{ row }">
+          {{ fromNow(row.createdAt) }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="updatedAt" label="Update" width="170">
+        <template #default="{ row }">
+          {{ fromNow(row.updatedAt) }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="status" label="Status" width="200">
         <template #default="{ row }">
           <el-tag
             size="large"
@@ -58,6 +67,7 @@
 </template>
 
 <script setup lang="ts">
+import moment from 'moment'
 const props = defineProps({
   list: {
     type: Object as () => ListPosts | null,
