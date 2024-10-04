@@ -30,6 +30,7 @@
         v-model:pagination="pagination"
         v-model:selected-rows="selectedRows"
         @delete="handleDelete([$event])"
+        @edit="navigateTo(`/dashboard/post/${$event}`)"
       />
     </div>
   </div>

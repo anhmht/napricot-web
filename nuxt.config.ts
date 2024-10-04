@@ -48,7 +48,7 @@ export default defineNuxtConfig({
     '/email-verification': { prerender: true },
     '/forgot-password': { prerender: true },
     '/reset-password': { prerender: true },
-    '/dashboard/post/create': { ssr: false },
+    '/dashboard/post/**': { ssr: false },
   },
 
   runtimeConfig: {

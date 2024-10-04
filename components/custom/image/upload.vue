@@ -95,10 +95,28 @@ const props = defineProps({
     default: []
   }
 })
+const convertUploadFile = (image: Image): IUploadFile => {
+  return {
+    id: image.id,
+    data: new File([], image.id),
+    progress: 100,
+    name: image.id,
+    url: image.url,
+    base64: image.cloudflareUrl + '/large500'
+  }
+}
 const formItemRef = ref()
 const inputRef = ref<HTMLInputElement>()
-const selectedFiles = ref<IUploadFile[]>([])
-const uploadedImages = ref<Image[]>([])
+const selectedFiles = ref<IUploadFile[]>(
+  props.multiple
+    ? props.images.map((image) => convertUploadFile(image))
+    : props.image
+    ? [convertUploadFile(props.image)]
+    : []
+)
+const uploadedImages = ref<Image[]>(
+  props.multiple ? props.images : props.image ? [props.image] : []
+)
 const errorMessage = ref<string>('')
 const config = useRuntimeConfig()
 
