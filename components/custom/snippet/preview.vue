@@ -31,9 +31,9 @@ const url = computed(() => {
 })
 
 const metaDesc = computed(() => {
-  return props.description.length < 105
+  return props.description.length < 100
     ? props.description
-    : `${props.description.slice(0, 105)}...`
+    : `${props.description.slice(0, 100)}...`
 })
 </script>
 

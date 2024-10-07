@@ -12,19 +12,13 @@
           />
         </NuxtLink>
         <div :class="$style.category">
-          <ClientOnly>
-            <layout-header-category />
-          </ClientOnly>
+          <layout-header-category />
         </div>
         <div :class="$style.search">
-          <ClientOnly>
-            <layout-header-search />
-          </ClientOnly>
+          <layout-header-search />
         </div>
         <div :class="$style.profile">
-          <ClientOnly>
-            <layout-header-profile />
-          </ClientOnly>
+          <layout-header-profile />
         </div>
       </div>
     </div>

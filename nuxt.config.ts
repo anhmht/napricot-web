@@ -57,6 +57,10 @@ export default defineNuxtConfig({
     },
   },
 
+  socialShare: {
+    baseUrl: process.env.BASE_URL // required!
+  },
+
   components: true,
 
   css: [
@@ -64,7 +68,7 @@ export default defineNuxtConfig({
     '~/assets/styles/main.css'
   ],
 
-  modules: ['@pinia/nuxt', "@nuxt/image", "@element-plus/nuxt"],
+  modules: ['@pinia/nuxt', "@nuxt/image", "@element-plus/nuxt", "@stefanobartoletti/nuxt-social-share"],
 
   imports: {
     dirs: ['store/*.ts', 'models/*.ts', 'services/*.ts', 'data/*.ts']

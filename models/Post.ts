@@ -28,5 +28,6 @@ export interface ListPosts {
 
 export interface PostFilter {
   title?: string
+  categoryId?: string
   sort?: string
 }

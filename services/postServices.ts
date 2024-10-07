@@ -51,12 +51,22 @@ const getPost = async (id: string): Promise<IPost> => {
   }
 }
 
+const getPostBySlug = async (slug: string): Promise<IPost> => {
+  try {
+    const data = await $api(`/post/slug/${slug}`)
+    return data.post as IPost
+  } catch (error: any) {
+    throw errorHandler(error)
+  }
+}
+
 interface PostService {
   getPosts(filter: PostFilter, pagination: Pagination): Promise<ListPosts>
   createPost(post: IPost): Promise<void>
   deletePosts(id: string[]): Promise<void>
   getPost(id: string): Promise<IPost>
   updatePost(id: string, post: IPost): Promise<void>
+  getPostBySlug(slug: string): Promise<IPost>
 }
 
 export const $postService: PostService = {
@@ -64,5 +74,6 @@ export const $postService: PostService = {
   createPost: (post) => createPost(post),
   deletePosts: (id) => deletePosts(id),
   getPost: (id) => getPost(id),
-  updatePost: (id, post) => updatePost(id, post)
+  updatePost: (id, post) => updatePost(id, post),
+  getPostBySlug: (slug) => getPostBySlug(slug)
 }
