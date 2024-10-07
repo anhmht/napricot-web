@@ -34,17 +34,17 @@ withDefaults(
           >
             {{ desc }}
           </p>
-          <div
+          <img
+            src="https://staging.napricot.com/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero"
+            alt="Napricot"
+            width="100%"
+            height="100px"
             :style="{
-              'background-image': `url('https://staging.napricot.com/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero')`,
-              height: '100px',
-              width: '100%',
-              'background-size': 'contain',
-              'background-repeat': 'no-repeat',
-              'background-position': 'center',
+              'object-fit': 'contain',
+              'object-position': 'center',
               'margin-top': 'auto'
             }"
-          ></div>
+          />
         </div>
         <div
           :style="{
@@ -56,7 +56,18 @@ withDefaults(
             'background-repeat': 'no-repeat',
             'background-position': 'center'
           }"
-        ></div>
+        >
+          <img
+            :src="image"
+            :alt="title"
+            width="100%"
+            height="100%"
+            :style="{
+              'object-fit': 'contain',
+              'object-position': 'center'
+            }"
+          />
+        </div>
       </div>
     </div>
   </div>
