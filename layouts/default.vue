@@ -17,6 +17,16 @@ const { data } = await useAsyncData('categories', () =>
 )
 
 if (data.value) store.setCategories(data.value)
+
+const route = useRoute()
+useHead(() => ({
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://napricot.com' + route.path
+    }
+  ]
+}))
 </script>
 
 <style lang="postcss" module>

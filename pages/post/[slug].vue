@@ -38,11 +38,19 @@
 import 'ckeditor5/ckeditor5.css'
 
 const slug = useRoute().params.slug as string
-const { data, error } = useAsyncData(async () => {
+const { data, error } = useAsyncData('pageFetch', async () => {
   const post = await $postService.getPostBySlug(slug)
   return { ...post }
 })
 const title = computed(() => data?.value?.title || '')
+const image = computed(() => data.value?.image?.cloudflareUrl + 'large' || '')
+const desc = computed(() => data?.value?.desc || '')
+
+defineOgImageComponent('BlogPost', {
+  title,
+  image,
+  desc
+})
 </script>
 
 <style lang="postcss" module>

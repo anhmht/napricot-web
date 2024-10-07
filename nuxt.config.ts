@@ -37,6 +37,16 @@ export default defineNuxtConfig({
     },
   },
 
+  sitemap: {
+    sources: ['/api/__sitemap__/urls'],
+    experimentalCompression: true,
+    experimentalWarmUp: true,
+  },
+
+  robots: {
+    disallow: ['/dashboard'],
+  },
+
   nitro: {
     compressPublicAssets: true,
     minify: true
@@ -68,7 +78,13 @@ export default defineNuxtConfig({
     '~/assets/styles/main.css'
   ],
 
-  modules: ['@pinia/nuxt', "@nuxt/image", "@element-plus/nuxt", "@stefanobartoletti/nuxt-social-share"],
+  modules: [
+    '@pinia/nuxt',
+    "@nuxt/image",
+    "@element-plus/nuxt",
+    "@stefanobartoletti/nuxt-social-share",
+    "@nuxtjs/seo"
+  ],
 
   imports: {
     dirs: ['store/*.ts', 'models/*.ts', 'services/*.ts', 'data/*.ts']
