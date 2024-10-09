@@ -17,6 +17,7 @@
 definePageMeta({
   middleware: 'no-auth'
 })
+defineOgImageComponent('DefaultOg')
 </script>
 
 <style lang="postcss" module>

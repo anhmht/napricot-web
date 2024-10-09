@@ -51,6 +51,13 @@ defineOgImageComponent('BlogPost', {
   image,
   desc
 })
+
+useServerSeoMeta({
+  title: () => `${title.value}`,
+  description: () => desc.value,
+  ogTitle: () => `${title.value}`,
+  ogDescription: () => desc.value
+})
 </script>
 
 <style lang="postcss" module>

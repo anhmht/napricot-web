@@ -16,7 +16,9 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineOgImageComponent('DefaultOg')
+</script>
 
 <style lang="postcss" module>
 .home {
