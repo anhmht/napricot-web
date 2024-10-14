@@ -16,8 +16,14 @@
       <div :class="$style.slogan">Slogan is here, content is here</div>
     </div>
     <div :class="$style.bottom">
-      <div :class="[$style.wrapper, 'container']">
-        <div :class="$style.link">
+      <div
+        :class="[
+          $style.wrapper,
+          'container',
+          $device.isMobileOrTablet && $style.mobile
+        ]"
+      >
+        <div :class="[$style.link, $device.isMobileOrTablet && $style.mobile]">
           <NuxtLink
             v-for="item in data"
             :key="item.name"
@@ -27,7 +33,7 @@
             {{ item.name }}
           </NuxtLink>
         </div>
-        <div :class="$style.card">
+        <div :class="[$style.card, $device.isMobileOrTablet && $style.mobile]">
           <div>
             <NuxtLink to="#" aria-label="DMCA">
               <NuxtPicture
@@ -156,6 +162,19 @@ const data = ref([
   display: flex;
   justify-content: space-between;
   padding-bottom: 36px;
+  &.mobile {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+.link {
+  &.mobile {
+    padding: 0 16px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 .item {
   font-size: 1.4rem;
@@ -172,9 +191,22 @@ const data = ref([
 .item + .item {
   border-left: 1px solid #dcdcdc;
 }
+.mobile {
+  .item {
+    padding: 0;
+  }
+  .item + .item {
+    border: none;
+  }
+}
 .card {
   display: flex;
   gap: 12px;
+  &.mobile {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
   div {
     display: flex;
     width: fit-content;

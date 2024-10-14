@@ -1,13 +1,32 @@
 <template>
-  <NuxtLink :to="`/product/${data.slug}`" :class="$style.product">
+  <NuxtLink
+    :to="`/product/${data.slug}`"
+    :class="[$style.product, $device.isMobileOrTablet && $style.mobile]"
+  >
     <div :class="bestSelling && $style.bestSell">
       <NuxtPicture
         format="webp"
         loading="lazy"
         :src="data.image"
         :alt="data.name"
-        :width="bestSelling ? 318 : 330"
-        :height="bestSelling ? 318 : 330"
+        :width="
+          $device.isDesktop
+            ? bestSelling
+              ? 318
+              : 330
+            : bestSelling
+            ? 151
+            : 163
+        "
+        :height="
+          $device.isDesktop
+            ? bestSelling
+              ? 318
+              : 330
+            : bestSelling
+            ? 151
+            : 163
+        "
       />
     </div>
 
@@ -50,6 +69,9 @@ const oldPrice = computed(() => (props.data.price * 1.8).toFixed(2))
   flex-direction: column;
   gap: 8px;
   max-width: 330px;
+  &.mobile {
+    max-width: 163px;
+  }
   &:hover {
     picture {
       opacity: 0.8;

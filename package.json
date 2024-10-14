@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "serve": "nuxt dev",
+    "serve": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server.mjs",
     "postinstall": "nuxt prepare"
@@ -13,6 +13,7 @@
     "@ckeditor/ckeditor5-vue": "^7.2.0",
     "@element-plus/nuxt": "^1.0.10",
     "@nuxt/image": "^1.8.0",
+    "@nuxtjs/device": "^3.2.4",
     "@nuxtjs/seo": "^2.0.0-rc.23",
     "@pinia/nuxt": "^0.5.5",
     "@stefanobartoletti/nuxt-social-share": "^1.1.2",

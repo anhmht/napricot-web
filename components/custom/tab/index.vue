@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.tab">
+  <div :class="[$style.tab, $device.isMobileOrTablet && $style.mobile]">
     <div :class="$style.wrapper">
       <div
         v-for="(item, index) in tabs"
@@ -111,13 +111,20 @@ onMounted(() => {
     }
   }
   &:first-child {
-    padding-left: 0;
+    padding-left: 0 !important;
   }
   &:last-child {
-    padding-right: 0;
+    padding-right: 0 !important;
   }
   &:hover {
     color: var(--color-primary);
+  }
+}
+
+.mobile {
+  .header {
+    padding: 0 8px;
+    font-size: 1.2rem;
   }
 }
 </style>

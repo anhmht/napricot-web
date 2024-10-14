@@ -1,5 +1,7 @@
 <template>
-  <div :class="$style.serviceContact">
+  <div
+    :class="[$style.serviceContact, $device.isMobileOrTablet && $style.mobile]"
+  >
     <div :class="[$style.container, 'container']">
       <h4>Services & Contact</h4>
       <div :class="$style.service">
@@ -34,6 +36,9 @@
   padding: 36px 0;
   background-color: var(--color-background-secondary);
   color: #fff;
+  &.mobile {
+    padding: 24px 16px;
+  }
 }
 .container {
   display: flex;
@@ -60,6 +65,12 @@
     &:hover {
       color: var(--color-primary);
     }
+  }
+}
+.mobile {
+  .container {
+    flex-wrap: wrap;
+    gap: 16px;
   }
 }
 .service {

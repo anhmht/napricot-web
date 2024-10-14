@@ -1,10 +1,10 @@
 <template>
   <div :class="$style.profile">
-    <div :class="$style.link">
+    <div v-if="$device.isDesktop" :class="$style.link">
       <NuxtLink v-show="!currentUser" to="/sign-in"> Sign in </NuxtLink>
       <NuxtLink v-show="currentUser" to="/tracking"> Tracking </NuxtLink>
     </div>
-    <div :class="$style.icon">
+    <div v-if="$device.isDesktop" :class="$style.icon">
       <NuxtLink to="/favorite" aria-label="Wishlist">
         <i class="icon-favorite"></i>
       </NuxtLink>
@@ -31,6 +31,11 @@
       >
         <layout-header-account @close="popoverRef.hide()" />
       </el-popover>
+    </div>
+    <div v-if="$device.isMobileOrTablet" :class="$style.icon">
+      <i class="icon-search"></i>
+      <i class="icon-shopping-cart"></i>
+      <i class="icon-menu"></i>
     </div>
   </div>
 </template>

@@ -83,7 +83,8 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@element-plus/nuxt",
     "@stefanobartoletti/nuxt-social-share",
-    "@nuxtjs/seo"
+    "@nuxtjs/seo",
+    "@nuxtjs/device"
   ],
 
   imports: {

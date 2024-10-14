@@ -47,6 +47,8 @@ const input = ref('')
 .form {
   display: flex;
   gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .input {
   width: 350px;
