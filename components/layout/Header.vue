@@ -28,9 +28,24 @@
         </div>
       </div>
     </div>
-    <div v-if="store.showOverlay" :class="$style.overlay"></div>
+    <div
+      v-if="store.showOverlay"
+      :class="[
+        $style.overlay,
+        scrollUp && $style.scrollUp,
+        scrollDown && $style.scrollDown
+      ]"
+    ></div>
 
-    <div :class="[$style.subHeader, 'container']">
+    <div
+      :class="[
+        $style.subHeader,
+        'container',
+        $device.isMobileOrTablet && $style.mobile,
+        scrollUp && $style.scrollUp,
+        scrollDown && $style.scrollDown
+      ]"
+    >
       <layout-header-link />
     </div>
   </div>
@@ -39,6 +54,30 @@
 <script setup lang="ts">
 const config = useRuntimeConfig()
 const store = useMainStore()
+const scrollUp = ref<boolean>(false)
+const scrollDown = ref<boolean>(false)
+
+onMounted(() => {
+  let lastScroll = 0
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY
+    if (currentScroll <= 0) {
+      scrollUp.value = false
+      return
+    }
+
+    if (currentScroll > lastScroll && !scrollDown.value) {
+      // down
+      scrollUp.value = false
+      scrollDown.value = true
+    } else if (currentScroll < lastScroll && scrollDown.value) {
+      // up
+      scrollUp.value = true
+      scrollDown.value = false
+    }
+    lastScroll = currentScroll
+  })
+})
 </script>
 
 <style lang="postcss" module>
@@ -65,23 +104,31 @@ const store = useMainStore()
 }
 .headerWrapper {
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.05);
+  background: #fff;
 }
 .overlay {
   position: absolute;
-  top: 76px;
+  top: 72px;
   left: 0;
   width: 100%;
-  height: 56px;
+  height: 54px;
   z-index: 3;
   background: rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease;
+  &.scrollUp {
+    transform: none;
+  }
+  &.scrollDown {
+    transform: translate3d(0, -100%, 0);
+    z-index: -1;
+  }
 }
 .mainHeader {
   position: relative;
   display: flex;
   padding: 16px 0;
   &.mobile {
-    padding: 16px;
+    padding: 8px 16px;
   }
 }
 .category {
@@ -97,5 +144,23 @@ const store = useMainStore()
 .profile {
   display: flex;
   margin-left: 72px;
+}
+.subHeader {
+  position: absolute;
+  bottom: -55px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: -1;
+  transition: all 0.3s ease;
+  &.mobile {
+    bottom: -46px;
+  }
+  &.scrollUp {
+    transform: none;
+  }
+  &.scrollDown {
+    transform: translate3d(0, -100%, 0);
+  }
 }
 </style>

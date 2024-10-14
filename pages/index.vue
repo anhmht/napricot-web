@@ -25,10 +25,10 @@ defineOgImageComponent('DefaultOg')
   display: flex;
   flex-direction: column;
   gap: 36px;
-  padding: 36px 0;
+  padding-bottom: 36px;
   &.mobile {
     gap: 16px;
-    padding: 16px 0;
+    padding-bottom: 16px;
   }
 }
 </style>

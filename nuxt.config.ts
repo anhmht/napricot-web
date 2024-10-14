@@ -53,11 +53,6 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { prerender: true },
-    '/sign-in': { prerender: true },
-    '/email-verification': { prerender: true },
-    '/forgot-password': { prerender: true },
-    '/reset-password': { prerender: true },
     '/dashboard/post/**': { ssr: false },
   },
 
@@ -77,6 +72,10 @@ export default defineNuxtConfig({
     // CSS file in the project
     '~/assets/styles/main.css'
   ],
+
+  device: {
+    defaultUserAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1',
+  },
 
   modules: [
     '@pinia/nuxt',
