@@ -33,9 +33,10 @@
       </el-popover>
     </div>
     <div v-if="$device.isMobileOrTablet" :class="$style.icon">
-      <i class="icon-search"></i>
+      <layout-search-icon @search="$emit('search', $event)" />
       <i class="icon-shopping-cart"></i>
-      <i class="icon-menu"></i>
+      <i class="icon-menu" @click="open = true"></i>
+      <layout-category-drawer v-model:open="open" />
     </div>
   </div>
 </template>
@@ -43,8 +44,11 @@
 <script setup lang="ts">
 import { ClickOutside as vClickOutside } from 'element-plus'
 
+defineEmits(['search'])
+
 const buttonRef = ref()
 const popoverRef = ref()
+const open = ref(false)
 
 const onClickOutside = () => {
   unref(popoverRef).popperRef?.delayHide?.()
@@ -78,8 +82,9 @@ const currentUser = computed(() => store.currentUser)
 .icon {
   display: flex;
   gap: 24px;
+  align-items: center;
   i {
-    font-size: 2rem;
+    font-size: 2.3rem;
     color: var(--color-icon);
   }
 }

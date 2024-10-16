@@ -8,14 +8,25 @@
           $device.isMobileOrTablet ? $style.mobile : ''
         ]"
       >
-        <NuxtLink to="/">
-          <NuxtPicture
-            format="webp"
-            :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/thumbnail`"
-            alt="Napricot"
-            :width="$device.isMobileOrTablet ? '120' : '158'"
-            height="39"
-          />
+        <NuxtLink :class="$style.logo" to="/">
+          <Transition name="el-zoom-in-center" :duration="300">
+            <NuxtImg
+              v-if="searchLogo"
+              :class="$style.img"
+              src="Logo.svg"
+              alt="Napricot Logo"
+              :width="30"
+              :height="30"
+            />
+            <NuxtPicture
+              v-else
+              format="webp"
+              :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/thumbnail`"
+              alt="Napricot"
+              :width="$device.isMobileOrTablet ? '120' : '158'"
+              height="39"
+            />
+          </Transition>
         </NuxtLink>
         <div v-if="$device.isDesktop" :class="$style.category">
           <layout-header-category />
@@ -24,7 +35,7 @@
           <layout-header-search />
         </div>
         <div :class="$style.profile">
-          <layout-header-profile />
+          <layout-header-profile @search="searchLogo = $event" />
         </div>
       </div>
     </div>
@@ -56,6 +67,8 @@ const config = useRuntimeConfig()
 const store = useMainStore()
 const scrollUp = ref<boolean>(false)
 const scrollDown = ref<boolean>(false)
+
+const searchLogo = ref<boolean>(false)
 
 onMounted(() => {
   let lastScroll = 0
@@ -100,6 +113,16 @@ onMounted(() => {
   }
   .profile {
     margin-left: auto;
+  }
+  .logo {
+    height: 40px;
+    position: relative;
+    picture {
+      position: absolute;
+    }
+    .img {
+      position: absolute;
+    }
   }
 }
 .headerWrapper {
@@ -154,7 +177,7 @@ onMounted(() => {
   z-index: -1;
   transition: all 0.3s ease;
   &.mobile {
-    bottom: -46px;
+    bottom: -45px;
   }
   &.scrollUp {
     transform: none;
