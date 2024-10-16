@@ -21,6 +21,19 @@ const { data } = await useAsyncData('categories', () =>
 if (data.value) store.setCategories(data.value)
 
 const route = useRoute()
+const router = useRouter()
+const { isDesktop } = useDevice()
+
+if (!isDesktop) {
+  router.push({
+    path: route.path,
+    query: {
+      ...route.query,
+      mobile: 'true'
+    }
+  })
+}
+
 useHead(() => ({
   link: [
     {
