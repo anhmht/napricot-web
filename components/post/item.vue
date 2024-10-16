@@ -1,5 +1,8 @@
 <template>
-  <NuxtLink :class="$style.item" :to="`/post/${post.slug}`">
+  <NuxtLink
+    :class="[$style.item, $device.isMobileOrTablet && $style.mobile]"
+    :to="`/post/${post.slug}`"
+  >
     <NuxtPicture
       :src="post.image?.cloudflareUrl + '/large500'"
       :alt="post.title"
@@ -28,6 +31,9 @@ const props = defineProps({
 .item {
   width: 454px;
   text-decoration: none;
+  &.mobile {
+    width: 100%;
+  }
   picture {
     display: flex;
     img {

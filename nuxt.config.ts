@@ -31,7 +31,7 @@ export default defineNuxtConfig({
       title: 'Napricot | The best place to find gifts for your loved ones',
       charset: 'utf-8',
       meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0' },
         { hid: 'description', name: 'description', content: 'Napricot is the best place to find gifts for your loved ones. We have a wide range of gifts for all occasions.' }
       ],
     },
@@ -72,6 +72,10 @@ export default defineNuxtConfig({
     // CSS file in the project
     '~/assets/styles/main.css'
   ],
+
+  device: {
+    defaultUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36'
+  },
 
   modules: [
     '@pinia/nuxt',

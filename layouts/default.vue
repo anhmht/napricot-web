@@ -12,7 +12,6 @@
 
 <script setup lang="ts">
 const store = useMainStore()
-const nuxtApp = useNuxtApp()
 
 const { data } = await useAsyncData('categories', () =>
   $categoryService.getAllCategories()
@@ -21,18 +20,6 @@ const { data } = await useAsyncData('categories', () =>
 if (data.value) store.setCategories(data.value)
 
 const route = useRoute()
-const router = useRouter()
-const { isDesktop } = useDevice()
-
-if (!isDesktop) {
-  router.push({
-    path: route.path,
-    query: {
-      ...route.query,
-      mobile: 'true'
-    }
-  })
-}
 
 useHead(() => ({
   link: [

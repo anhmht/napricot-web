@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="container">
-      <div :class="$style.blog">
+      <div :class="[$style.blog, $device.isMobileOrTablet && $style.mobile]">
         <div :class="$style.content">
           <h1>
             {{ title }}
@@ -22,12 +22,15 @@
             {{ data?.desc }}
           </div>
           <div class="ck-content" v-html="data?.content"></div>
+          <post-tags v-if="$device.isMobileOrTablet" :tags="data?.tags" />
         </div>
-        <div :class="$style.sidebar">
+        <div v-if="$device.isDesktop" :class="$style.sidebar">
           <post-sidebar :post="data || undefined" />
         </div>
       </div>
-      <div :class="$style.latest">
+      <div
+        :class="[$style.latest, , $device.isMobileOrTablet && $style.mobile]"
+      >
         <post-list title="Latest Post" :post-id="data?._id" />
       </div>
     </div>
@@ -80,6 +83,12 @@ useServerSeoMeta({
     font-size: 3.6rem;
     font-weight: 500;
   }
+  &.mobile {
+    padding: 16px;
+    h1 {
+      font-size: 3rem;
+    }
+  }
 }
 .content {
   flex: 1;
@@ -100,6 +109,21 @@ useServerSeoMeta({
     font-size: 1.4rem;
     display: flex;
     gap: 24px;
+  }
+}
+.mobile {
+  .content {
+    gap: 16px;
+  }
+  .info {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+.latest {
+  &.mobile {
+    padding: 16px;
   }
 }
 </style>

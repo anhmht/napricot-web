@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.social">
+  <div :class="[$style.social, $device.isMobileOrTablet && $style.mobile]">
     <SocialShare
       v-for="network in [
         'facebook',
@@ -34,6 +34,11 @@
   }
   :global(.social-share-button__icon) {
     font-size: 2.5rem;
+  }
+  &.mobile {
+    :global(.social-share-button__icon) {
+      font-size: 1.6rem;
+    }
   }
 }
 </style>
