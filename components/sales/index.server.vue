@@ -18,8 +18,7 @@
 
 <script setup lang="ts">
 const config = useRuntimeConfig()
-const { isDesktop, isMobileOrTablet } = useDevice()
-console.log(isDesktop, isMobileOrTablet)
+const { isDesktop } = useDevice()
 
 const data = ref([
   {
