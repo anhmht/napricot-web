@@ -6,6 +6,8 @@
     :show-close="false"
     destroy-on-close
     @close="handleClose"
+    :close-on-click-modal="!loading"
+    :close-on-press-escape="!loading"
   >
     <template #header>
       <div :class="$style.header">
@@ -18,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-defineProps({
+const props = defineProps({
   open: {
     type: Boolean,
     required: true
@@ -30,12 +32,17 @@ defineProps({
   width: {
     type: String,
     default: '500'
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 })
 
 const emit = defineEmits(['update:open'])
 
 const handleClose = () => {
+  if (props.loading) return
   emit('update:open', false)
 }
 </script>

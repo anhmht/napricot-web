@@ -31,10 +31,20 @@ export default defineNuxtConfig({
       title: 'Napricot | The best place to find gifts for your loved ones',
       charset: 'utf-8',
       meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0' },
         { hid: 'description', name: 'description', content: 'Napricot is the best place to find gifts for your loved ones. We have a wide range of gifts for all occasions.' }
       ],
     },
+  },
+
+  sitemap: {
+    sources: ['/api/__sitemap__/urls'],
+    experimentalCompression: true,
+    experimentalWarmUp: true,
+  },
+
+  robots: {
+    disallow: ['/dashboard'],
   },
 
   nitro: {
@@ -43,17 +53,17 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { prerender: true },
-    '/sign-in': { prerender: true },
-    '/email-verification': { prerender: true },
-    '/forgot-password': { prerender: true },
-    '/reset-password': { prerender: true },
+    '/dashboard/post/**': { ssr: false },
   },
 
   runtimeConfig: {
     app: {
       ...runtimeConfig
     },
+  },
+
+  socialShare: {
+    baseUrl: process.env.BASE_URL // required!
   },
 
   components: true,
@@ -63,7 +73,18 @@ export default defineNuxtConfig({
     '~/assets/styles/main.css'
   ],
 
-  modules: ['@pinia/nuxt', "@nuxt/image", "@element-plus/nuxt"],
+  device: {
+    defaultUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36'
+  },
+
+  modules: [
+    '@pinia/nuxt',
+    "@nuxt/image",
+    "@element-plus/nuxt",
+    "@stefanobartoletti/nuxt-social-share",
+    "@nuxtjs/seo",
+    "@nuxtjs/device"
+  ],
 
   imports: {
     dirs: ['store/*.ts', 'models/*.ts', 'services/*.ts', 'data/*.ts']
@@ -75,5 +96,5 @@ export default defineNuxtConfig({
     }
   },
 
-  compatibilityDate: '2024-09-13',
+  compatibilityDate: '2024-10-02',
 })

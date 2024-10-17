@@ -1,10 +1,24 @@
 <template>
-  <ckeditor
-    :editor="editor"
-    v-model="editorData"
-    :config="editorConfig"
-    @update:model-value="$emit('update:modelValue', $event)"
-  ></ckeditor>
+  <el-form-item
+    ref="formItemRef"
+    :class="$style.editor"
+    :label="label"
+    :prop="name"
+    label-position="top"
+  >
+    <ckeditor
+      :editor="editor"
+      v-model="editorData"
+      :config="editorConfig"
+      @update:model-value="
+        ($event: string) => {
+          $emit('update:modelValue', $event)
+          $emit('input', $event)
+          $refs.formItemRef?.clearValidate()
+        }
+      "
+    ></ckeditor>
+  </el-form-item>
 </template>
 
 <script lang="ts">
@@ -17,7 +31,6 @@ import {
   ImageToolbar,
   ImageCaption,
   ImageStyle,
-  ImageResize,
   LinkImage,
   ImageInsert,
   Link,
@@ -36,16 +49,73 @@ import {
   ParagraphButtonUI,
   FileLoader,
   Editor,
-  UploadResponse
+  UploadResponse,
+  ImageResize,
+  SourceEditing,
+  Plugin
 } from 'ckeditor5'
-import CKEditor from '@ckeditor/ckeditor5-vue'
 
 import 'ckeditor5/ckeditor5.css'
+import { Ckeditor } from '@ckeditor/ckeditor5-vue'
+
+import { Image as CustomImage } from '~/models/Image'
+
+class ImageId extends Plugin {
+  init() {
+    const editor = this.editor
+
+    editor.model.schema.extend('imageBlock', {
+      allowAttributes: 'dataReference'
+    })
+    editor.model.schema.extend('imageInline', {
+      allowAttributes: 'dataReference'
+    })
+
+    editor.plugins
+      .get('ImageUploadEditing')
+      .on('uploadComplete', (evt, { data, imageElement }) => {
+        editor.model.change((writer) => {
+          writer.setAttribute('dataReference', data.id, imageElement)
+        })
+      })
+
+    editor.conversion.for('upcast').attributeToAttribute({
+      view: 'data-reference',
+      model: 'dataReference'
+    })
+
+    editor.conversion.for('downcast').add((dispatcher) => {
+      dispatcher.on(
+        'attribute:dataReference:imageBlock',
+        (evt, data, conversionApi) => {
+          if (!conversionApi.consumable.consume(data.item, evt.name)) {
+            return
+          }
+
+          const viewWriter = conversionApi.writer
+          const figure = conversionApi.mapper.toViewElement(data.item)
+
+          if (data.attributeNewValue !== null) {
+            viewWriter.setAttribute(
+              'data-reference',
+              data.attributeNewValue,
+              figure
+            )
+          } else {
+            viewWriter.removeAttribute('data-reference', figure)
+          }
+        }
+      )
+    })
+  }
+}
 
 class UploadAdapter {
   loader: FileLoader
-  constructor(loader: FileLoader) {
+  vm: any
+  constructor(loader: FileLoader, vm: any) {
     this.loader = loader
+    this.vm = vm
   }
   upload(): Promise<UploadResponse> {
     let upload = new Promise<UploadResponse>((resolve, reject) => {
@@ -54,7 +124,16 @@ class UploadAdapter {
           $uploadService
             .uploadImage(data)
             .then((response) => {
-              resolve({ default: response?.url })
+              if (response) {
+                this.vm.setImages(response)
+
+                resolve({
+                  id: response.id,
+                  urls: {
+                    default: response.url
+                  }
+                })
+              }
             })
             .catch((err) => {
               reject(err)
@@ -72,22 +151,42 @@ class UploadAdapter {
   }
 }
 
-export default defineNuxtComponent({
+export default {
   components: {
-    ckeditor: CKEditor.component
+    ckeditor: Ckeditor
   },
   props: {
     modelValue: {
       type: String,
       required: true
+    },
+    images: {
+      type: Array as () => CustomImage[],
+      default: []
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    label: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    setImages(image: CustomImage): void {
+      const images = [...this.images, image]
+      this.$emit('update:images', images)
     }
   },
   data() {
+    const vm = this
     return {
       editor: ClassicEditor,
       editorData: this.modelValue,
       editorConfig: {
         plugins: [
+          Image,
           Bold,
           Essentials,
           Italic,
@@ -96,13 +195,11 @@ export default defineNuxtComponent({
           Heading,
           List,
           Alignment,
-          Image,
-          ImageToolbar,
+          ImageInsert,
           ImageCaption,
           ImageStyle,
-          ImageResize,
+          ImageToolbar,
           LinkImage,
-          ImageInsert,
           Link,
           Highlight,
           Indent,
@@ -111,7 +208,18 @@ export default defineNuxtComponent({
           BlockQuote,
           BlockToolbar,
           HeadingButtonsUI,
-          ParagraphButtonUI
+          ParagraphButtonUI,
+          ImageResize,
+          SourceEditing,
+          ImageId,
+          function (editor: Editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (
+              loader
+            ) => {
+              // Configure the URL to the upload script in your back-end here!
+              return new UploadAdapter(loader, vm)
+            }
+          }
         ],
         blockToolbar: [
           'paragraph',
@@ -126,6 +234,7 @@ export default defineNuxtComponent({
           'uploadImage'
         ],
         toolbar: [
+          'sourceEditing',
           'heading',
           'fontFamily',
           'fontsize',
@@ -140,7 +249,7 @@ export default defineNuxtComponent({
           'link',
           'bulletedList',
           'numberedList',
-          'insertImage',
+          'uploadImage',
           'mediaEmbed',
           'blockQuote',
           'undo',
@@ -148,32 +257,34 @@ export default defineNuxtComponent({
         ],
         image: {
           toolbar: [
-            'imageStyle:full',
-            'imageStyle:side',
+            'imageStyle:block',
+            'imageStyle:alignLeft',
+            'imageStyle:alignRight',
+            '|',
+            'resizeImage:original',
+            'resizeImage:50',
+            'resizeImage:75',
             '|',
             'imageTextAlternative',
+            'toggleImageCaption',
             '|',
             'linkImage'
           ]
         },
-        extraPlugins: [
-          function (editor: Editor) {
-            editor.plugins.get('FileRepository').createUploadAdapter = (
-              loader
-            ) => {
-              // Configure the URL to the upload script in your back-end here!
-              return new UploadAdapter(loader)
-            }
-          }
-        ]
+        extraPlugins: []
       }
     }
   }
-})
+}
 </script>
 <style lang="postcss" module>
 :global(.ck-editor__editable_inline:not(.ck-comment__input *)) {
   height: 300px;
   overflow-y: auto;
+}
+.editor {
+  :global(.el-form-item__content) {
+    display: block;
+  }
 }
 </style>

@@ -1,0 +1,129 @@
+<template>
+  <div :class="$style.post">
+    <div :class="$style.breadcrumb">
+      <div class="container">
+        <breadcrumb :links="[{ name: title, path: `/post/${slug}` }]" />
+      </div>
+    </div>
+    <div class="container">
+      <div :class="[$style.blog, $device.isMobileOrTablet && $style.mobile]">
+        <div :class="$style.content">
+          <h1>
+            {{ title }}
+          </h1>
+          <div :class="$style.info">
+            <div :class="$style.date">
+              <span>Created: {{ formatDate(data?.createdAt) }}</span>
+              <span>Updated: {{ formatDate(data?.updatedAt) }}</span>
+            </div>
+            <social-share-component />
+          </div>
+          <div :class="$style.desc">
+            {{ data?.desc }}
+          </div>
+          <div class="ck-content" v-html="data?.content"></div>
+          <post-tags v-if="$device.isMobileOrTablet" :tags="data?.tags" />
+        </div>
+        <div v-if="$device.isDesktop" :class="$style.sidebar">
+          <post-sidebar :post="data || undefined" />
+        </div>
+      </div>
+      <div
+        :class="[$style.latest, , $device.isMobileOrTablet && $style.mobile]"
+      >
+        <post-list title="Latest Post" :post-id="data?._id" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import 'ckeditor5/ckeditor5.css'
+
+const slug = useRoute().params.slug as string
+const { data, error } = useAsyncData('pageFetch', async () => {
+  const post = await $postService.getPostBySlug(slug)
+  return { ...post }
+})
+const title = computed(() => data?.value?.title || '')
+const image = computed(() => data.value?.image?.cloudflareUrl + 'large' || '')
+const desc = computed(() => data?.value?.desc || '')
+
+defineOgImageComponent('BlogPost', {
+  title,
+  image,
+  desc
+})
+
+useServerSeoMeta({
+  title: () => `${title.value}`,
+  description: () => desc.value,
+  ogTitle: () => `${title.value}`,
+  ogDescription: () => desc.value
+})
+</script>
+
+<style lang="postcss" module>
+.post {
+  position: relative;
+}
+.breadcrumb {
+  background-color: var(--color-background);
+  color: var(--color-icon);
+  padding: 8px 0;
+}
+.desc {
+  font-weight: 400;
+}
+.blog {
+  padding: 36px 0;
+  display: flex;
+  gap: 48px;
+  h1 {
+    font-size: 3.6rem;
+    font-weight: 500;
+  }
+  &.mobile {
+    padding: 16px;
+    h1 {
+      font-size: 3rem;
+    }
+  }
+}
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.sidebar {
+  width: 400px;
+}
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .date {
+    color: var(--color-icon);
+    font-weight: 400;
+    font-size: 1.4rem;
+    display: flex;
+    gap: 24px;
+  }
+}
+.mobile {
+  .content {
+    gap: 16px;
+  }
+  .info {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+.latest {
+  &.mobile {
+    padding: 16px;
+  }
+}
+</style>

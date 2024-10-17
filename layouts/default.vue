@@ -3,20 +3,32 @@
     <announcement />
     <layout-header />
     <div v-if="store.showOverlay" :class="$style.overlay"></div>
-    <slot />
+    <div :class="[$style.page, $device.isMobileOrTablet && $style.mobile]">
+      <slot />
+    </div>
     <layout-footer />
   </div>
 </template>
 
 <script setup lang="ts">
 const store = useMainStore()
-const nuxtApp = useNuxtApp()
 
 const { data } = await useAsyncData('categories', () =>
   $categoryService.getAllCategories()
 )
 
 if (data.value) store.setCategories(data.value)
+
+const route = useRoute()
+
+useHead(() => ({
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://napricot.com' + route.path
+    }
+  ]
+}))
 </script>
 
 <style lang="postcss" module>
@@ -31,5 +43,11 @@ if (data.value) store.setCategories(data.value)
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 2;
+}
+.page {
+  padding-top: 54px;
+  &.mobile {
+    padding-top: 46px;
+  }
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
-  <div id="trending" :class="$style.trending">
+  <div
+    id="trending"
+    :class="[$style.trending, $device.isMobileOrTablet ? $style.mobile : '']"
+  >
     <div :class="$style.title">
       <h4>Trending</h4>
       <NuxtLink to="#"
@@ -25,6 +28,9 @@ const config = useRuntimeConfig()
 .trending {
   display: block;
   scroll-margin-top: 150px;
+  &.mobile {
+    padding: 16px;
+  }
 }
 .title {
   display: flex;
@@ -61,5 +67,10 @@ const config = useRuntimeConfig()
   gap: 30px;
   justify-content: center;
   align-items: center;
+}
+.mobile {
+  .content {
+    gap: 16px;
+  }
 }
 </style>

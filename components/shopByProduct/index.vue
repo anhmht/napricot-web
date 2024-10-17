@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.shop">
+  <div :class="[$style.shop, , $device.isMobileOrTablet && $style.mobile]">
     <div :class="$style.title">
       <h4>Shop by Product</h4>
       <NuxtLink to="#"
@@ -7,18 +7,22 @@
         <i class="icon-arrow-down"></i>
       </NuxtLink>
     </div>
-    <div :class="$style.content">
+    <div :class="[$style.content, $device.isMobileOrTablet && $style.mobile]">
       <el-carousel
         arrow="never"
-        height="244px"
+        :height="$device.isDesktop ? '244px' : '396px'"
         :autoplay="false"
         motion-blur
         indicator-position="none"
         ref="carousel"
       >
-        <el-carousel-item :class="$style.category">
+        <el-carousel-item
+          :class="$style.category"
+          v-for="(item, index) in categories"
+          :key="index"
+        >
           <NuxtLink
-            v-for="(category, index) in page1"
+            v-for="(category, index) in item"
             :key="index"
             :to="`/categories?category=${category.slug}`"
           >
@@ -27,30 +31,11 @@
                 :src="category.src"
                 format="webp"
                 :alt="`${category.name} image`"
-                width="210"
-                height="210"
+                :width="$device.isDesktop ? 210 : 164"
+                :height="$device.isDesktop ? 210 : 164"
                 :class="$style.picture"
               />
             </div>
-            <p>{{ category.name }}</p>
-          </NuxtLink>
-        </el-carousel-item>
-        <el-carousel-item :class="$style.category">
-          <NuxtLink
-            v-for="(category, index) in page2"
-            :key="index"
-            :to="`/categories?category=${category.slug}`"
-          >
-            <div>
-              <NuxtPicture
-                :src="category.src"
-                format="webp"
-                :alt="`${category.name} image`"
-                width="210"
-                height="210"
-              />
-            </div>
-
             <p>{{ category.name }}</p>
           </NuxtLink>
         </el-carousel-item>
@@ -67,8 +52,8 @@
 </template>
 
 <script setup lang="ts">
-import { ElCarousel } from 'element-plus'
 const config = useRuntimeConfig()
+const { isDesktop } = useDevice()
 const page1 = ref([
   {
     src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/961a4543-42cb-4e59-bda9-49caa4de8c00/hero`,
@@ -120,7 +105,40 @@ const page2 = ref([
   }
 ])
 
-const carousel = ref<typeof ElCarousel>()
+const page2Mobile = ref([
+  {
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/f23b31ed-4079-439a-9f26-4ceaaf434800/hero`,
+    slug: 'category-1',
+    name: 'Solar Light'
+  },
+  {
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/7a20bfa3-6b4a-4708-be3d-1447688aaf00/hero`,
+    slug: 'category-1',
+    name: 'Mug'
+  },
+  {
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/eb0fc99c-7de9-47c8-37e1-a9f43223ab00/hero`,
+    slug: 'category-1',
+    name: 'Ornament'
+  },
+  {
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/81cd0e9d-7ac0-4d23-7854-47913eef6000/hero`,
+    slug: 'category-1',
+    name: 'T-shirt'
+  }
+])
+
+const items = ref<Array<{ src?: string; slug?: string; name?: string }[]>>([
+  isDesktop ? page1.value : page1.value.slice(0, 4),
+  isDesktop ? page2.value : page2Mobile.value,
+  isDesktop ? [] : [page2.value[page2.value.length - 1]]
+])
+
+const categories = computed(() => {
+  return isDesktop ? items.value.slice(0, 2) : items.value
+})
+
+const carousel = ref()
 const prev = () => carousel.value?.prev()
 const next = () => carousel.value?.next()
 </script>
@@ -128,6 +146,9 @@ const next = () => carousel.value?.next()
 <style lang="postcss" module scoped>
 .shop {
   position: relative;
+  &.mobile {
+    padding: 0 16px;
+  }
 }
 .title {
   display: flex;
@@ -219,5 +240,22 @@ const next = () => carousel.value?.next()
 .right {
   right: -20px;
   transform: translateY(-50%);
+}
+
+.mobile {
+  .category {
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    p {
+      font-size: 1.4rem;
+    }
+  }
+  .left {
+    left: -12px;
+  }
+  .right {
+    right: -12px;
+  }
 }
 </style>

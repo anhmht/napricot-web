@@ -1,7 +1,12 @@
 <template>
-  <div :class="$style.link">
+  <div :class="[$style.link, $device.isMobileOrTablet ? $style.mobile : '']">
     <div :class="$style.anchor">
-      <NuxtLink :to="{ path: '/', hash: '#hot-offers' }"> Hot offers </NuxtLink>
+      <NuxtLink
+        v-if="$device.isDesktop"
+        :to="{ path: '/', hash: '#hot-offers' }"
+      >
+        Hot offers
+      </NuxtLink>
       <NuxtLink :to="{ path: '/', hash: '#sales' }"> Sales </NuxtLink>
       <NuxtLink :to="{ path: '/', hash: '#trending' }"> Trends </NuxtLink>
       <NuxtLink :to="{ path: '/', hash: '#best-seller' }">
@@ -11,7 +16,7 @@
         New arrival
       </NuxtLink>
     </div>
-    <layout-language />
+    <layout-language v-if="$device.isDesktop" />
   </div>
 </template>
 
@@ -24,6 +29,9 @@
   align-items: center;
   padding: 12px 0;
   justify-content: space-between;
+  &.mobile {
+    padding: 12px 16px;
+  }
 }
 .anchor {
   display: flex;

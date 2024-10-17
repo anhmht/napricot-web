@@ -1,15 +1,16 @@
 export interface Menu {
   name: string;
   icon: string;
-  route?: string;
+  route: string;
   children?: Menu[];
+  activePath?: string[]
 }
 
 export const menu: Menu[] = [
   {
     name: 'Dashboard',
     icon: 'icon-home',
-    route: '/dashboard'
+    route: '/dashboard',
   },
   {
     name: 'Categories',
@@ -29,7 +30,8 @@ export const menu: Menu[] = [
   {
     name: 'Posts',
     icon: 'icon-post',
-    route: '/dashboard/post'
+    route: '/dashboard/post',
+    activePath: ['dashboard-post-create', 'dashboard-post-id']
   },
   {
     name: 'Orders',

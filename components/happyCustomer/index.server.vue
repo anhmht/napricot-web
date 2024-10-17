@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.customer">
+  <div :class="[$style.customer, $device.isMobileOrTablet && $style.mobile]">
     <div :class="$style.title">
       <h4>Happy Customers</h4>
       <NuxtLink to="#"
@@ -15,8 +15,8 @@
         format="webp"
         loading="lazy"
         :alt="customer.name"
-        width="269"
-        height="282"
+        :width="$device.isDesktop ? 269 : 163"
+        :height="$device.isDesktop ? 282 : 176"
       />
     </div>
   </div>
@@ -71,6 +71,9 @@ const customers = [
 <style lang="postcss" module>
 .customer {
   position: relative;
+  &.mobile {
+    padding: 0 16px;
+  }
 }
 .title {
   display: flex;
@@ -110,6 +113,12 @@ const customers = [
     border-radius: 8px;
     overflow: hidden;
     display: flex;
+  }
+}
+.mobile {
+  .content {
+    margin-top: 16px;
+    justify-content: center;
   }
 }
 </style>

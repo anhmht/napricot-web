@@ -4,13 +4,19 @@
       v-for="(item, index) in menu"
       :key="index"
       :data="item"
-      :is-active="item.route === route.path"
+      :is-active="isActive(item)"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 const route = useRoute()
+const isActive = (menu: Menu) => {
+  return (
+    menu.route === route.path ||
+    !!(route.name && menu.activePath?.includes(route.name.toString()))
+  )
+}
 </script>
 
 <style lang="postcss" module>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div :class="$style.home">
+    <div :class="[$style.home, $device.isMobileOrTablet ? $style.mobile : '']">
       <carousel />
       <sales />
       <trending />
@@ -16,13 +16,19 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineOgImageComponent('DefaultOg')
+</script>
 
 <style lang="postcss" module>
 .home {
   display: flex;
   flex-direction: column;
   gap: 36px;
-  padding: 36px 0;
+  padding-bottom: 36px;
+  &.mobile {
+    gap: 16px;
+    padding-bottom: 16px;
+  }
 }
 </style>

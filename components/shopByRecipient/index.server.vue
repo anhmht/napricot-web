@@ -1,5 +1,8 @@
 <template>
-  <div id="shop-by-recipient" :class="$style.recipient">
+  <div
+    id="shop-by-recipient"
+    :class="[$style.recipient, $device.isMobileOrTablet && $style.mobile]"
+  >
     <div :class="$style.title">
       <h4>Shop by Recipient</h4>
       <NuxtLink to="#"
@@ -15,8 +18,8 @@
             format="webp"
             loading="lazy"
             :alt="`${item.title} image`"
-            width="330"
-            height="330"
+            :width="$device.isDesktop ? 330 : 164"
+            :height="$device.isDesktop ? 330 : 164"
           />
         </div>
         <p>{{ item.title }}</p>
@@ -32,6 +35,9 @@ const config = useRuntimeConfig()
 <style lang="postcss" module>
 .recipient {
   display: block;
+  &.mobile {
+    padding: 0 16px;
+  }
 }
 .title {
   display: flex;
@@ -100,6 +106,12 @@ const config = useRuntimeConfig()
     img {
       border-radius: 50%;
     }
+  }
+}
+
+.mobile {
+  .content {
+    gap: 15px;
   }
 }
 </style>

@@ -1,0 +1,144 @@
+<template>
+  <div :class="$style.update">
+    <layout-dashboard-header title="Update Post">
+      <template #action>
+        <custom-button type="default" @click="navigateTo('/dashboard/post')">
+          Discard</custom-button
+        >
+        <custom-button type="primary" @click="handleSubmit">
+          <i class="icon-edit"></i>
+          Update</custom-button
+        >
+      </template>
+    </layout-dashboard-header>
+    <el-form
+      v-if="post"
+      action="submit"
+      ref="formRef"
+      :model="post"
+      :rules="rules"
+      :disabled="isLoading"
+      require-asterisk-position="right"
+      scroll-to-error
+      :scroll-into-view-options="{ behavior: 'smooth', block: 'center' }"
+    >
+      <div :class="$style.content">
+        <div :class="$style.form">
+          <dashboard-post-form v-model:post="post" />
+        </div>
+        <div :class="$style.config">
+          <dashboard-post-config v-model:post="post" />
+        </div>
+      </div>
+    </el-form>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { FormInstance, FormRules } from 'element-plus'
+definePageMeta({
+  layout: 'dashboard',
+  middleware: 'authorize'
+})
+
+const store = useMainStore()
+
+const { id } = useRoute().params
+const post = ref<IPost>({
+  _id: id.toString(),
+  title: '',
+  slug: '',
+  desc: '',
+  image: undefined,
+  images: [],
+  categoryId: undefined,
+  content: '',
+  author: '',
+  status: PostStatus.draft,
+  tags: []
+})
+
+const formRef = ref<FormInstance>()
+const isLoading = ref<boolean>(false)
+const rules = reactive<FormRules>({
+  title: [
+    {
+      required: true,
+      message: 'Please input post title',
+      trigger: ['blur', 'change']
+    }
+  ],
+  desc: [
+    {
+      required: true,
+      message: 'Please input post description',
+      trigger: ['blur', 'change']
+    }
+  ],
+  content: [
+    {
+      required: true,
+      message: 'Please input post content',
+      trigger: ['blur', 'change']
+    }
+  ],
+  image: [
+    {
+      required: true,
+      message: 'Please upload post image',
+      trigger: ['blur', 'change']
+    }
+  ],
+  categoryId: [
+    {
+      required: true,
+      message: 'Please select post category',
+      trigger: ['change']
+    }
+  ]
+})
+
+const handleSubmit = async () => {
+  formRef.value?.validate(async (valid) => {
+    if (!valid) return
+  })
+  post.value.images = post.value.images.filter((image) =>
+    post.value.content.includes(image.id)
+  )
+  post.value.author = store.currentUser?.userId
+  isLoading.value = true
+  await $postService.updatePost(id.toString(), post.value)
+  ElNotification.success({
+    title: 'Post updated successfully',
+    message: `Post ${post.value.title} has been updated`
+  })
+  isLoading.value = false
+  navigateTo('/dashboard/post')
+}
+
+const { data } = await useAsyncData('post', async () => {
+  return await $postService.getPost(id.toString())
+})
+
+if (data.value) {
+  post.value = data.value
+}
+</script>
+
+<style lang="postcss" module>
+.update {
+  position: relative;
+}
+.content {
+  display: flex;
+}
+.form {
+  flex: 1;
+  height: calc(100vh - 77px);
+  overflow: auto;
+}
+.config {
+  width: 400px;
+  border-left: 1px solid var(--color-background-grayscale-100);
+}
+</style>

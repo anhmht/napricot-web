@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.language">
+  <div :class="[$style.language, $device.isMobileOrTablet && $style.mobile]">
     <div><i class="icon-global" /> United State</div>
     <div :class="$style.locale">
       <NuxtPicture
@@ -7,8 +7,8 @@
         loading="lazy"
         format="avif,webp"
         alt="United State"
-        width="24"
-        height="24"
+        :width="$device.isDesktop ? 24 : 20"
+        :height="$device.isDesktop ? 24 : 20"
       />
       English (EN-US)
     </div>
@@ -41,6 +41,13 @@ const config = useRuntimeConfig()
   i {
     font-size: 2.4rem;
     color: var(--color-icon);
+  }
+  &.mobile {
+    gap: 16px;
+    padding: 8px 12px;
+    i {
+      font-size: 2rem;
+    }
   }
 }
 

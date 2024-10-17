@@ -3,7 +3,7 @@
     <el-input
       :class="$style.input"
       v-model="query"
-      placeholder="Search categories"
+      :placeholder="`Search ${searchName}`"
       @input="emit('search', $event)"
     >
       <template #prefix>
@@ -13,7 +13,7 @@
     <div :class="$style.action">
       <custom-button @click="handleClear" type="default">
         <i class="icon-filter-3-fill"></i>
-        Show all categories
+        Show all {{ searchName }}
       </custom-button>
       <el-dropdown
         :teleported="false"
@@ -40,6 +40,12 @@
 </template>
 
 <script setup lang="ts">
+defineProps({
+  searchName: {
+    type: String,
+    default: ''
+  }
+})
 const query = ref('')
 const sort = ref('Sort by default')
 
