@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.update">
+  <div :class="$style.update" v-loading="isLoading">
     <layout-dashboard-header title="Update Post">
       <template #action>
         <custom-button type="default" @click="navigateTo('/dashboard/post')">

@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.post">
+  <div v-if="data" :class="$style.post">
     <div :class="$style.breadcrumb">
       <div class="container">
         <breadcrumb :links="[{ name: title, path: `/post/${slug}` }]" />
@@ -49,6 +49,13 @@ const title = computed(() => data?.value?.title || '')
 const image = computed(() => data.value?.image?.cloudflareUrl + 'large' || '')
 const desc = computed(() => data?.value?.desc || '')
 
+if (error.value) {
+  throw createError({
+    statusCode: 404,
+    message: 'Content not found',
+    fatal: true
+  })
+}
 defineOgImageComponent('BlogPost', {
   title,
   image,
