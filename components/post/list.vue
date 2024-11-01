@@ -33,7 +33,8 @@ const posts = computed(() => {
 onMounted(async () => {
   data.value = await $postService.getPosts(
     {
-      sort: 'createdAt'
+      sort: 'createdAt',
+      status: PostStatus.published
     },
     { page: 1, limit: props.limit }
   )

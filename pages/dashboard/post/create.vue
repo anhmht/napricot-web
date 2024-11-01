@@ -99,19 +99,19 @@ const rules = reactive<FormRules>({
 const handleSubmit = async () => {
   formRef.value?.validate(async (valid) => {
     if (!valid) return
+    post.value.images = post.value.images.filter((image) => {
+      return post.value.content.includes(image.id)
+    })
+    post.value.author = store.currentUser?.userId
+    isLoading.value = true
+    await $postService.createPost(post.value)
+    ElNotification.success({
+      title: 'Post created successfully',
+      message: `Post ${post.value.title} has been created`
+    })
+    isLoading.value = false
+    navigateTo('/dashboard/post')
   })
-  post.value.images = post.value.images.filter((image) =>
-    post.value.content.includes(image.id)
-  )
-  post.value.author = store.currentUser?.userId
-  isLoading.value = true
-  await $postService.createPost(post.value)
-  ElNotification.success({
-    title: 'Post created successfully',
-    message: `Post ${post.value.title} has been created`
-  })
-  isLoading.value = false
-  navigateTo('/dashboard/post')
 }
 </script>
 
