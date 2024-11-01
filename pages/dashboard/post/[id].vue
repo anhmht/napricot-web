@@ -101,19 +101,19 @@ const rules = reactive<FormRules>({
 const handleSubmit = async () => {
   formRef.value?.validate(async (valid) => {
     if (!valid) return
+    post.value.images = post.value.images.filter((image) => {
+      return post.value.content.includes(image.id)
+    })
+    post.value.author = store.currentUser?.userId
+    isLoading.value = true
+    await $postService.updatePost(id.toString(), post.value)
+    ElNotification.success({
+      title: 'Post updated successfully',
+      message: `Post ${post.value.title} has been updated`
+    })
+    isLoading.value = false
+    navigateTo('/dashboard/post')
   })
-  post.value.images = post.value.images.filter((image) =>
-    post.value.content.includes(image.id)
-  )
-  post.value.author = store.currentUser?.userId
-  isLoading.value = true
-  await $postService.updatePost(id.toString(), post.value)
-  ElNotification.success({
-    title: 'Post updated successfully',
-    message: `Post ${post.value.title} has been updated`
-  })
-  isLoading.value = false
-  navigateTo('/dashboard/post')
 }
 
 const { data } = await useAsyncData('post', async () => {
