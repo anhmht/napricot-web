@@ -35,6 +35,13 @@
       v-model:images="form.images"
       @input="updateForm('content', $event)"
     />
+
+    <custom-content-assessor
+      :title="form.title"
+      :description="form.desc"
+      :content="form.content"
+      :slug="form.slug"
+    />
   </div>
 </template>
 
@@ -63,6 +70,7 @@ const updateForm = (key: string, value: any) => {
 watch(
   () => props.post.title,
   (title) => {
+    if (props.post._id) return
     form.value.slug = slugify(title, { lower: true })
     updateForm('slug', form.value.slug)
   },
