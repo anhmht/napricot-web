@@ -1,5 +1,5 @@
 import { RuntimeConfig, getRunTimeConfig } from "./config/RuntimeConfig"
-
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
 
 const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
@@ -10,6 +10,11 @@ export default defineNuxtConfig({
 
   experimental: {
     componentIslands: true
+  },
+
+  vite: {
+    plugins: [
+      nodePolyfills()],
   },
 
   /*
