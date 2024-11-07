@@ -42,6 +42,14 @@
       :content="form.content"
       :slug="form.slug"
     />
+
+    <custom-seo-assessor
+      keyword=""
+      :title="form.title"
+      :description="form.desc"
+      :content="form.content"
+      :slug="form.slug"
+    />
   </div>
 </template>
 
@@ -96,6 +104,9 @@ watch(
 .form {
   position: relative;
   padding: 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   h4 {
     font-weight: 400;
     margin-bottom: 16px;

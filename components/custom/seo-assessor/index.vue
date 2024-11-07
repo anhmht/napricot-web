@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.root" v-loading="loading">
-    <div :class="$style.title">Content Assessor</div>
+    <div :class="$style.title">SEO Assessor</div>
     <div :class="$style.content">
       <div
         v-show="item.text"
@@ -17,11 +17,8 @@
 
 <script setup lang="ts">
 import debounce from 'lodash/debounce'
-import { Paper, ContentAssessor, interpreters } from 'yoastseo'
+import { Paper, SeoAssessor, interpreters } from 'yoastseo'
 import Researcher from 'yoastseo/build/languageProcessing/languages/en/Researcher.js'
-import TextAlignmentAssessment from 'yoastseo/build/scoring/assessments/readability/TextAlignmentAssessment.js'
-import WordComplexityAssessment from 'yoastseo/build/scoring/assessments/readability/WordComplexityAssessment.js'
-import { getLongCenterAlignedTexts } from 'yoastseo/build/languageProcessing/researches'
 
 const props = defineProps({
   description: {
@@ -37,6 +34,10 @@ const props = defineProps({
     default: ''
   },
   content: {
+    type: String,
+    default: ''
+  },
+  keyword: {
     type: String,
     default: ''
   }
@@ -66,13 +67,9 @@ const getData = debounce((paper) => {
   const researcher = new Researcher(paper, {
     marker: null
   })
-  researcher.addResearch('getLongCenterAlignedTexts', getLongCenterAlignedTexts)
-  const textAlignmentAssessment = new TextAlignmentAssessment({})
-  const wordComplexityAssessment = new WordComplexityAssessment({})
 
-  const contentAssessor = new ContentAssessor(researcher)
-  contentAssessor.addAssessment('textAlignment', textAlignmentAssessment)
-  contentAssessor.addAssessment('wordComplexity', wordComplexityAssessment)
+  const contentAssessor = new SeoAssessor(researcher)
+
   contentAssessor.assess(paper)
 
   overallScore.value = contentAssessor.calculateOverallScore()
@@ -97,7 +94,7 @@ const getData = debounce((paper) => {
 
 watchEffect(() => {
   const paper = new Paper(props.content, {
-    keyword: '',
+    keyword: props.keyword,
     description: props.description,
     title: props.title,
     locale: 'en_US',
