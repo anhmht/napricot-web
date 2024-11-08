@@ -88,7 +88,8 @@ export default defineNuxtConfig({
     "@element-plus/nuxt",
     "@stefanobartoletti/nuxt-social-share",
     "@nuxtjs/seo",
-    "@nuxtjs/device"
+    "@nuxtjs/device",
+    "@nuxt/scripts"
   ],
 
   imports: {
