@@ -42,16 +42,6 @@ export default defineNuxtConfig({
     },
   },
 
-  $production: {
-    scripts: {
-      registry: {
-        googleAnalytics: {
-          id: 'G-6K500GJZ6H',
-        }
-      }
-    }
-  },
-
   sitemap: {
     sources: ['/api/__sitemap__/urls'],
     experimentalCompression: true,
