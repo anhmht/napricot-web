@@ -59,6 +59,18 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/dashboard/post/**': { ssr: false },
+    '/sign-in': {
+      static: true,
+    },
+    'email-verification': {
+      static: true,
+    },
+    '/reset-password': {
+      static: true,
+    },
+    '/forgot-password': {
+      static: true,
+    },
   },
 
   runtimeConfig: {
