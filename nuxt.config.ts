@@ -42,6 +42,16 @@ export default defineNuxtConfig({
     },
   },
 
+  $production: {
+    scripts: {
+      registry: {
+        googleTagManager: {
+          id: 'G-6K500GJZ6H',
+        }
+      }
+    }
+  },
+
   sitemap: {
     sources: ['/api/__sitemap__/urls'],
     experimentalCompression: true,
@@ -88,7 +98,8 @@ export default defineNuxtConfig({
     "@element-plus/nuxt",
     "@stefanobartoletti/nuxt-social-share",
     "@nuxtjs/seo",
-    "@nuxtjs/device"
+    "@nuxtjs/device",
+    "@nuxt/scripts"
   ],
 
   imports: {

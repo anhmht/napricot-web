@@ -3,6 +3,7 @@ export interface RuntimeConfig {
   apiBaseUrl: string
   apiVersion: string
   stripePublicKey: string
+  isDevelopment: boolean
 }
 
 export const getRunTimeConfig = (env: string): RuntimeConfig => {
@@ -11,5 +12,6 @@ export const getRunTimeConfig = (env: string): RuntimeConfig => {
     apiBaseUrl: process.env.API_URL as string,
     apiVersion: 'v1',
     stripePublicKey: process.env.STRIPE_PUBLIC_KEY as string,
+    isDevelopment: process.env.NUXT_SITE_ENV === 'preview',
   }
 }

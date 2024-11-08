@@ -13,6 +13,7 @@
     "@ckeditor/ckeditor5-vue": "^7.2.0",
     "@element-plus/nuxt": "^1.0.10",
     "@nuxt/image": "^1.8.0",
+    "@nuxt/scripts": "^0.9.5",
     "@nuxtjs/device": "^3.2.4",
     "@nuxtjs/seo": "^2.0.0-rc.23",
     "@pinia/nuxt": "^0.5.5",

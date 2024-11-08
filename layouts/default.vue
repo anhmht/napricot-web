@@ -16,10 +16,23 @@ const store = useMainStore()
 const { data } = await useAsyncData('categories', () =>
   $categoryService.getAllCategories()
 )
+const { app } = useRuntimeConfig()
 
 if (data.value) store.setCategories(data.value)
 
 const route = useRoute()
+
+if (!app.isDevelopment) {
+  const { proxy } = useScriptGoogleTagManager()
+
+  proxy.gtag('js', new Date())
+  proxy.gtag('config', 'G-6K500GJZ6H')
+
+  proxy.dataLayer.push({
+    event: 'page_view',
+    path: route.path
+  })
+}
 
 useHead(() => ({
   link: [
