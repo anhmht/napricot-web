@@ -23,7 +23,7 @@ if (data.value) store.setCategories(data.value)
 const route = useRoute()
 
 if (!app.isDevelopment) {
-  const { proxy } = useScriptGoogleTagManager()
+  const { proxy } = useScriptGoogleAnalytics()
 
   proxy.gtag('js', new Date())
   proxy.gtag('config', 'G-6K500GJZ6H')
