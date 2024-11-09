@@ -20,7 +20,7 @@
         </template>
       </custom-field>
       <custom-button type="primary" @click="submitForm" :disabled="isLoading"
-        >Sign up
+        >Verify code
         <i class="icon-arrow-right" />
       </custom-button>
     </el-form>
@@ -86,7 +86,7 @@ const submitForm = () => {
         isLoading.value = true
 
         try {
-          await $userService.verifyCode(form.code, store.currentUser!.email)
+          await $userService.verifyCode(form.code, store.currentUser!.email!)
 
           ElNotification.success({
             title: 'Email verified',
