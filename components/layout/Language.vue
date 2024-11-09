@@ -48,6 +48,17 @@ const config = useRuntimeConfig()
     i {
       font-size: 2rem;
     }
+    div {
+      font-size: 1.2rem;
+    }
+    .locale {
+      &::before {
+        left: -8px;
+      }
+    }
+    &::after {
+      right: -8px;
+    }
   }
 }
 
