@@ -71,6 +71,9 @@ export default defineNuxtConfig({
     '/forgot-password': {
       static: true,
     },
+    '/about-us': {
+      static: true
+    }
   },
 
   runtimeConfig: {
