@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.preview">
-    <h4 style="margin: 0">{{ title }}</h4>
+    <h4 style="margin: 0" ref="titleRef">{{ title }}</h4>
     <p>{{ url }}</p>
     <div>
       <span>{{ metaDesc }}</span>
@@ -21,10 +21,18 @@ const props = defineProps({
   slug: {
     type: String,
     default: ''
+  },
+  titleWidth: {
+    type: Number,
+    default: 0
   }
 })
 
+const titleRef = ref<HTMLElement>()
+
 const config = useRuntimeConfig()
+
+const emit = defineEmits(['update:titleWidth'])
 
 const url = computed(() => {
   return `${config.app.baseUrl}/post/${props.slug}`
@@ -34,6 +42,16 @@ const metaDesc = computed(() => {
   return props.description.length < 100
     ? props.description
     : `${props.description.slice(0, 100)}...`
+})
+
+const onTitleUpdated = () => {
+  const w = titleRef.value?.offsetWidth
+  if (!w) return
+  emit('update:titleWidth', w)
+}
+
+onMounted(() => {
+  onTitleUpdated()
 })
 </script>
 

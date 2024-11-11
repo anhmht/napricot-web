@@ -36,19 +36,37 @@
       @input="updateForm('content', $event)"
     />
 
+    <h4 v-if="displaySnippet" :class="$style.organization">Snippet Preview</h4>
+    <custom-snippet-preview
+      v-if="displaySnippet"
+      v-model:title-width="titleWidth"
+      :title="post.title"
+      :slug="post.slug"
+      :description="post.desc"
+    />
+
     <custom-content-assessor
       :title="form.title"
+      :title-width="titleWidth"
       :description="form.desc"
       :content="form.content"
       :slug="form.slug"
     />
 
-    <custom-seo-assessor
-      keyword=""
+    <custom-seo-assessor-keyword-input
+      v-model="form.keywords"
+      @change="updateForm('keywords', $event)"
+    />
+
+    <custom-seo-assessor-tabs
+      v-if="form.keywords.length"
+      v-model:keywords="form.keywords"
       :title="form.title"
+      :title-width="titleWidth"
       :description="form.desc"
       :content="form.content"
       :slug="form.slug"
+      @change="updateForm('keywords', $event)"
     />
   </div>
 </template>
@@ -66,6 +84,11 @@ const props = defineProps({
 const emit = defineEmits(['update:post'])
 
 const form = ref<IPost>(props.post)
+const titleWidth = ref<number>(0)
+
+const displaySnippet = computed<boolean>(() => {
+  return !!(form.value.title && form.value.desc)
+})
 
 const updateForm = (key: string, value: any) => {
   const updateForm: IPost = {
@@ -109,7 +132,10 @@ watch(
   gap: 16px;
   h4 {
     font-weight: 400;
-    margin-bottom: 16px;
   }
+}
+.organization {
+  padding-top: 16px;
+  border-top: 1px solid var(--color-background-grayscale-50);
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div :class="$style.root" v-loading="loading">
-    <div :class="$style.title">SEO Assessor</div>
     <div :class="$style.content">
       <div
         v-show="item.text"
@@ -40,16 +39,20 @@ const props = defineProps({
   keyword: {
     type: String,
     default: ''
+  },
+  titleWidth: {
+    type: Number,
+    default: 0
   }
 })
 
 const ratings = ['feedback', 'bad', 'ok', 'good']
 const scoreToRating = interpreters.scoreToRating
 
-const overallScore = ref<Number>(0)
-const overallRating = ref<String>('')
+const overallScore = ref<number>(0)
+const overallRating = ref<string>('')
 const assessorResultsByRating = ref<Object>({})
-const loading = ref<Boolean>(false)
+const loading = ref<boolean>(false)
 
 const seoResults = computed<any>(() => {
   const res = [] as any
@@ -98,7 +101,8 @@ watchEffect(() => {
     description: props.description,
     title: props.title,
     locale: 'en_US',
-    permalink: `https://napricot.com/post/${props.slug}`
+    permalink: `https://napricot.com/post/${props.slug}`,
+    titleWidth: props.titleWidth
   })
   getData(paper)
 })
@@ -108,22 +112,11 @@ watchEffect(() => {
 .root {
   display: block;
 }
-.title {
-  font-weight: 400;
-  display: inline-block;
-  height: auto;
-  line-height: 22px;
-  margin-bottom: 8px;
-  text-align: left;
-  vertical-align: middle;
-}
 .content {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 16px;
-  border: 1px solid #dcdfe6;
-  border-radius: 8px;
+  margin-top: 16px;
 }
 .badge {
   vertical-align: middle;

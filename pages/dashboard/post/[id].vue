@@ -55,6 +55,7 @@ const post = ref<IPost>({
   content: '',
   author: '',
   status: PostStatus.draft,
+  keywords: [],
   tags: []
 })
 
