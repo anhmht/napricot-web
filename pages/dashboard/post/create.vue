@@ -53,7 +53,8 @@ const post = ref<IPost>({
   content: '',
   author: '',
   status: PostStatus.draft,
-  tags: []
+  tags: [],
+  keywords: []
 })
 
 const formRef = ref<FormInstance>()

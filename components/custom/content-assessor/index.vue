@@ -39,16 +39,20 @@ const props = defineProps({
   content: {
     type: String,
     default: ''
+  },
+  titleWidth: {
+    type: Number,
+    default: 0
   }
 })
 
 const ratings = ['feedback', 'bad', 'ok', 'good']
 const scoreToRating = interpreters.scoreToRating
 
-const overallScore = ref<Number>(0)
-const overallRating = ref<String>('')
+const overallScore = ref<number>(0)
+const overallRating = ref<string>('')
 const assessorResultsByRating = ref<Object>({})
-const loading = ref<Boolean>(false)
+const loading = ref<boolean>(false)
 
 const seoResults = computed<any>(() => {
   const res = [] as any
@@ -101,7 +105,8 @@ watchEffect(() => {
     description: props.description,
     title: props.title,
     locale: 'en_US',
-    permalink: `https://napricot.com/post/${props.slug}`
+    permalink: `https://napricot.com/post/${props.slug}`,
+    titleWidth: props.titleWidth
   })
   getData(paper)
 })

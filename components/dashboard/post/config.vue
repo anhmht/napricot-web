@@ -24,13 +24,6 @@
       :style="{ marginBottom: '16px' }"
       @change="updateForm('tags', $event)"
     />
-    <h4 v-if="displaySnippet" :class="$style.organization">Snippet Preview</h4>
-    <custom-snippet-preview
-      v-if="displaySnippet"
-      :title="post.title"
-      :slug="post.slug"
-      :description="post.desc"
-    />
   </div>
 </template>
 
@@ -66,10 +59,6 @@ const categoriesOptions = computed<OptionType[]>(() => {
   ]
 })
 
-const displaySnippet = computed<boolean>(() => {
-  return !!(form.value.title && form.value.desc)
-})
-
 const updateForm = (key: string, value: any) => {
   const updateForm: IPost = {
     ...form.value,
@@ -91,9 +80,5 @@ onMounted(async () => {
     font-weight: 400;
     margin-bottom: 16px;
   }
-}
-.organization {
-  padding-top: 16px;
-  border-top: 1px solid var(--color-background-grayscale-50);
 }
 </style>

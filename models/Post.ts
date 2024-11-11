@@ -17,6 +17,7 @@ export interface IPost {
   createdAt?: string
   updatedAt?: string
   status?: PostStatus
+  keywords: string[]
   tags: string[]
 }
 
