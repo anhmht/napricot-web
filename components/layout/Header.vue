@@ -132,12 +132,14 @@ onMounted(() => {
 .overlay {
   position: absolute;
   top: 72px;
-  left: 0;
+  left: 50%;
   width: 100%;
   height: 54px;
   z-index: 3;
   background: rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease;
+  max-width: 1410px;
+  transform: translateX(-50%);
   &.scrollUp {
     transform: none;
   }
