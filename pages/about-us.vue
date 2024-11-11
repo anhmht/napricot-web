@@ -7,7 +7,7 @@
     </div>
     <div class="container">
       <div :class="[$style.wrapper, $device.isMobileOrTablet && $style.mobile]">
-        <h2>Napricot Brand Introduction</h2>
+        <h1>Napricot Brand Introduction</h1>
         <p>
           The name "Napricot" is a fusion of the letter "N" and the word
           "Apricot." Inspired by the apricot fruit, the name reflects the idea
@@ -47,7 +47,8 @@
           format="webp"
           :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/c9787163-6e05-4788-2e77-e2c18e246300/public`"
           alt="Napricot Commitment"
-          width="1410px"
+          :width="$device.isDesktop ? 1410 : 375"
+          :height="$device.isDesktop ? 340 : 120"
         />
         <h2>Our Products</h2>
         <p>
@@ -61,7 +62,8 @@
             format="webp"
             :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/6e36a2ea-2b29-4881-0981-35505883f100/large`"
             alt="Napricot product"
-            width="705px"
+            :width="$device.isDesktop ? 705 : 360"
+            :height="$device.isDesktop ? 705 : 360"
           />
           <div :class="$style.detail">
             <h3>Print on Demand</h3>
@@ -110,6 +112,17 @@
 
 <script setup lang="ts">
 defineOgImageComponent('DefaultOg')
+
+useServerSeoMeta({
+  title: () => `About Us`,
+  description: () => `we are dedicated to creating personalized
+          products that celebrate the most meaningful people and cherished
+          moments in your life`,
+  ogTitle: () => `About Us`,
+  ogDescription: () => `we are dedicated to creating personalized
+          products that celebrate the most meaningful people and cherished
+          moments in your life`
+})
 
 const config = useRuntimeConfig()
 </script>
