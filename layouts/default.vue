@@ -63,6 +63,9 @@ useHead(() => ({
   padding-top: 54px;
   &.mobile {
     padding-top: 46px;
+    h2 {
+      font-size: 3rem;
+    }
   }
 }
 </style>

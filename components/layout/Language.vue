@@ -43,7 +43,7 @@ const config = useRuntimeConfig()
     color: var(--color-icon);
   }
   &.mobile {
-    gap: 16px;
+    gap: 14px;
     padding: 8px 12px;
     i {
       font-size: 2rem;

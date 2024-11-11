@@ -78,7 +78,7 @@ const data = ref([
   {
     title: 'About',
     items: [
-      { name: 'About us', link: '/about/story' },
+      { name: 'About us', link: '/about-us' },
       { name: 'Invite Friends', link: '/about/team' }
     ]
   }
