@@ -46,6 +46,7 @@ export default defineNuxtConfig({
     sources: ['/api/__sitemap__/urls'],
     experimentalCompression: true,
     experimentalWarmUp: true,
+    exclude: ['/email-verification', '/reset-password', '/forgot-password', '/sign-in', '/dashboard'],
   },
 
   robots: {
@@ -54,25 +55,28 @@ export default defineNuxtConfig({
 
   nitro: {
     compressPublicAssets: true,
-    minify: true
+    minify: true,
+    prerender: {
+      routes: ['/sitemap.xml']
+    }
   },
 
   routeRules: {
     '/dashboard/post/**': { ssr: false },
     '/sign-in': {
-      static: true,
+      prerender: true,
     },
     'email-verification': {
-      static: true,
+      prerender: true,
     },
     '/reset-password': {
-      static: true,
+      prerender: true,
     },
     '/forgot-password': {
-      static: true,
+      prerender: true,
     },
     '/about-us': {
-      static: true
+      prerender: true
     }
   },
 

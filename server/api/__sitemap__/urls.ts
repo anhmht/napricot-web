@@ -2,7 +2,7 @@ import { Image } from "~/models/Image";
 import { ListPosts, PostStatus } from "~/models/Post";
 import { createPayload } from "~/utils";
 
-export default defineEventHandler(async (event) => {
+export default defineSitemapEventHandler(async () => {
   const [
     posts
   ] = await Promise.all([
@@ -10,14 +10,25 @@ export default defineEventHandler(async (event) => {
       .then((data: ListPosts) => {
         return data.posts.map((post) => {
           return {
+            title: post.title,
             url: `/post/${post.slug}`,
             images: [post.image,...post.images].map((img: Image) => img.cloudflareUrl),
             lastmod: post.updatedAt,
+            publication_date: post.createdAt as string
           }
         })
       })
   ])
   return [...posts].map((p) => {
-    return { loc: p.url, lastmod: p.lastmod, images: p.images.map((img: string) => ({ loc: img })) }
+    return {
+      loc: p.url,
+      lastmod: p.lastmod,
+      images: p.images.map((img: string, index) => ({ loc: img, title: p.title + index, caption: p.title + index })),
+      news: [{
+        title: p.title,
+        publication_date: p.publication_date,
+        publication: { name: p.title, language: "en" }
+      }]
+    }
   })
 });
