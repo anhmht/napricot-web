@@ -167,7 +167,7 @@ watch(
   () => props.id,
   async (id) => {
     if (id) {
-      buttonTitle.value = 'Update'
+      buttonTitle.value = 'Save'
       isLoading.value = true
       emit('update:loading', true)
 

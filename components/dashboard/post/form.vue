@@ -130,6 +130,7 @@ watch(
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding-bottom: 80px;
   h4 {
     font-weight: 400;
   }

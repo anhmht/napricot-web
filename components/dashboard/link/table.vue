@@ -1,7 +1,7 @@
 <template>
-  <div :class="$style.categoryTable">
+  <div :class="$style.linkTable">
     <custom-table
-      :data="categories"
+      :data="links"
       :page="pagination.page"
       :limit="pagination.limit"
       :total="list?.total"
@@ -10,13 +10,17 @@
       @limit-change="updateLimit"
     >
       <el-table-column
-        prop="name"
-        label="Name"
+        prop="words"
+        label="Words"
         width="300"
         show-overflow-tooltip
       >
       </el-table-column>
-      <el-table-column prop="slug" label="Slug" width="300"> </el-table-column>
+      <el-table-column prop="url" label="Path" width="500">
+        <template #default="{ row }">
+          <nuxt-link :to="row.url" target="_blank">{{ row.url }}</nuxt-link>
+        </template>
+      </el-table-column>
       <el-table-column prop="createdAt" label="Create" width="170">
         <template #default="{ row }">
           {{ fromNow(row.createdAt) }}
@@ -25,17 +29,6 @@
       <el-table-column prop="updatedAt" label="Update" width="170">
         <template #default="{ row }">
           {{ fromNow(row.updatedAt) }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="type" label="Type" width="200">
-        <template #default="{ row }">
-          <el-tag
-            size="large"
-            :type="row.type === CategoryType.Product ? 'success' : 'warning'"
-            effect="dark"
-          >
-            {{ row.type }}
-          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="Action" width="220">
@@ -58,7 +51,7 @@
 <script setup lang="ts">
 const props = defineProps({
   list: {
-    type: Object as () => ListCategories | null,
+    type: Object as () => ListLinks | null,
     required: true
   },
   pagination: {
@@ -66,7 +59,7 @@ const props = defineProps({
     required: true
   },
   selectedRows: {
-    type: Array as () => ICategory[],
+    type: Array as () => ILink[],
     default: []
   }
 })
@@ -78,7 +71,7 @@ const emit = defineEmits([
   'update:selectedRows'
 ])
 
-const categories = computed(() => props.list?.categories || [])
+const links = computed(() => props.list?.links || [])
 
 const updateCurrentPage = (page: number) => {
   emit('update:pagination', { ...props.pagination, page })
@@ -90,7 +83,7 @@ const updateLimit = (limit: number) => {
 </script>
 
 <style lang="postcss" module>
-.categoryTable {
+.linkTable {
   position: relative;
 }
 .action {
