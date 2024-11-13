@@ -16,6 +16,35 @@
         label="Link Words"
         placeholder="Enter link words"
       />
+      <custom-autocomplete
+        v-model="form.url"
+        name="url"
+        label="Link to"
+        :options="options"
+        :loading="optionLoading"
+        custom-options
+        clearable
+        @search="getOptions"
+      >
+        <el-option-group
+          v-for="group in options"
+          :key="group.label"
+          :label="group.label"
+        >
+          <el-option
+            v-for="item in group.options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-option-group>
+      </custom-autocomplete>
+      <div v-if="form.url" :class="$style.link">
+        <NuxtLink :to="form.url" target="_blank">
+          <i class="icon-link"></i>
+          {{ `https://napricot.com${form.url}` }}
+        </NuxtLink>
+      </div>
       <custom-field
         v-model="form.description"
         name="description"
@@ -33,7 +62,7 @@
 
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
-import { OptionType } from 'element-plus/lib/components/select-v2/src/select.types.js'
+import { OptionGroup } from 'element-plus/es/components/select-v2/src/select.types.mjs'
 
 const props = defineProps({
   id: {
@@ -59,6 +88,11 @@ const form = reactive<ILink>({
 const isLoading = ref<boolean>(false)
 const errorMessage = ref<string>('')
 const buttonTitle = ref<string>('Create')
+const optionLoading = ref<boolean>(false)
+const posts = ref<OptionGroup>({
+  label: 'Posts',
+  options: []
+})
 
 const rules = reactive<FormRules>({
   words: [
@@ -73,6 +107,24 @@ const rules = reactive<FormRules>({
       required: true,
       message: 'Please input link',
       trigger: ['blur', 'change']
+    }
+  ]
+})
+
+const options = computed<OptionGroup[]>(() => {
+  const res: OptionGroup[] = []
+  if (posts.value.options.length) {
+    res.push(posts.value)
+  }
+  return [
+    ...res,
+    {
+      label: 'Pages',
+      options: [
+        { label: 'Home', value: '/' },
+        { label: 'About us', value: '/about-us' },
+        { label: 'Contact us', value: '/contact' }
+      ]
     }
   ]
 })
@@ -117,6 +169,22 @@ const getLink = async (id: string) => {
   }
 }
 
+const getOptions = async (query?: string) => {
+  optionLoading.value = true
+  const [listPost] = await Promise.all([
+    $postService.getPosts({ title: query }, { page: 1, limit: 10 })
+  ])
+  posts.value = {
+    label: 'Posts',
+    options: listPost.posts.slice(0, 5).map((post) => ({
+      label: post.title,
+      value: `/post/${post.slug}`,
+      image: post.image?.cloudflareUrl
+    }))
+  } as OptionGroup
+  optionLoading.value = false
+}
+
 watch(
   () => props.id,
   async (id) => {
@@ -136,11 +204,28 @@ watch(
   },
   { immediate: true }
 )
+
+onMounted(async () => {
+  await getOptions()
+})
 </script>
 
 <style lang="postcss" module>
 .linkForm {
   position: relative;
+}
+.link {
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-primary);
+  }
 }
 .button {
   padding-top: 16px;

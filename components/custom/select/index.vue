@@ -23,7 +23,7 @@ import { OptionType } from 'element-plus/lib/components/select-v2/src/select.typ
 
 const props = defineProps({
   modelValue: {
-    type: [String, Array<String>],
+    type: [String, Array<string>],
     default: undefined
   },
   name: {

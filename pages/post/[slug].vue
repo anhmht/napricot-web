@@ -102,6 +102,7 @@ useServerSeoMeta({
   display: flex;
   flex-direction: column;
   gap: 24px;
+  max-width: 962px;
 }
 .sidebar {
   width: 400px;
