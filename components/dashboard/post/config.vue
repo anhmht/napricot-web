@@ -24,6 +24,11 @@
       :style="{ marginBottom: '16px' }"
       @change="updateForm('tags', $event)"
     />
+    <h4>Suggested Link</h4>
+    <dashboard-post-suggest-link
+      v-model:content="form.content"
+      @change="updateForm('content', $event)"
+    />
   </div>
 </template>
 

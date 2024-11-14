@@ -7,6 +7,7 @@
     label-position="top"
   >
     <ckeditor
+      ref="editorRef"
       :editor="editor"
       v-model="editorData"
       :config="editorConfig"
@@ -259,7 +260,7 @@ class LinkAmazonAffiliate extends Plugin {
   }
 }
 
-export default {
+export default defineNuxtComponent({
   components: {
     ckeditor: Ckeditor
   },
@@ -402,8 +403,16 @@ export default {
         extraPlugins: []
       }
     }
+  },
+  mounted() {
+    this.$eventBus.on('replaceLink', (value: string) => {
+      ;(this.$refs?.editorRef as any).instance.data.set(value)
+    })
+  },
+  unmounted() {
+    this.$eventBus.off('replaceLink')
   }
-}
+})
 </script>
 <style lang="postcss" module>
 :global(.ck-editor__editable_inline:not(.ck-comment__input *)) {
