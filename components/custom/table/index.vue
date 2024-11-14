@@ -72,10 +72,6 @@ const props = defineProps({
   total: {
     type: Number,
     default: 0
-  },
-  selectedRows: {
-    type: Array as () => any[],
-    default: () => []
   }
 })
 

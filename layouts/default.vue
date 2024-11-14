@@ -27,8 +27,8 @@ if (!app.isDevelopment) {
     id: 'G-6K500GJZ6H'
   })
 
-  proxy.gtag('js', new Date())
-  proxy.gtag('config', 'G-6K500GJZ6H')
+  ;(proxy.gtag as any)('js', new Date())
+  ;(proxy.gtag as any)('config', 'G-6K500GJZ6H')
 
   proxy.dataLayer.push({
     event: 'page_view',

@@ -130,6 +130,8 @@ const handleSubmit = async () => {
 }
 .config {
   width: 400px;
+  height: calc(100vh - 77px);
+  overflow: auto;
   border-left: 1px solid var(--color-background-grayscale-100);
 }
 </style>

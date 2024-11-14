@@ -21,7 +21,9 @@
           <div :class="$style.desc">
             {{ data?.desc }}
           </div>
-          <div class="ck-content" v-html="data?.content"></div>
+          <article>
+            <div class="ck-content" v-html="data?.content"></div>
+          </article>
           <post-tags v-if="$device.isMobileOrTablet" :tags="data?.tags" />
         </div>
         <div v-if="$device.isDesktop" :class="$style.sidebar">
@@ -102,6 +104,7 @@ useServerSeoMeta({
   display: flex;
   flex-direction: column;
   gap: 24px;
+  max-width: 962px;
 }
 .sidebar {
   width: 400px;

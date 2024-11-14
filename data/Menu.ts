@@ -34,6 +34,11 @@ export const menu: Menu[] = [
     activePath: ['dashboard-post-create', 'dashboard-post-id']
   },
   {
+    name: 'Links',
+    icon: 'icon-link',
+    route: '/dashboard/link'
+  },
+  {
     name: 'Orders',
     icon: 'icon-money',
     route: '/dashboard/order'
