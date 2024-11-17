@@ -36,7 +36,7 @@ export default defineNuxtConfig({
       title: 'Napricot | The best place to find gifts for your loved ones',
       charset: 'utf-8',
       meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1.0' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { hid: 'description', name: 'description', content: 'Napricot is the best place to find gifts for your loved ones. We have a wide range of gifts for all occasions.' }
       ],
     },
@@ -88,6 +88,17 @@ export default defineNuxtConfig({
   },
 
   components: true,
+
+  image: {
+    domains: ['napricot.com'],
+    providers: {
+      cloudflare: {
+        options: {
+          baseURL: process.env.IMAGE_URL
+        }
+      }
+    }
+  },
 
   css: [
     // CSS file in the project
