@@ -4,6 +4,7 @@ export interface RuntimeConfig {
   apiVersion: string
   stripePublicKey: string
   isDevelopment: boolean
+  imageUrl: string
 }
 
 export const getRunTimeConfig = (env: string): RuntimeConfig => {
@@ -13,5 +14,6 @@ export const getRunTimeConfig = (env: string): RuntimeConfig => {
     apiVersion: 'v1',
     stripePublicKey: process.env.STRIPE_PUBLIC_KEY as string,
     isDevelopment: process.env.TARGET_ENV === 'staging',
+    imageUrl: process.env.IMAGE_URL as string,
   }
 }
