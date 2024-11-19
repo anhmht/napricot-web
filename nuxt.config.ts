@@ -10,7 +10,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   experimental: {
-    componentIslands: true
+    componentIslands: true,
+    payloadExtraction: true,
   },
 
   vite: {
