@@ -92,10 +92,9 @@ export default defineNuxtConfig({
   image: {
     domains: ['napricot.com'],
     providers: {
-      cloudflare: {
-        options: {
-          baseURL: process.env.IMAGE_URL
-        }
+      myProvider: {
+        name: 'myProvider', // optional value to overrider provider name
+        provider: '~/providers/my-provider.ts', // Path to custom provider
       }
     }
   },
@@ -111,7 +110,7 @@ export default defineNuxtConfig({
 
   modules: [
     '@pinia/nuxt',
-    "@nuxt/image",
+    "@nuxt/image-edge",
     "@element-plus/nuxt",
     "@stefanobartoletti/nuxt-social-share",
     "@nuxtjs/seo",

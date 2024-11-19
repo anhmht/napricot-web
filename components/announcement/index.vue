@@ -2,12 +2,13 @@
   <div v-show="isOpen" :class="$style.announcement">
     Sign up and get 20% off to your first order.
     <nuxt-link to="/sign-in?active=sign-up">Sign up now</nuxt-link>
-    <i v-if="$device.isDesktop" class="icon-close-fill" @click="close" />
+    <i v-show="isDesktop" class="icon-close-fill" @click="close" />
   </div>
 </template>
 
 <script setup lang="ts">
 const isOpen = ref(true)
+const { isDesktop } = useMediaQuery()
 
 const close = () => {
   isOpen.value = false

@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="container">
-      <div :class="[$style.wrapper, $device.isMobileOrTablet && $style.mobile]">
+      <div :class="$style.wrapper">
         <h1>Napricot Brand Introduction</h1>
         <p>
           The name "Napricot" is a fusion of the letter "N" and the word
@@ -16,12 +16,14 @@
           products that celebrate the most meaningful people and cherished
           moments in your life
         </p>
-        <NuxtPicture
+        <NuxtImg
+          provider="myProvider"
+          src="/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero"
+          :srcset="`${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero 210w,
+                  ${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/large500 500w`"
+          sizes="210 md:500"
+          alt="Napricot Logo Brand"
           :class="$style.logo"
-          format="webp"
-          :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/large500`"
-          alt="Napricot Logo"
-          :height="$device.isDesktop ? 100 : 55"
         />
         <h2>Our Mission</h2>
         <p>
@@ -125,6 +127,7 @@ useServerSeoMeta({
 })
 
 const config = useRuntimeConfig()
+const { isMobile } = useMediaQuery()
 </script>
 
 <style lang="postcss" module>
@@ -141,8 +144,9 @@ const config = useRuntimeConfig()
   padding: 8px 0;
 }
 .logo {
-  display: flex;
-  justify-content: center;
+  width: 400px;
+  height: 100px;
+  margin: auto;
 }
 .wrapper {
   padding: 36px 0;
@@ -150,14 +154,6 @@ const config = useRuntimeConfig()
   display: flex;
   flex-direction: column;
   gap: 24px;
-  &.mobile {
-    padding: 36px 8px;
-  }
-}
-.mobile {
-  .product {
-    flex-wrap: wrap;
-  }
 }
 .product {
   display: flex;
@@ -167,5 +163,18 @@ const config = useRuntimeConfig()
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 36px 8px;
+  }
+  .product {
+    flex-wrap: wrap;
+  }
+  .logo {
+    width: 210px;
+    height: 55px;
+  }
 }
 </style>
