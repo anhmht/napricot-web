@@ -1,14 +1,12 @@
 <template>
   <div :class="$style.banner">
     <nuxt-img
-      provider="cloudflare"
+      provider="myProvider"
       src="/51f64545-6417-4083-5e4e-c3d211e16e00/thumbnail344"
-      :srcset="`${imageUrl}/51f64545-6417-4083-5e4e-c3d211e16e00/thumbnail344 344w,
+      :srcset="`${imageUrl}/51f64545-6417-4083-5e4e-c3d211e16e00/thumbnail344 343w,
             ${imageUrl}/51f64545-6417-4083-5e4e-c3d211e16e00/public 1410w`"
-      sizes="344 md:1410"
+      sizes="343 md:1410"
       alt="Napricot Banner 1"
-      type="image/avif"
-      fit="inside"
     />
   </div>
 </template>

@@ -3,7 +3,7 @@
     <announcement />
     <layout-header />
     <div v-if="store.showOverlay" :class="$style.overlay"></div>
-    <div :class="[$style.page, $device.isMobileOrTablet && $style.mobile]">
+    <div :class="$style.page">
       <slot />
     </div>
     <layout-footer />
@@ -61,7 +61,7 @@ useHead(() => ({
 }
 .page {
   padding-top: 54px;
-  &.mobile {
+  @media (max-width: 768px) {
     padding-top: 46px;
     h1 {
       font-size: 3.5rem;

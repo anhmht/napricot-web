@@ -1,10 +1,10 @@
 <template>
   <div :class="$style.profile">
-    <div v-if="$device.isDesktop" :class="$style.link">
+    <div :class="$style.link">
       <NuxtLink v-show="!currentUser" to="/sign-in"> Sign in </NuxtLink>
       <NuxtLink v-show="currentUser" to="/tracking"> Tracking </NuxtLink>
     </div>
-    <div v-if="$device.isDesktop" :class="$style.icon">
+    <div :class="$style.iconDesktop">
       <NuxtLink to="/favorite" aria-label="Wishlist">
         <i class="icon-favorite"></i>
       </NuxtLink>
@@ -32,7 +32,7 @@
         <layout-header-account @close="popoverRef.hide()" />
       </el-popover>
     </div>
-    <div v-if="$device.isMobileOrTablet" :class="$style.icon">
+    <div :class="$style.icon">
       <layout-search-icon @search="$emit('search', $event)" />
       <i class="icon-shopping-cart"></i>
       <i class="icon-menu" @click="open = true"></i>
@@ -79,8 +79,17 @@ const currentUser = computed(() => store.currentUser)
   display: flex;
   gap: 16px;
 }
-.icon {
+.iconDesktop {
   display: flex;
+  gap: 24px;
+  align-items: center;
+  i {
+    font-size: 2.3rem;
+    color: var(--color-icon);
+  }
+}
+.icon {
+  display: none;
   gap: 24px;
   align-items: center;
   i {
@@ -90,5 +99,16 @@ const currentUser = computed(() => store.currentUser)
 }
 :global(.el-popover.el-popper) {
   padding: 0;
+}
+@media (max-width: 768px) {
+  .link {
+    display: none;
+  }
+  .iconDesktop {
+    display: none;
+  }
+  .icon {
+    display: flex;
+  }
 }
 </style>

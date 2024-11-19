@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="container">
-      <div :class="[$style.wrapper, $device.isMobileOrTablet && $style.mobile]">
+      <div :class="$style.wrapper">
         <h1>Napricot Brand Introduction</h1>
         <p>
           The name "Napricot" is a fusion of the letter "N" and the word
@@ -16,12 +16,14 @@
           products that celebrate the most meaningful people and cherished
           moments in your life
         </p>
-        <NuxtPicture
+        <NuxtImg
+          provider="myProvider"
+          src="/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero"
+          :srcset="`${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero 210w,
+                  ${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/large500 500w`"
+          sizes="210 md:500"
+          alt="Napricot Logo Brand"
           :class="$style.logo"
-          format="webp"
-          :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/large500`"
-          alt="Napricot Logo"
-          :height="$device.isDesktop ? 100 : 55"
         />
         <h2>Our Mission</h2>
         <p>
@@ -43,12 +45,14 @@
           dedicated artisans and designers brings each idea to life, producing
           products that are as distinctive as the individuals who order them.
         </p>
-        <NuxtPicture
-          format="webp"
-          :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/c9787163-6e05-4788-2e77-e2c18e246300/public`"
+        <NuxtImg
+          provider="myProvider"
+          src="/c9787163-6e05-4788-2e77-e2c18e246300/public"
+          :srcset="`${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero 375w,
+                  ${config.app.imageUrl}/c9787163-6e05-4788-2e77-e2c18e246300/public 1410w`"
+          sizes="375 md:1410"
           alt="Napricot Commitment"
-          :width="$device.isDesktop ? 1410 : 375"
-          :height="$device.isDesktop ? 340 : 120"
+          :class="$style.commitment"
         />
         <h2>Our Products</h2>
         <p>
@@ -58,12 +62,11 @@
           to bring joy and significance to every moment.
         </p>
         <div :class="$style.product">
-          <NuxtPicture
-            format="webp"
-            :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/6e36a2ea-2b29-4881-0981-35505883f100/large`"
+          <NuxtImg
+            provider="myProvider"
+            src="/6e36a2ea-2b29-4881-0981-35505883f100/large"
             alt="Napricot product"
-            :width="$device.isDesktop ? 705 : 360"
-            :height="$device.isDesktop ? 705 : 360"
+            :class="$style.productImg"
           />
           <div :class="$style.detail">
             <h3>Print on Demand</h3>
@@ -127,7 +130,7 @@ useServerSeoMeta({
 const config = useRuntimeConfig()
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" module scoped>
 .aboutUs {
   position: relative;
   picture {
@@ -141,8 +144,17 @@ const config = useRuntimeConfig()
   padding: 8px 0;
 }
 .logo {
-  display: flex;
-  justify-content: center;
+  width: 400px;
+  height: 100px;
+  margin: auto;
+}
+.commitment {
+  width: 1410px;
+  height: 340px;
+}
+.productImg {
+  width: 705px;
+  height: 705px;
 }
 .wrapper {
   padding: 36px 0;
@@ -150,14 +162,6 @@ const config = useRuntimeConfig()
   display: flex;
   flex-direction: column;
   gap: 24px;
-  &.mobile {
-    padding: 36px 8px;
-  }
-}
-.mobile {
-  .product {
-    flex-wrap: wrap;
-  }
 }
 .product {
   display: flex;
@@ -167,5 +171,26 @@ const config = useRuntimeConfig()
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 36px 8px;
+  }
+  .product {
+    flex-wrap: wrap;
+  }
+  .logo {
+    width: 210px;
+    height: 55px;
+  }
+  .commitment {
+    width: 100%;
+    height: auto;
+  }
+  .productImg {
+    width: 100%;
+    height: auto;
+  }
 }
 </style>

@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="container">
-      <div :class="[$style.blog, $device.isMobileOrTablet && $style.mobile]">
+      <div :class="$style.blog">
         <div :class="$style.content">
           <h1>
             {{ title }}
@@ -24,15 +24,13 @@
           <article>
             <div class="ck-content" v-html="data?.content"></div>
           </article>
-          <post-tags v-if="$device.isMobileOrTablet" :tags="data?.tags" />
+          <post-tags :class="$style.tags" :tags="data?.tags" />
         </div>
-        <div v-if="$device.isDesktop" :class="$style.sidebar">
+        <div :class="$style.sidebar">
           <post-sidebar :post="data || undefined" />
         </div>
       </div>
-      <div
-        :class="[$style.latest, , $device.isMobileOrTablet && $style.mobile]"
-      >
+      <div :class="$style.latest">
         <post-list title="Latest Post" :post-id="data?._id" />
       </div>
     </div>
@@ -72,7 +70,7 @@ useServerSeoMeta({
 })
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" module scoped>
 .post {
   position: relative;
 }
@@ -91,12 +89,6 @@ useServerSeoMeta({
   h1 {
     font-size: 3.6rem;
     font-weight: 500;
-  }
-  &.mobile {
-    padding: 16px;
-    h1 {
-      font-size: 3rem;
-    }
   }
 }
 .content {
@@ -121,7 +113,16 @@ useServerSeoMeta({
     gap: 24px;
   }
 }
-.mobile {
+.tags {
+  display: none;
+}
+@media (max-width: 1120px) {
+  .blog {
+    padding: 16px;
+    h1 {
+      font-size: 3rem;
+    }
+  }
   .content {
     gap: 16px;
   }
@@ -130,10 +131,14 @@ useServerSeoMeta({
     align-items: flex-start;
     gap: 16px;
   }
-}
-.latest {
-  &.mobile {
+  .latest {
     padding: 16px;
+  }
+  .tags {
+    display: flex;
+  }
+  .sidebar {
+    display: none;
   }
 }
 </style>

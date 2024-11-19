@@ -1,8 +1,8 @@
 <template>
-  <div :class="[$style.link, $device.isMobileOrTablet ? $style.mobile : '']">
+  <div :class="$style.link">
     <div :class="$style.anchor">
       <NuxtLink
-        v-if="$device.isDesktop"
+        :class="$style.hotOffers"
         :to="{ path: '/', hash: '#hot-offers' }"
       >
         Hot offers
@@ -16,7 +16,7 @@
         New arrival
       </NuxtLink>
     </div>
-    <layout-language v-if="$device.isDesktop" />
+    <layout-language :class="$style.language" />
   </div>
 </template>
 
@@ -42,10 +42,20 @@
     font-weight: 500;
     font-size: 1.6rem;
     display: flex;
-    &:hover,
-    :hover {
+    &:hover {
       color: var(--color-primary);
     }
+  }
+}
+@media (max-width: 768px) {
+  .link {
+    padding: 12px 16px;
+  }
+  .hotOffers {
+    display: none !important;
+  }
+  .language {
+    display: none;
   }
 }
 </style>

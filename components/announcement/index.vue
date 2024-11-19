@@ -2,7 +2,7 @@
   <div v-show="isOpen" :class="$style.announcement">
     Sign up and get 20% off to your first order.
     <nuxt-link to="/sign-in?active=sign-up">Sign up now</nuxt-link>
-    <i v-if="$device.isDesktop" class="icon-close-fill" @click="close" />
+    <i class="icon-close-fill" @click="close" />
   </div>
 </template>
 
@@ -36,6 +36,13 @@ const close = () => {
     right: 8px;
     font-size: 1.4rem;
     cursor: pointer;
+  }
+}
+@media (max-width: 768px) {
+  .announcement {
+    i {
+      display: none;
+    }
   }
 }
 </style>
