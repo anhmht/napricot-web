@@ -1,7 +1,5 @@
 <template>
-  <div
-    :class="[$style.serviceContact, $device.isMobileOrTablet && $style.mobile]"
-  >
+  <div :class="$style.serviceContact">
     <div :class="[$style.container, 'container']">
       <h4>Services & Contact</h4>
       <div :class="$style.service">
@@ -36,9 +34,6 @@
   padding: 36px 0;
   background-color: var(--color-background-secondary);
   color: #fff;
-  &.mobile {
-    padding: 24px 16px;
-  }
 }
 .container {
   display: flex;
@@ -67,12 +62,6 @@
     }
   }
 }
-.mobile {
-  .container {
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-}
 .service {
   display: flex;
   align-items: center;
@@ -84,5 +73,14 @@
   align-items: center;
   width: 354px;
   gap: 16px;
+}
+@media (max-width: 768px) {
+  .serviceContact {
+    padding: 24px 16px;
+  }
+  .container {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
 }
 </style>

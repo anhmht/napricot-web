@@ -5,7 +5,7 @@
         :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public`"
         format="avif,webp"
         alt="Napricot Banner 1"
-        :preload="{ fetchPriority: 'high' }"
+        preload
         :width="$device.isDesktop ? 1410 : 375"
         height="340"
         @load="loading = false"
@@ -38,7 +38,7 @@
             alt="Napricot Banner 1"
             :width="$device.isDesktop ? 1410 : 375"
             height="340"
-            :preload="{ fetchPriority: 'high' }"
+            preload
           />
           <div :class="$style.overlay">
             <div :class="$style.contentWrapper">
@@ -63,7 +63,7 @@
             alt="Napricot Banner 2"
             :width="$device.isDesktop ? 1410 : 375"
             height="340"
-            :preload="{ fetchPriority: 'high' }"
+            preload
           />
         </NuxtLink>
       </el-carousel-item>

@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.breadcrumb, $device.isMobileOrTablet && $style.mobile]">
+  <div :class="$style.breadcrumb">
     <ul>
       <li>
         <i class="icon-home_filled"></i>
@@ -28,9 +28,6 @@ defineProps({
 <style lang="postcss" module scoped>
 .breadcrumb {
   position: relative;
-}
-.mobile {
-  padding: 8px;
 }
 ul {
   display: flex;
@@ -79,6 +76,11 @@ li + li {
     left: -20px;
     font-size: 1.2rem;
     transform: rotate(270deg);
+  }
+}
+@media (max-width: 768px) {
+  .breadcrumb {
+    padding: 8px;
   }
 }
 </style>

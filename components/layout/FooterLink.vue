@@ -1,11 +1,5 @@
 <template>
-  <div
-    :class="[
-      $style.link,
-      'container',
-      $device.isMobileOrTablet && $style.mobile
-    ]"
-  >
+  <div :class="[$style.link, 'container']">
     <div :class="$style.item" v-for="item in data" :key="item.title">
       <div :class="$style.title">{{ item.title }}</div>
       <ul>
@@ -41,7 +35,7 @@
           Nappricot © 2024. All Rights Reserved
         </div>
       </div>
-      <layout-language v-if="$device.isDesktop" />
+      <layout-language :class="$style.lang" />
     </div>
   </div>
 </template>
@@ -90,19 +84,6 @@ const data = ref([
   padding: 48px 0 36px 0;
   display: flex;
   justify-content: space-between;
-  &.mobile {
-    flex-wrap: wrap;
-    padding: 16px;
-    flex-wrap: wrap;
-    row-gap: 20px;
-    padding: 16px;
-    justify-content: flex-start;
-  }
-}
-.mobile {
-  .item {
-    flex-basis: 50%;
-  }
 }
 .item {
   &:last-child {
@@ -161,9 +142,20 @@ li + li {
   font-weight: 400;
   margin-top: 12px;
 }
-.lang {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+@media (max-width: 768px) {
+  .link {
+    flex-wrap: wrap;
+    padding: 16px;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    padding: 16px;
+    justify-content: flex-start;
+  }
+  .item {
+    flex-basis: 50%;
+  }
+  .lang {
+    display: none;
+  }
 }
 </style>

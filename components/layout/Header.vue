@@ -1,13 +1,7 @@
 <template>
   <div :class="$style.header">
     <div :class="$style.headerWrapper">
-      <div
-        :class="[
-          $style.mainHeader,
-          'container',
-          $device.isMobileOrTablet ? $style.mobile : ''
-        ]"
-      >
+      <div :class="[$style.mainHeader, 'container']">
         <NuxtLink :class="$style.logo" to="/">
           <Transition name="el-zoom-in-center" :duration="300">
             <NuxtImg
@@ -15,23 +9,22 @@
               :class="$style.img"
               src="Logo.svg"
               alt="Napricot Logo"
-              :width="30"
-              :height="30"
+              width="30"
+              height="30"
             />
-            <NuxtPicture
+            <NuxtImg
               v-else
-              format="webp"
-              :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/thumbnail`"
-              alt="Napricot"
-              :width="$device.isMobileOrTablet ? '120' : '158'"
-              height="39"
+              :class="$style.logoBrand"
+              provider="myProvider"
+              src="/8a7c1d2c-57eb-4120-5bb6-47e54128e600/thumbnail"
+              alt="Napricot Brand"
             />
           </Transition>
         </NuxtLink>
-        <div v-if="$device.isDesktop" :class="$style.category">
+        <div :class="$style.category">
           <layout-header-category />
         </div>
-        <div v-if="$device.isDesktop" :class="$style.search">
+        <div :class="$style.search">
           <layout-header-search />
         </div>
         <div :class="$style.profile">
@@ -52,7 +45,6 @@
       :class="[
         $style.subHeader,
         'container',
-        $device.isMobileOrTablet && $style.mobile,
         scrollUp && $style.scrollUp,
         scrollDown && $style.scrollDown
       ]"
@@ -63,11 +55,9 @@
 </template>
 
 <script setup lang="ts">
-const config = useRuntimeConfig()
 const store = useMainStore()
 const scrollUp = ref<boolean>(false)
 const scrollDown = ref<boolean>(false)
-
 const searchLogo = ref<boolean>(false)
 
 onMounted(() => {
@@ -104,27 +94,14 @@ onMounted(() => {
     display: flex;
   }
 }
-.mobile {
-  .category {
-    margin: 0;
-  }
-  .search {
-    margin: 0;
-  }
-  .profile {
-    margin-left: auto;
-  }
-  .logo {
-    height: 40px;
-    position: relative;
-    picture {
-      position: absolute;
-    }
-    .img {
-      position: absolute;
-    }
-  }
+.logo {
+  display: flex;
 }
+.logoBrand {
+  width: 158px;
+  height: 39px;
+}
+
 .headerWrapper {
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.05);
   background: #fff;
@@ -152,9 +129,6 @@ onMounted(() => {
   position: relative;
   display: flex;
   padding: 16px 0;
-  &.mobile {
-    padding: 8px 16px;
-  }
 }
 .category {
   margin-left: 44px;
@@ -178,14 +152,43 @@ onMounted(() => {
   background: #fff;
   z-index: -1;
   transition: all 0.3s ease;
-  &.mobile {
-    bottom: -45px;
-  }
   &.scrollUp {
     transform: none;
   }
   &.scrollDown {
     transform: translate3d(0, -100%, 0);
+  }
+}
+@media (max-width: 768px) {
+  .category {
+    margin: 0;
+    display: none;
+  }
+  .search {
+    margin: 0;
+    display: none;
+  }
+  .profile {
+    margin-left: auto;
+  }
+  .logo {
+    height: 40px;
+    position: relative;
+    picture {
+      position: absolute;
+    }
+    .img {
+      position: absolute;
+    }
+  }
+  .logoBrand {
+    width: 120px;
+  }
+  .mainHeader {
+    padding: 8px 16px;
+  }
+  .subHeader {
+    bottom: -45px;
   }
 }
 </style>

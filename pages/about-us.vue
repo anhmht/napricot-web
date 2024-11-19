@@ -45,12 +45,14 @@
           dedicated artisans and designers brings each idea to life, producing
           products that are as distinctive as the individuals who order them.
         </p>
-        <NuxtPicture
-          format="webp"
-          :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/c9787163-6e05-4788-2e77-e2c18e246300/public`"
+        <NuxtImg
+          provider="myProvider"
+          src="/c9787163-6e05-4788-2e77-e2c18e246300/public"
+          :srcset="`${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero 375w,
+                  ${config.app.imageUrl}/c9787163-6e05-4788-2e77-e2c18e246300/public 1410w`"
+          sizes="375 md:1410"
           alt="Napricot Commitment"
-          :width="$device.isDesktop ? 1410 : 375"
-          :height="$device.isDesktop ? 340 : 120"
+          :class="$style.commitment"
         />
         <h2>Our Products</h2>
         <p>
@@ -60,12 +62,11 @@
           to bring joy and significance to every moment.
         </p>
         <div :class="$style.product">
-          <NuxtPicture
-            format="webp"
-            :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/6e36a2ea-2b29-4881-0981-35505883f100/large`"
+          <NuxtImg
+            provider="myProvider"
+            src="/6e36a2ea-2b29-4881-0981-35505883f100/large"
             alt="Napricot product"
-            :width="$device.isDesktop ? 705 : 360"
-            :height="$device.isDesktop ? 705 : 360"
+            :class="$style.productImg"
           />
           <div :class="$style.detail">
             <h3>Print on Demand</h3>
@@ -127,10 +128,9 @@ useServerSeoMeta({
 })
 
 const config = useRuntimeConfig()
-const { isMobile } = useMediaQuery()
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" module scoped>
 .aboutUs {
   position: relative;
   picture {
@@ -147,6 +147,14 @@ const { isMobile } = useMediaQuery()
   width: 400px;
   height: 100px;
   margin: auto;
+}
+.commitment {
+  width: 1410px;
+  height: 340px;
+}
+.productImg {
+  width: 705px;
+  height: 705px;
 }
 .wrapper {
   padding: 36px 0;
@@ -175,6 +183,14 @@ const { isMobile } = useMediaQuery()
   .logo {
     width: 210px;
     height: 55px;
+  }
+  .commitment {
+    width: 100%;
+    height: auto;
+  }
+  .productImg {
+    width: 100%;
+    height: auto;
   }
 }
 </style>

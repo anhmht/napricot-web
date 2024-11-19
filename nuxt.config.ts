@@ -63,18 +63,18 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/dashboard/post/**': { ssr: false },
-    // '/sign-in': {
-    //   prerender: true,
-    // },
-    // '/reset-password': {
-    //   prerender: true,
-    // },
-    // '/forgot-password': {
-    //   prerender: true,
-    // },
-    // '/about-us': {
-    //   prerender: true
-    // }
+    '/sign-in': {
+      prerender: true,
+    },
+    '/reset-password': {
+      prerender: true,
+    },
+    '/forgot-password': {
+      prerender: true,
+    },
+    '/about-us': {
+      prerender: true
+    },
   },
 
   runtimeConfig: {
