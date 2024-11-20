@@ -1,37 +1,30 @@
 <template>
-  <div
-    id="hot-offers"
-    :class="[$style.banner, $device.isMobileOrTablet ? $style.mobile : '']"
-  >
-    <NuxtPicture
-      format="webp"
+  <div id="hot-offers" :class="$style.banner">
+    <NuxtImg
+      provider="myProvider"
       loading="lazy"
-      :src="`${
-        config.app.baseUrl
-      }/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/154c0562-5694-4a08-0bd6-c02c971d9100/${
-        $device.isDesktop ? 'banner690' : 'thumbnail344'
-      }`"
-      alt="Napricot Banner"
-      :width="$device.isDesktop ? 690 : 343"
-      :height="$device.isDesktop ? 290 : 144"
+      src="/154c0562-5694-4a08-0bd6-c02c971d9100/thumbnail344"
+      :srcset="`${imageUrl}/154c0562-5694-4a08-0bd6-c02c971d9100/thumbnail344 343w,
+            ${imageUrl}/154c0562-5694-4a08-0bd6-c02c971d9100/banner690 1410w`"
+      sizes="343 md:1410"
+      alt="Napricot Banner 1"
     />
-    <NuxtPicture
-      format="webp"
+    <NuxtImg
+      provider="myProvider"
       loading="lazy"
-      :src="`${
-        config.app.baseUrl
-      }/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/dda547f1-23ef-4bcf-b3d9-56aa4151b500/${
-        $device.isDesktop ? 'banner690' : 'thumbnail344'
-      }`"
-      alt="Napricot Banner"
-      :width="$device.isDesktop ? 690 : 343"
-      :height="$device.isDesktop ? 290 : 144"
+      src="/dda547f1-23ef-4bcf-b3d9-56aa4151b500/thumbnail344"
+      :srcset="`${imageUrl}/dda547f1-23ef-4bcf-b3d9-56aa4151b500/thumbnail344 343w,
+            ${imageUrl}/dda547f1-23ef-4bcf-b3d9-56aa4151b500/banner690 1410w`"
+      sizes="343 md:1410"
+      alt="Napricot Banner 2"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-const config = useRuntimeConfig()
+const {
+  app: { imageUrl }
+} = useRuntimeConfig()
 </script>
 
 <style lang="postcss" module>
@@ -41,11 +34,8 @@ const config = useRuntimeConfig()
   display: flex;
   justify-content: space-evenly;
   gap: 30px;
-  &.mobile {
+  @media (max-width: 768px) {
     flex-wrap: wrap;
-  }
-  picture {
-    display: flex;
   }
 }
 </style>

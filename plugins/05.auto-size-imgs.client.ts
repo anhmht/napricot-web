@@ -17,7 +17,25 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
     });
   };
+
+  const getMediaQuery = () => {
+    const matches = ref(false);
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    matches.value = mediaQuery.matches;
+    const { isMobile, isDesktop } = useMediaQuery();
+    isMobile.value = matches.value;
+    isDesktop.value = !matches.value
+    mediaQuery.onchange = (event: MediaQueryListEvent) => {
+      matches.value = event.matches;
+      isMobile.value = matches.value;
+      isDesktop.value = !matches.value
+    };
+    return matches;
+  }
   if (import.meta.client) {
-    nuxtApp.hook('page:finish', addImageSizesWithObserver);
+    nuxtApp.hook('page:finish', () => {
+      addImageSizesWithObserver();
+      getMediaQuery();
+    });
   }
 });

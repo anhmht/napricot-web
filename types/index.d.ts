@@ -1,13 +1,11 @@
 
 
-import { Device } from '@nuxtjs/device/runtime/types';
 import Vue from 'vue'
 import { ComponentCustomProperties } from 'vue'
 import type { EventBus } from '~/plugins/03.event-bus';
 
 interface PluginsInjections {
   $eventBus: EventBus
-  $device: Device
 
   // Composables
   formatDate: typeof import('~/composables/format').formatDate

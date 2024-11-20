@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="best-seller"
-    :class="[$style.bestSeller, $device.isMobileOrTablet && $style.mobile]"
-  >
+  <div id="best-seller" :class="$style.bestSeller">
     <div :class="$style.title">
       <h4>Best Sellers</h4>
       <NuxtLink to="#"
@@ -29,9 +26,6 @@ const config = useRuntimeConfig()
 .bestSeller {
   position: relative;
   scroll-margin-top: 150px;
-  &.mobile {
-    padding: 16px;
-  }
 }
 .title {
   display: flex;
@@ -68,7 +62,10 @@ const config = useRuntimeConfig()
   gap: 30px;
   justify-content: space-evenly;
 }
-.mobile {
+@media (max-width: 768px) {
+  .bestSeller {
+    padding: 16px;
+  }
   .content {
     gap: 16px;
     margin-top: 16px;

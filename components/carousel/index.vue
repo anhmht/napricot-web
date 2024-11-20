@@ -1,13 +1,14 @@
 <template>
   <div :class="$style.carousel">
     <div :class="$style.wrapper" v-if="loading">
-      <NuxtPicture
-        :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public`"
-        format="avif,webp"
+      <NuxtImg
+        provider="myProvider"
+        src="/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public"
+        :srcset="`${imageUrl}/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/large500 375w,
+            ${imageUrl}/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public 1410w`"
+        sizes="375 md:1410"
         alt="Napricot Banner 1"
         preload
-        :width="$device.isDesktop ? 1410 : 375"
-        height="340"
         @load="loading = false"
       />
       <div :class="$style.overlay">
@@ -32,13 +33,13 @@
     >
       <el-carousel-item>
         <div :class="$style.wrapper">
-          <NuxtPicture
-            :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public`"
-            format="avif,webp"
+          <NuxtImg
+            provider="myProvider"
+            src="/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public"
+            :srcset="`${imageUrl}/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/large500 375w,
+            ${imageUrl}/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public 1410w`"
+            sizes="375 md:1410"
             alt="Napricot Banner 1"
-            :width="$device.isDesktop ? 1410 : 375"
-            height="340"
-            preload
           />
           <div :class="$style.overlay">
             <div :class="$style.contentWrapper">
@@ -57,13 +58,13 @@
       </el-carousel-item>
       <el-carousel-item>
         <NuxtLink to="#">
-          <NuxtPicture
-            :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/51f64545-6417-4083-5e4e-c3d211e16e00/public`"
-            format="webp"
+          <NuxtImg
+            provider="myProvider"
+            src="/51f64545-6417-4083-5e4e-c3d211e16e00/public"
+            :srcset="`${imageUrl}/51f64545-6417-4083-5e4e-c3d211e16e00/large500 375w,
+            ${imageUrl}/51f64545-6417-4083-5e4e-c3d211e16e00/public 1410w`"
+            sizes="375 md:1410"
             alt="Napricot Banner 2"
-            :width="$device.isDesktop ? 1410 : 375"
-            height="340"
-            preload
           />
         </NuxtLink>
       </el-carousel-item>
@@ -72,22 +73,21 @@
 </template>
 
 <script setup lang="ts">
-const config = useRuntimeConfig()
 const loading = ref(true)
+const {
+  app: { imageUrl }
+} = useRuntimeConfig()
 </script>
 
 <style lang="postcss" module>
 .carousel {
   height: 340px;
-  picture {
+  img {
     position: relative;
-    display: flex;
-    img {
-      object-fit: cover;
-      object-position: center;
-      width: 100%;
-      height: 340px;
-    }
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 340px;
   }
   a:hover {
     opacity: 0.8;
