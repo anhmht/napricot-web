@@ -1,32 +1,12 @@
 <template>
-  <NuxtLink
-    :to="`/product/${data.slug}`"
-    :class="[$style.product, $device.isMobileOrTablet && $style.mobile]"
-  >
+  <NuxtLink :to="`/product/${data.slug}`" :class="$style.product">
     <div :class="bestSelling && $style.bestSell">
-      <NuxtPicture
-        format="webp"
+      <NuxtImg
         loading="lazy"
-        :src="data.image"
+        :src="`${data.image}hero`"
         :alt="data.name"
-        :width="
-          $device.isDesktop
-            ? bestSelling
-              ? 318
-              : 330
-            : bestSelling
-            ? 151
-            : 163
-        "
-        :height="
-          $device.isDesktop
-            ? bestSelling
-              ? 318
-              : 330
-            : bestSelling
-            ? 151
-            : 163
-        "
+        :srcset="`${data.image}hero 163w, ${data.image}thumbnail 330w`"
+        sizes="163 md:330"
       />
     </div>
 
@@ -69,11 +49,13 @@ const oldPrice = computed(() => (props.data.price * 1.8).toFixed(2))
   flex-direction: column;
   gap: 8px;
   max-width: 330px;
-  &.mobile {
-    max-width: 163px;
+  img {
+    object-fit: cover;
+    width: 330px;
+    height: 330px;
   }
   &:hover {
-    picture {
+    img {
       opacity: 0.8;
     }
     p {
@@ -99,9 +81,6 @@ const oldPrice = computed(() => (props.data.price * 1.8).toFixed(2))
       text-decoration: line-through;
     }
   }
-  picture {
-    display: flex;
-  }
   :global(.el-rate) {
     height: 22px;
   }
@@ -117,6 +96,11 @@ p {
     rgba(241, 184, 91, 1) 100%
   );
   padding: 6px;
+  img {
+    width: 318px;
+    height: 318px;
+    display: flex;
+  }
 }
 .tag {
   display: flex;
@@ -148,5 +132,20 @@ p {
   display: flex;
   margin-left: auto;
   box-shadow: 0px 1px 5px 0px #00000080;
+}
+@media (max-width: 768px) {
+  .product {
+    max-width: 163px;
+    img {
+      width: 163px;
+      height: 163px;
+    }
+  }
+  .bestSell {
+    img {
+      width: 151px;
+      height: 151px;
+    }
+  }
 }
 </style>

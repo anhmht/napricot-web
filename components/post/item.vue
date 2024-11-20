@@ -1,9 +1,6 @@
 <template>
-  <NuxtLink
-    :class="[$style.item, $device.isMobileOrTablet && $style.mobile]"
-    :to="`/post/${post.slug}`"
-  >
-    <NuxtPicture
+  <NuxtLink :class="$style.item" :to="`/post/${post.slug}`">
+    <NuxtImg
       :src="post.image?.cloudflareUrl + '/large500'"
       :alt="post.title"
       width="424"
@@ -27,21 +24,15 @@ const props = defineProps({
 })
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" module scoped>
 .item {
   width: 454px;
   text-decoration: none;
-  &.mobile {
-    width: 100%;
-  }
-  picture {
-    display: flex;
-    img {
-      object-fit: cover;
-    }
+  img {
+    object-fit: cover;
   }
   &:hover {
-    picture {
+    img {
       opacity: 0.8;
     }
   }
@@ -96,6 +87,11 @@ const props = defineProps({
     h5 {
       color: var(--color-primary);
     }
+  }
+}
+@media (max-width: 768px) {
+  .item {
+    width: 100%;
   }
 }
 </style>

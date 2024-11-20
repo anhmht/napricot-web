@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.tab, $device.isMobileOrTablet && $style.mobile]">
+  <div :class="$style.tab">
     <div :class="$style.wrapper">
       <div
         v-for="(item, index) in tabs"
@@ -80,7 +80,7 @@ onMounted(() => {
 })
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" module scoped>
 .tab {
   position: relative;
   padding-bottom: 4px;
@@ -121,7 +121,7 @@ onMounted(() => {
   }
 }
 
-.mobile {
+@media (max-width: 768px) {
   .header {
     padding: 0 8px;
     font-size: 1.2rem;

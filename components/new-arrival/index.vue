@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="new-arrival"
-    :class="[$style.newArrival, $device.isMobileOrTablet && $style.mobile]"
-  >
+  <div id="new-arrival" :class="$style.newArrival">
     <div :class="$style.title">
       <h4>New arrival</h4>
       <NuxtLink to="#"
@@ -47,13 +44,10 @@ const changeTab = (index: number) => {
 }
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" module scoped>
 .newArrival {
   display: block;
   scroll-margin-top: 150px;
-  &.mobile {
-    padding: 0 16px;
-  }
 }
 .title {
   display: flex;
@@ -96,7 +90,10 @@ const changeTab = (index: number) => {
   flex-wrap: wrap;
   gap: 30px;
 }
-.mobile {
+@media (max-width: 768px) {
+  .newArrival {
+    padding: 16px;
+  }
   .wrapper {
     gap: 16px;
     justify-content: center;

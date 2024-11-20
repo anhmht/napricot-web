@@ -29,9 +29,6 @@
   align-items: center;
   padding: 12px 0;
   justify-content: space-between;
-  &.mobile {
-    padding: 12px 16px;
-  }
 }
 .anchor {
   display: flex;

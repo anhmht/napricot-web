@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="shop-by-recipient"
-    :class="[$style.recipient, $device.isMobileOrTablet && $style.mobile]"
-  >
+  <div id="shop-by-recipient" :class="$style.recipient">
     <div :class="$style.title">
       <h4>Shop by Recipient</h4>
       <NuxtLink to="#"
@@ -13,13 +10,10 @@
     <div :class="$style.content">
       <NuxtLink v-for="(item, index) in recipients(config)" to="#" :key="index">
         <div>
-          <NuxtPicture
+          <NuxtImg
             :src="item.src"
-            format="webp"
             loading="lazy"
             :alt="`${item.title} image`"
-            :width="$device.isDesktop ? 330 : 164"
-            :height="$device.isDesktop ? 330 : 164"
           />
         </div>
         <p>{{ item.title }}</p>
@@ -32,12 +26,9 @@
 const config = useRuntimeConfig()
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" module scoped>
 .recipient {
   display: block;
-  &.mobile {
-    padding: 0 16px;
-  }
 }
 .title {
   display: flex;
@@ -88,7 +79,7 @@ const config = useRuntimeConfig()
       p {
         color: var(--color-primary);
       }
-      picture {
+      img {
         transform: scale(1.2) rotate(10deg);
         opacity: 0.8;
       }
@@ -99,19 +90,26 @@ const config = useRuntimeConfig()
       color: var(--color-text);
     }
   }
-  picture {
+  img {
     display: flex;
     border-radius: 50%;
     transition: transform 0.3s ease;
-    img {
-      border-radius: 50%;
-    }
+    border-radius: 50%;
+    width: 330px;
+    height: 330px;
   }
 }
 
-.mobile {
+@media (max-width: 768px) {
+  .recipient {
+    padding: 0 16px;
+  }
   .content {
     gap: 15px;
+    img {
+      width: 164px;
+      height: 164px;
+    }
   }
 }
 </style>

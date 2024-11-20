@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.shop, , $device.isMobileOrTablet && $style.mobile]">
+  <div :class="$style.shop">
     <div :class="$style.title">
       <h4>Shop by Product</h4>
       <NuxtLink to="#"
@@ -7,10 +7,10 @@
         <i class="icon-arrow-down"></i>
       </NuxtLink>
     </div>
-    <div :class="[$style.content, $device.isMobileOrTablet && $style.mobile]">
+    <div :class="$style.content">
       <el-carousel
         arrow="never"
-        :height="$device.isDesktop ? '244px' : '396px'"
+        :height="isDesktop ? '244px' : '396px'"
         :autoplay="false"
         motion-blur
         indicator-position="none"
@@ -27,12 +27,10 @@
             :to="`/categories?category=${category.slug}`"
           >
             <div>
-              <NuxtPicture
-                :src="category.src"
+              <NuxtImg
+                :src="`${category.src}hero`"
                 format="webp"
                 :alt="`${category.name} image`"
-                :width="$device.isDesktop ? 210 : 164"
-                :height="$device.isDesktop ? 210 : 164"
                 :class="$style.picture"
               />
             </div>
@@ -53,35 +51,36 @@
 
 <script setup lang="ts">
 const config = useRuntimeConfig()
-const { isDesktop } = useDevice()
+const { isDesktop } = useMediaQuery()
+
 const page1 = ref([
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/961a4543-42cb-4e59-bda9-49caa4de8c00/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/961a4543-42cb-4e59-bda9-49caa4de8c00/`,
     slug: 'category-1',
     name: 'Hanging Suncatcher'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/3b49c6d4-805a-4e96-adc5-b96f41aefa00/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/3b49c6d4-805a-4e96-adc5-b96f41aefa00/`,
     slug: 'category-1',
     name: 'Glass Cup'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/faaf5686-b294-4115-cf33-a22b8862c300/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/faaf5686-b294-4115-cf33-a22b8862c300/`,
     slug: 'category-1',
     name: 'Whiskey Glass'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/fba3e489-8489-4836-6a45-36ea881a0a00/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/fba3e489-8489-4836-6a45-36ea881a0a00/`,
     slug: 'category-1',
     name: 'Leather Belt'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/f23b31ed-4079-439a-9f26-4ceaaf434800/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/f23b31ed-4079-439a-9f26-4ceaaf434800/`,
     slug: 'category-1',
     name: 'Solar Light'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/7a20bfa3-6b4a-4708-be3d-1447688aaf00/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/7a20bfa3-6b4a-4708-be3d-1447688aaf00/`,
     slug: 'category-1',
     name: 'Mug'
   }
@@ -89,17 +88,17 @@ const page1 = ref([
 
 const page2 = ref([
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/eb0fc99c-7de9-47c8-37e1-a9f43223ab00/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/eb0fc99c-7de9-47c8-37e1-a9f43223ab00/`,
     slug: 'category-1',
     name: 'Ornament'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/81cd0e9d-7ac0-4d23-7854-47913eef6000/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/81cd0e9d-7ac0-4d23-7854-47913eef6000/`,
     slug: 'category-1',
     name: 'T-shirt'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/3c03ce56-a8fd-4920-6f69-52a071afab00/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/3c03ce56-a8fd-4920-6f69-52a071afab00/`,
     slug: 'category-1',
     name: 'Doormat'
   }
@@ -107,35 +106,37 @@ const page2 = ref([
 
 const page2Mobile = ref([
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/f23b31ed-4079-439a-9f26-4ceaaf434800/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/f23b31ed-4079-439a-9f26-4ceaaf434800/`,
     slug: 'category-1',
     name: 'Solar Light'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/7a20bfa3-6b4a-4708-be3d-1447688aaf00/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/7a20bfa3-6b4a-4708-be3d-1447688aaf00/`,
     slug: 'category-1',
     name: 'Mug'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/eb0fc99c-7de9-47c8-37e1-a9f43223ab00/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/eb0fc99c-7de9-47c8-37e1-a9f43223ab00/`,
     slug: 'category-1',
     name: 'Ornament'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/81cd0e9d-7ac0-4d23-7854-47913eef6000/hero`,
+    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/81cd0e9d-7ac0-4d23-7854-47913eef6000/`,
     slug: 'category-1',
     name: 'T-shirt'
   }
 ])
 
-const items = ref<Array<{ src?: string; slug?: string; name?: string }[]>>([
-  isDesktop ? page1.value : page1.value.slice(0, 4),
-  isDesktop ? page2.value : page2Mobile.value,
-  isDesktop ? [] : [page2.value[page2.value.length - 1]]
-])
+const items = computed<Array<{ src?: string; slug?: string; name?: string }[]>>(
+  () => [
+    isDesktop.value ? page1.value : page1.value.slice(0, 4),
+    isDesktop.value ? page2.value : page2Mobile.value,
+    isDesktop.value ? [] : [page2.value[page2.value.length - 1]]
+  ]
+)
 
 const categories = computed(() => {
-  return isDesktop ? items.value.slice(0, 2) : items.value
+  return isDesktop.value ? items.value.slice(0, 2) : items.value
 })
 
 const carousel = ref()
@@ -146,9 +147,6 @@ const next = () => carousel.value?.next()
 <style lang="postcss" module scoped>
 .shop {
   position: relative;
-  &.mobile {
-    padding: 0 16px;
-  }
 }
 .title {
   display: flex;
@@ -197,7 +195,7 @@ const next = () => carousel.value?.next()
     }
     &:hover {
       color: var(--color-primary);
-      picture {
+      img {
         transform: scale(1.2) rotate(10deg);
         opacity: 0.8;
       }
@@ -207,7 +205,7 @@ const next = () => carousel.value?.next()
 .content {
   margin-top: 24px;
   position: relative;
-  picture {
+  img {
     display: flex;
     overflow: hidden;
     transition: transform 0.3s ease;
@@ -232,6 +230,10 @@ const next = () => carousel.value?.next()
     }
   }
 }
+.picture {
+  width: 210px;
+  height: 210px;
+}
 
 .left {
   left: -20px;
@@ -242,14 +244,23 @@ const next = () => carousel.value?.next()
   transform: translateY(-50%);
 }
 
-.mobile {
+@media (max-width: 768px) {
+  .shop {
+    padding: 0 16px;
+  }
   .category {
     flex-wrap: wrap;
     gap: 15px;
     justify-content: center;
-    p {
-      font-size: 1.4rem;
+    a {
+      p {
+        font-size: 1.4rem;
+      }
     }
+  }
+  .picture {
+    width: 164px;
+    height: 164px;
   }
   .left {
     left: -12px;

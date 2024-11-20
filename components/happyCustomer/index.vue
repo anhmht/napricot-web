@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.customer, $device.isMobileOrTablet && $style.mobile]">
+  <div :class="$style.customer">
     <div :class="$style.title">
       <h4>Happy Customers</h4>
       <NuxtLink to="#"
@@ -8,72 +8,71 @@
       </NuxtLink>
     </div>
     <div :class="$style.content">
-      <NuxtPicture
+      <NuxtImg
         v-for="(customer, index) in customers"
+        provider="myProvider"
+        :class="$style.image"
         :key="index"
-        :src="customer.src"
-        format="webp"
+        :src="`${customer.src}/hero`"
+        :srcset="`${imageUrl}${customer.src}/hero 163w, ${imageUrl}${customer.src}/thumbnail269 269w`"
         loading="lazy"
         :alt="customer.name"
-        :width="$device.isDesktop ? 269 : 163"
-        :height="$device.isDesktop ? 282 : 176"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const config = useRuntimeConfig()
+const {
+  app: { imageUrl }
+} = useRuntimeConfig()
 const customers = [
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/6501ea48-4fda-490e-0c8c-43a60c6bdf00/thumbnail269`,
+    src: `/6501ea48-4fda-490e-0c8c-43a60c6bdf00`,
     name: 'John Doe'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/6235c5d4-bcb7-4fef-0967-bab1c0a63f00/thumbnail269`,
+    src: `/6235c5d4-bcb7-4fef-0967-bab1c0a63f00`,
     name: 'Jane Doe'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/ec28fac0-ff6f-4574-88ee-ad4ddde2e700/thumbnail269`,
+    src: `/ec28fac0-ff6f-4574-88ee-ad4ddde2e700`,
     name: 'John Smith'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/4d7926fa-2e48-46ca-0c70-439c6c3cd100/thumbnail269`,
+    src: `/4d7926fa-2e48-46ca-0c70-439c6c3cd100`,
     name: 'Jane Smith'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/a93259d1-d00c-4964-dd65-924a6f809a00/thumbnail269`,
+    src: `/a93259d1-d00c-4964-dd65-924a6f809a00`,
     name: 'John Doe'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/79e0e418-6403-4540-939d-e69785572700/thumbnail269`,
+    src: `/79e0e418-6403-4540-939d-e69785572700`,
     name: 'Jane Doe'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a1dace1-e38d-41ab-eaff-d35ebfcabb00/thumbnail269`,
+    src: `/8a1dace1-e38d-41ab-eaff-d35ebfcabb00`,
     name: 'John Smith'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/d333d96d-73c8-4fd4-f194-014c40c08e00/thumbnail269`,
+    src: `/d333d96d-73c8-4fd4-f194-014c40c08e00`,
     name: 'Jane Smith'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/9b2ba6df-73ac-4890-94cd-61decd953100/thumbnail269`,
+    src: `/9b2ba6df-73ac-4890-94cd-61decd953100`,
     name: 'Jane Smith'
   },
   {
-    src: `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/a1bbde0a-b1e1-4c1b-2811-8e6052d30d00/thumbnail269`,
+    src: `/a1bbde0a-b1e1-4c1b-2811-8e6052d30d00`,
     name: 'Jane Smith'
   }
 ]
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" module scoped>
 .customer {
   position: relative;
-  &.mobile {
-    padding: 0 16px;
-  }
 }
 .title {
   display: flex;
@@ -109,16 +108,26 @@ const customers = [
   flex-wrap: wrap;
   gap: 16px;
   justify-content: space-evenly;
-  picture {
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-  }
 }
-.mobile {
+
+.image {
+  border-radius: 8px;
+  overflow: hidden;
+  height: 282px;
+  width: 269px;
+}
+
+@media (max-width: 768px) {
+  .customer {
+    padding: 0 16px;
+  }
   .content {
     margin-top: 16px;
     justify-content: center;
+  }
+  .image {
+    height: 176px;
+    width: 163px;
   }
 }
 </style>

@@ -1,10 +1,12 @@
 <template>
   <div class="container">
-    <div :class="[$style.home, $device.isMobileOrTablet ? $style.mobile : '']">
+    <div :class="$style.home">
       <carousel />
       <sales />
       <trending />
-      <shop-by-product />
+      <client-only>
+        <shop-by-product />
+      </client-only>
       <best-seller />
       <banner />
       <shop-by-recipient />
@@ -26,7 +28,7 @@ defineOgImageComponent('DefaultOg')
   flex-direction: column;
   gap: 36px;
   padding-bottom: 36px;
-  &.mobile {
+  @media (max-width: 768px) {
     gap: 16px;
     padding-bottom: 16px;
   }
