@@ -19,6 +19,7 @@ async function fetchRoutes() {
     ...data.posts.map((post) => `/post/${post.slug}`),
     '/sitemap.xml'
   ]
+  console.log(routes)
 
   await writeFile('.env.routes', `ROUTES=${JSON.stringify(routes)}\n`)
 }
