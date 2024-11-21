@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "fetch-routes": "node scripts/fetch-routes.js",
+    "build": "yarn fetch-routes && nuxt build",
     "serve": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server.mjs",

@@ -8,20 +8,20 @@
     <div class="container">
       <div :class="$style.blog">
         <div :class="$style.content">
-          <h1>
-            {{ title }}
-          </h1>
-          <div :class="$style.info">
-            <div :class="$style.date">
-              <span>Created: {{ formatDate(data?.createdAt) }}</span>
-              <span>Updated: {{ formatDate(data?.updatedAt) }}</span>
-            </div>
-            <social-share-component />
-          </div>
-          <div :class="$style.desc">
-            {{ data?.desc }}
-          </div>
           <article>
+            <h1>
+              {{ title }}
+            </h1>
+            <div :class="$style.info">
+              <div :class="$style.date">
+                <span>Created: {{ formatDate(data?.createdAt) }}</span>
+                <span>Updated: {{ formatDate(data?.updatedAt) }}</span>
+              </div>
+              <social-share-component />
+            </div>
+            <div :class="$style.desc">
+              {{ data?.desc }}
+            </div>
             <div class="ck-content" v-html="data?.content"></div>
           </article>
           <post-tags :class="$style.tags" :tags="data?.tags" />

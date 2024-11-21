@@ -88,3 +88,14 @@ p strong {
 .el-tooltip__trigger:focus-visible {
   outline: none;
 }
+
+.ck-content a{
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ck-content a:hover{
+  text-decoration: underline;
+  opacity: 0.8;
+}
