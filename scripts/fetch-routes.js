@@ -21,7 +21,7 @@ async function fetchRoutes() {
   ]
   console.log(routes)
 
-  await writeFile('.env.routes', `ROUTES=${JSON.stringify(routes)}\n`)
+  await writeFile('./dynamic-routes.json', JSON.stringify(routes))
 }
 
 fetchRoutes()

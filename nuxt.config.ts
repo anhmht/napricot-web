@@ -3,6 +3,7 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
 import fontsPreload from "./config/Font"
 import * as dotenv from 'dotenv';
+import routes from './dynamic-routes.json';
 
 // Load main .env file
 dotenv.config();
@@ -66,7 +67,7 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
     minify: true,
     prerender: {
-      routes: JSON.parse(process.env.ROUTES || '[/sitemap.xml]'),
+      routes: routes as string[],
     }
   },
 
