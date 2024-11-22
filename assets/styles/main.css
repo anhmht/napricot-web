@@ -62,7 +62,7 @@ p {
 }
 
 p strong {
-  font-weight: 700
+  font-weight: 700;
 }
 
 .container {
@@ -89,13 +89,18 @@ p strong {
   outline: none;
 }
 
-.ck-content a{
-  color: var(--color-primary);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.ck-content a:hover{
-  text-decoration: underline;
-  opacity: 0.8;
+.ck-content {
+  a {
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+      opacity: 0.8;
+    }
+  }
+  h2 {
+    font-size: 3rem;
+    font-weight: 500;
+  }
 }

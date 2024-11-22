@@ -18,6 +18,32 @@ export const createPayload = (filter: any, pagination: Pagination) => {
   return payload;
 }
 
+export const addIdsToHeadings = (htmlString: string): string => {
+  // Create a DOM parser
+  const parser = new DOMParser()
+  const doc = parser.parseFromString(htmlString, 'text/html')
+
+  // Find all headings (h1 to h6)
+  const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6')
+
+  // Iterate over each heading
+  headings.forEach((heading) => {
+    if (!heading.id && heading.textContent) {
+      // Ensure we don't overwrite existing IDs
+      // Generate an ID from the heading's text content
+      const id = heading.textContent
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-') // Replace spaces with dashes
+        .replace(/[^\w\-]/g, '') // Remove non-alphanumeric characters
+      heading.id = id
+    }
+  })
+
+  // Return the updated HTML as a string
+  return doc.body.innerHTML
+}
+
 export const generateUniqSerial= () => {
   return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, (c) => {
     const r = Math.floor(Math.random() * 16);
