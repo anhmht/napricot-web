@@ -3,11 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "build": "yarn fetch-routes && nuxt build && yarn revert-routes",
     "serve": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server.mjs",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "fetch-routes": "node scripts/fetch-routes.js",
+    "revert-routes": "node scripts/revert-routes.js"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.2.0",

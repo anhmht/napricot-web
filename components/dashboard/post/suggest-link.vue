@@ -40,7 +40,7 @@ const submit = async (item: ILink) => {
   const parser = new DOMParser()
   const doc = parser.parseFromString(props.content, 'text/html')
 
-  const replacementLink = `<a href="https://napricot.com${item.url}">${item.words}</a>`
+  const replacementLink = `<a href="${item.url}">${item.words}</a>`
 
   // Helper function to replace text in text nodes
   function replaceTextContent(node) {

@@ -3,7 +3,6 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "verbatimModuleSyntax": false,
-    "noImplicitAny": false,
-    "types": ["@nuxt/image"]
+    "noImplicitAny": false
   }
 }
