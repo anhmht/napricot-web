@@ -27,7 +27,16 @@
           <post-tags :class="$style.tags" :tags="data?.tags" />
         </div>
         <div :class="$style.sidebar">
-          <post-sidebar :post="data || undefined" />
+          <nav>
+            <div>
+              <div :class="$style.toc">
+                <div :class="$style.tocTitle">Table of Contents</div>
+                <table-of-content :content="data?.content" />
+              </div>
+
+              <post-sidebar :post="data || undefined" />
+            </div>
+          </nav>
         </div>
       </div>
       <div :class="$style.latest">
@@ -86,10 +95,6 @@ useServerSeoMeta({
   padding: 36px 0;
   display: flex;
   gap: 48px;
-  h1 {
-    font-size: 3.6rem;
-    font-weight: 500;
-  }
 }
 .content {
   flex: 1;
@@ -97,9 +102,27 @@ useServerSeoMeta({
   flex-direction: column;
   gap: 24px;
   max-width: 962px;
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    h1 {
+      font-size: 3.6rem;
+      font-weight: 500;
+    }
+  }
 }
 .sidebar {
   width: 400px;
+  nav {
+    position: sticky;
+    top: 126px;
+    max-height: calc(100vh - 115px);
+    overflow-y: auto;
+    > div {
+      padding-bottom: 32px;
+    }
+  }
 }
 .info {
   display: flex;
@@ -115,6 +138,17 @@ useServerSeoMeta({
 }
 .tags {
   display: none;
+}
+.toc {
+  padding: 24px;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+.tocTitle {
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 16px;
 }
 @media (max-width: 1120px) {
   .blog {

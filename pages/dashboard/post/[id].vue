@@ -36,6 +36,7 @@
 
 <script lang="ts" setup>
 import { FormInstance, FormRules } from 'element-plus'
+import { addIdsToHeadings } from '~/utils'
 definePageMeta({
   layout: 'dashboard',
   middleware: 'authorize'
@@ -106,6 +107,7 @@ const handleSubmit = async () => {
       return post.value.content.includes(image.id)
     })
     post.value.author = store.currentUser?.userId
+    post.value.content = addIdsToHeadings(post.value.content)
     isLoading.value = true
     await $postService.updatePost(id.toString(), post.value)
     ElNotification.success({

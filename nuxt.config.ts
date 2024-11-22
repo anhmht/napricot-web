@@ -2,13 +2,7 @@ import { RuntimeConfig, getRunTimeConfig } from "./config/RuntimeConfig"
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
 import fontsPreload from "./config/Font"
-import * as dotenv from 'dotenv';
 import routes from './dynamic-routes.json';
-
-// Load main .env file
-dotenv.config();
-// Load additional .env.routes file
-dotenv.config({ path: './.env.routes' });
 
 const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 
@@ -23,7 +17,12 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [
-      nodePolyfills()],
+      nodePolyfills()
+    ],
+  },
+
+  build: {
+
   },
 
   /*
@@ -129,7 +128,9 @@ export default defineNuxtConfig({
 
   postcss: {
     plugins: {
-      'postcss-nested': {}
+      'postcss-import': {},
+      'postcss-nested': {},
+      autoprefixer: {}
     }
   },
 
