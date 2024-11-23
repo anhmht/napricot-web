@@ -1,8 +1,23 @@
 <template>
-  <ul :class="[$style.toc, isRoot && $style.root]">
+  <div v-if="isRoot" :class="$style.wrapper">
+    <div :class="$style.highlight" :style="{ '--top-index': top }"></div>
+  </div>
+  <ul
+    :id="isRoot ? 'toc' : undefined"
+    :class="[$style.toc, isRoot && $style.root]"
+  >
     <li v-for="(item, index) in list" :key="index">
-      <NuxtLink :to="`#${item.id}`">{{ item.title }}</NuxtLink>
-      <table-of-content v-if="item.children.length" :data="item.children" />
+      <NuxtLink
+        :id="item.id"
+        :class="activeValue === item.id && $style.active"
+        :to="`#${item.id}`"
+        >{{ item.title }}</NuxtLink
+      >
+      <table-of-content
+        v-if="item.children.length"
+        :data="item.children"
+        :active="activeIdString"
+      />
     </li>
   </ul>
 </template>
@@ -24,9 +39,25 @@ const props = defineProps({
   data: {
     type: Object as () => TableOfContentItem[],
     default: []
+  },
+  active: {
+    type: String,
+    default: undefined
   }
 })
+const tocIds = ref<string[]>([])
 
+const { activeId } = useActiveToc(tocIds.value)
+const activeIdString = computed<string | undefined>(
+  () => activeId.value || undefined
+)
+const top = computed<number>(() => {
+  if (import.meta.server) return 0
+  const index = tocIds.value.indexOf(activeIdString.value!)
+  return index === -1 ? 0 : index
+})
+
+const activeValue = computed<string>(() => activeId.value || props.active || '')
 const isRoot = computed<boolean>(() => !!props.content)
 
 const generateTableOfContents = computed<TableOfContentItem[] | undefined>(
@@ -49,6 +80,7 @@ const generateTableOfContents = computed<TableOfContentItem[] | undefined>(
       const id =
         $heading.attr('id') ||
         $heading.text().trim().replace(/\s+/g, '-').toLowerCase() // Generate an ID if none exists
+      tocIds.value.push(id)
       const item = {
         level,
         id,
@@ -67,8 +99,6 @@ const generateTableOfContents = computed<TableOfContentItem[] | undefined>(
       }
       stack.push(item)
     })
-    console.log(toc)
-
     return toc
   }
 )
@@ -85,6 +115,7 @@ const list = computed<TableOfContentItem[]>(() => {
   margin: 0;
   &.root {
     padding-left: 0;
+    margin: 0 16px;
     > li:first-child {
       padding-top: 0;
     }
@@ -95,10 +126,32 @@ const list = computed<TableOfContentItem[]>(() => {
       text-decoration: none;
       color: var(--color-icon);
       font-weight: 400;
+      max-width: 340px;
+      display: inherit;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: all 0.3s ease-in-out;
+      &.active {
+        color: var(--color-text);
+        font-weight: 500;
+      }
       &:hover {
         color: var(--color-text);
       }
     }
   }
+}
+.wrapper {
+  position: relative;
+  width: 4px;
+}
+.highlight {
+  width: 4px;
+  height: 24px;
+  background: var(--color-primary);
+  position: absolute;
+  top: calc(var(--top-index) * 27px);
+  transition: all 0.3s ease-in-out;
 }
 </style>

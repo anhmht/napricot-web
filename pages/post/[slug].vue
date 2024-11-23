@@ -31,7 +31,9 @@
             <div>
               <div :class="$style.toc">
                 <div :class="$style.tocTitle">Table of Contents</div>
-                <table-of-content :content="data?.content" />
+                <div :class="$style.tocContent">
+                  <table-of-content :content="data?.content" />
+                </div>
               </div>
 
               <post-sidebar :post="data || undefined" />
@@ -149,6 +151,9 @@ useServerSeoMeta({
   font-size: 1.6rem;
   font-weight: 500;
   margin-bottom: 16px;
+}
+.tocContent {
+  display: flex;
 }
 @media (max-width: 1120px) {
   .blog {
