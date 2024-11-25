@@ -14,14 +14,15 @@ export default defineSitemapEventHandler(async () => {
             url: `/post/${post.slug}`,
             images: [post.image,...post.images].map((img: Image) => img.cloudflareUrl),
             lastmod: post.updatedAt,
-            publication_date: post.createdAt as string
+            publication_date: post.createdAt as string,
           }
         })
       })
   ])
-  return [...posts].map((p) => {
-    return {
+  const sitemap = posts.flatMap((p) => {
+    return [{
       loc: p.url,
+      priority: 1.0,
       lastmod: p.lastmod,
       images: p.images.map((img: string, index) => ({ loc: img, title: p.title + index, caption: p.title + index })),
       news: [{
@@ -29,6 +30,8 @@ export default defineSitemapEventHandler(async () => {
         publication_date: p.publication_date,
         publication: { name: p.title, language: "en" }
       }]
-    }
+    },
+    ]
   })
+  return sitemap;
 });
