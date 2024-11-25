@@ -1,3 +1,5 @@
+import { CheerioAPI, load } from 'cheerio'
+
 export const randomRate = (min: number, max: number) => {
   return Number((Math.random() * (max - min)).toFixed(1)) + min;
 }
@@ -55,4 +57,20 @@ export const sleep = (duration: number): Promise<void> => {
   return new Promise((resolve) => {
     setTimeout(resolve, duration)
   })
+}
+
+export const extractTocIds= (html: string): string[] => {
+  // Load the HTML into Cheerio
+  const $: CheerioAPI = load(html);
+
+  // Select <h2> to <h6> elements and extract their IDs
+  const ids: string[] = [];
+  $('h2, h3, h4, h5, h6').each((_, element) => {
+    const id = $(element).attr('id');
+    if (id) {
+      ids.push(id); // Add the ID if it exists
+    }
+  });
+
+  return ids;
 }
