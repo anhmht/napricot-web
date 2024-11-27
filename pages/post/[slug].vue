@@ -79,6 +79,20 @@ useServerSeoMeta({
   ogTitle: () => `${title.value}`,
   ogDescription: () => desc.value
 })
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: title.value,
+        image: image.value
+      })
+    }
+  ]
+})
 </script>
 
 <style lang="postcss" module scoped>
