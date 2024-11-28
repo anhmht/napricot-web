@@ -88,7 +88,8 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'Article',
         headline: title.value,
-        image: image.value
+        image: image.value,
+        url: `https://napricot.com/post/${slug}`
       })
     }
   ]
