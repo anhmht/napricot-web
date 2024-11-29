@@ -59,6 +59,9 @@ const { data, error } = useAsyncData('pageFetch', async () => {
 const title = computed(() => data?.value?.title || '')
 const image = computed(() => data.value?.image?.cloudflareUrl + 'large' || '')
 const desc = computed(() => data?.value?.desc || '')
+const createdDate = computed(() => data?.value?.createdAt || '')
+const updatedDate = computed(() => data?.value?.updatedAt || '')
+const keywords = computed(() => data?.value?.keywords || '')
 
 if (error.value) {
   throw createError({
@@ -86,10 +89,14 @@ useHead({
       type: 'application/ld+json',
       children: JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'Article',
+        '@type': 'WebPage',
         headline: title.value,
+        keywords: Array.isArray(keywords.value) ? keywords.value.join(',') : '',
         image: image.value,
-        url: `https://napricot.com/post/${slug}`
+        url: `https://napricot.com/post/${slug}`,
+        datePublished: createdDate.value,
+        dateModified: updatedDate.value,
+        inLanguage: 'en-US'
       })
     }
   ]
