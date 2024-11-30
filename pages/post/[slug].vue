@@ -92,6 +92,7 @@ useHead({
         '@type': 'WebPage',
         headline: title.value,
         keywords: Array.isArray(keywords.value) ? keywords.value.join(',') : '',
+        description: desc.value,
         image: image.value,
         url: `https://napricot.com/post/${slug}`,
         datePublished: createdDate.value,
