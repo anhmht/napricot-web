@@ -105,9 +105,6 @@ useHead({
 </script>
 
 <style lang="postcss" module scoped>
-.post {
-  position: relative;
-}
 .breadcrumb {
   background-color: var(--color-background);
   color: var(--color-icon);
