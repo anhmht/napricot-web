@@ -8,7 +8,7 @@
   >
     <li v-for="(item, index) in list" :key="index">
       <NuxtLink
-        :id="item.id"
+        :data-id="item.id"
         :class="activeValue === item.id && $style.active"
         :to="`#${item.id}`"
         >{{ item.title }}</NuxtLink
@@ -16,7 +16,7 @@
       <table-of-content
         v-if="item.children.length"
         :data="item.children"
-        :active="activeIdString"
+        :active="activeValue"
       />
     </li>
   </ul>
@@ -48,17 +48,16 @@ const props = defineProps({
 const tocIds = ref<string[]>([])
 
 const { activeId } = useActiveToc(tocIds.value)
-const activeIdString = computed<string | undefined>(
-  () => activeId.value || undefined
-)
-const top = computed<number>(() => {
-  if (import.meta.server) return 0
-  const index = tocIds.value.indexOf(activeIdString.value!)
-  return index === -1 ? 0 : index
-})
 
 const activeValue = computed<string>(() => activeId.value || props.active || '')
+
 const isRoot = computed<boolean>(() => !!props.content)
+
+const top = computed<number>(() => {
+  if (import.meta.server) return 0
+  const index = tocIds.value.indexOf(activeValue.value!)
+  return index === -1 ? 0 : index
+})
 
 const generateTableOfContents = computed<TableOfContentItem[] | undefined>(
   () => {
@@ -123,6 +122,7 @@ const list = computed<TableOfContentItem[]>(() => {
   li {
     padding-top: 4px;
     a {
+      height: 23px;
       text-decoration: none;
       color: var(--color-icon);
       font-weight: 400;

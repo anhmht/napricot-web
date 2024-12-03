@@ -416,7 +416,7 @@ export default defineNuxtComponent({
 </script>
 <style lang="postcss" module>
 :global(.ck-editor__editable_inline:not(.ck-comment__input *)) {
-  height: 420px;
+  height: 750px;
   overflow-y: auto;
 }
 .editor {
