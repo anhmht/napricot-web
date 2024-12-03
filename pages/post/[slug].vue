@@ -172,9 +172,6 @@ useHead({
   font-weight: 500;
   margin-bottom: 16px;
 }
-.tocContent {
-  display: flex;
-}
 @media (max-width: 1120px) {
   .blog {
     padding: 16px;
