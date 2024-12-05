@@ -67,7 +67,7 @@ const generateTableOfContents = computed<TableOfContentItem[] | undefined>(
     const $: CheerioAPI = load(props.content!)
 
     // Extract all heading elements (h1 to h6)
-    const headings = $('h1, h2, h3, h4, h5, h6').toArray()
+    const headings = $('h1, h2, h3').toArray()
 
     // Build ToC structure
     const toc: TableOfContentItem[] = []
