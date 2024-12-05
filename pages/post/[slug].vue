@@ -112,6 +112,10 @@ useHead({
 }
 .desc {
   font-weight: 400;
+  padding: 24px;
+  background: #fff0e8;
+  border-left: 4px solid var(--color-primary);
+  font-style: italic;
 }
 .blog {
   padding: 36px 0;
