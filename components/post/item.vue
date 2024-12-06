@@ -1,11 +1,6 @@
 <template>
   <NuxtLink :class="$style.item" :to="`/post/${post.slug}`">
-    <NuxtImg
-      :src="post.image?.cloudflareUrl + '/large500'"
-      :alt="post.title"
-      width="424"
-      height="248"
-    />
+    <NuxtImg :src="post.image?.cloudflareUrl + '/large500'" :alt="post.title" />
     <div :class="$style.info">
       <span>{{ formatDate(post.createdAt) }}</span>
       <h5>{{ post.title }}</h5>
@@ -29,7 +24,11 @@ const props = defineProps({
   width: 454px;
   text-decoration: none;
   img {
+    width: 100%;
+    height: 248px;
     object-fit: cover;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
   }
   &:hover {
     img {
@@ -45,6 +44,8 @@ const props = defineProps({
   min-height: 186px;
   display: flex;
   flex-direction: column;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
   span {
     font-size: 1.4rem;
     font-weight: 400;

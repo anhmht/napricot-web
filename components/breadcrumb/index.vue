@@ -81,6 +81,12 @@ li + li {
 @media (max-width: 768px) {
   .breadcrumb {
     padding: 8px;
+    a {
+      max-width: 150px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 }
 </style>
