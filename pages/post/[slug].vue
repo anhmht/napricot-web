@@ -2,7 +2,12 @@
   <div v-if="data" :class="$style.post">
     <div :class="$style.breadcrumb">
       <div class="container">
-        <breadcrumb :links="[{ name: title, path: `/post/${slug}` }]" />
+        <breadcrumb
+          :links="[
+            { name: 'posts', path: '/post' },
+            { name: title, path: `/post/${slug}` }
+          ]"
+        />
       </div>
     </div>
     <div class="container">
@@ -143,7 +148,6 @@ useHead({
   nav {
     position: sticky;
     top: 126px;
-    max-height: calc(100vh - 115px);
     overflow-y: auto;
     > div {
       padding-bottom: 32px;
