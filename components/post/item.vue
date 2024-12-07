@@ -24,6 +24,7 @@ const props = defineProps({
   width: 454px;
   text-decoration: none;
   img {
+    display: block;
     width: 100%;
     height: 248px;
     object-fit: cover;
@@ -56,6 +57,12 @@ const props = defineProps({
     font-size: 1.8rem;
     color: var(--color-text);
     margin-bottom: 12px;
+    height: 52px;
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   p {
     font-weight: 400;
@@ -67,6 +74,7 @@ const props = defineProps({
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    height: 48px;
   }
   button {
     background: #fff;
