@@ -19,7 +19,7 @@ const props = defineProps({
   },
   limit: {
     type: Number,
-    default: 4
+    default: 3
   }
 })
 const data = ref<ListPosts | undefined>(undefined)

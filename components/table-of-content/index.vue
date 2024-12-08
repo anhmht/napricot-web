@@ -6,7 +6,7 @@
     :id="isRoot ? 'toc' : undefined"
     :class="[$style.toc, isRoot && $style.root]"
   >
-    <li v-for="(item, index) in list" :key="index">
+    <li v-for="(item, index) in data" :key="index">
       <NuxtLink
         :data-id="item.id"
         :class="activeValue === item.id && $style.active"
@@ -17,15 +17,14 @@
         v-if="item.children.length"
         :data="item.children"
         :active="activeValue"
+        :toc-ids="tocIds"
       />
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
-import { CheerioAPI, load } from 'cheerio'
-
-type TableOfContentItem = {
+export type TableOfContentItem = {
   id: string
   title: string
   level: number
@@ -42,68 +41,28 @@ const props = defineProps({
   },
   active: {
     type: String,
-    default: undefined
+    default: ''
+  },
+  slug: {
+    type: String,
+    default: ''
+  },
+  tocIds: {
+    type: Array as () => string[],
+    default: []
   }
 })
-const tocIds = ref<string[]>([])
 
-const { activeId } = useActiveToc(tocIds.value)
-
-const activeValue = computed<string>(() => activeId.value || props.active || '')
+const activeValue = computed<string>(() => {
+  return props.active || ''
+})
 
 const isRoot = computed<boolean>(() => !!props.content)
 
 const top = computed<number>(() => {
   if (import.meta.server) return 0
-  const index = tocIds.value.indexOf(activeValue.value!)
+  const index = props.tocIds.indexOf(activeValue.value!)
   return index === -1 ? 0 : index
-})
-
-const generateTableOfContents = computed<TableOfContentItem[] | undefined>(
-  () => {
-    if (!isRoot.value) return undefined
-
-    // Load the HTML body into Cheerio
-    const $: CheerioAPI = load(props.content!)
-
-    // Extract all heading elements (h1 to h6)
-    const headings = $('h1, h2, h3').toArray()
-
-    // Build ToC structure
-    const toc: TableOfContentItem[] = []
-    const stack: { level: number; children: TableOfContentItem[] }[] = []
-
-    headings.forEach((heading) => {
-      const level = parseInt(heading.tagName[1], 10)
-      const $heading = $(heading)
-      const id =
-        $heading.attr('id') ||
-        $heading.text().trim().replace(/\s+/g, '-').toLowerCase() // Generate an ID if none exists
-      tocIds.value.push(id)
-      const item = {
-        level,
-        id,
-        title: $heading.text().trim() || '',
-        children: []
-      }
-
-      while (stack.length && stack[stack.length - 1].level >= level) {
-        stack.pop()
-      }
-
-      if (stack.length) {
-        stack[stack.length - 1].children.push(item)
-      } else {
-        toc.push(item)
-      }
-      stack.push(item)
-    })
-    return toc
-  }
-)
-
-const list = computed<TableOfContentItem[]>(() => {
-  return generateTableOfContents.value || props.data
 })
 </script>
 

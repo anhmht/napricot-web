@@ -1,10 +1,13 @@
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
 
-export function useActiveToc(tocIds: string[]) {
+export function useActiveToc() {
   const activeId = ref<string | null>(null);
+  const tocIds = ref<string[]>([]);
+  const slug = ref<string | null>(null);
+  const observer = ref<IntersectionObserver | null>(null);
 
-  onMounted(() => {
-    const observer = new IntersectionObserver(
+  const getActiveId = () => {
+    observer.value = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -20,17 +23,37 @@ export function useActiveToc(tocIds: string[]) {
     );
 
     // Observe each section
-    tocIds.forEach((id) => {
+    tocIds.value.forEach((id) => {
       const element = document.getElementById(id);
       if (element) {
-        observer.observe(element);
+        if (observer.value) {
+          observer.value.observe(element);
+        }
       }
     });
+  }
 
-    onUnmounted(() => {
-      observer.disconnect(); // Cleanup observer
-    });
-  });
+  const cleanUp = () => {
+    if (observer.value) {
+      tocIds.value = [];
+      observer.value.disconnect();
+      // observer.value = null;
+      slug.value = null;
+    }
+  }
 
-  return { activeId };
+  watch(tocIds, () => {
+    getActiveId();
+  })
+
+  onMounted(() => {
+    getActiveId()
+  })
+
+  onBeforeUnmount(() => {
+    tocIds.value = []
+    cleanUp()
+  })
+
+  return { activeId, tocIds, slug, getActiveId , cleanUp };
 }
