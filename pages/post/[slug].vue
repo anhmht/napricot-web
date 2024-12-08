@@ -22,7 +22,9 @@
                 <span>Created: {{ formatDate(data?.createdAt) }}</span>
                 <span>Updated: {{ formatDate(data?.updatedAt) }}</span>
               </div>
-              <social-share-component />
+              <client-only>
+                <social-share-component />
+              </client-only>
             </div>
             <div :class="$style.desc">
               {{ data?.desc }}
@@ -37,10 +39,15 @@
               <div :class="$style.toc">
                 <div :class="$style.tocTitle">Table of Contents</div>
                 <div :class="$style.tocContent">
-                  <table-of-content :content="data?.content" />
+                  <table-of-content
+                    :data="generateTableOfContents"
+                    :active="activeId || undefined"
+                    :content="data?.content"
+                    :slug="data?.slug"
+                    :toc-ids="tocIds"
+                  />
                 </div>
               </div>
-
               <post-sidebar :post="data || undefined" />
             </div>
           </nav>
@@ -55,6 +62,8 @@
 
 <script lang="ts" setup>
 import 'ckeditor5/ckeditor5.css'
+import { CheerioAPI, load } from 'cheerio'
+import { TableOfContentItem } from '~/components/table-of-content/index.vue'
 
 const slug = useRoute().params.slug as string
 const { data, error } = useAsyncData('pageFetch', async () => {
@@ -75,6 +84,51 @@ if (error.value) {
     fatal: true
   })
 }
+
+const { activeId, tocIds } = useActiveToc()
+
+const generateTableOfContents = computed<TableOfContentItem[] | undefined>(
+  () => {
+    // Load the HTML body into Cheerio
+    const $: CheerioAPI = load(data?.value?.content!)
+
+    // Extract all heading elements (h1 to h6)
+    const headings = $('h1, h2, h3').toArray()
+
+    // Build ToC structure
+    const toc: TableOfContentItem[] = []
+    const stack: { level: number; children: TableOfContentItem[] }[] = []
+
+    tocIds.value = []
+    headings.forEach((heading) => {
+      const level = parseInt(heading.tagName[1], 10)
+      const $heading = $(heading)
+      const id =
+        $heading.attr('id') ||
+        $heading.text().trim().replace(/\s+/g, '-').toLowerCase() // Generate an ID if none exists
+      tocIds.value.push(id)
+      const item = {
+        level,
+        id,
+        title: $heading.text().trim() || '',
+        children: []
+      }
+
+      while (stack.length && stack[stack.length - 1].level >= level) {
+        stack.pop()
+      }
+
+      if (stack.length) {
+        stack[stack.length - 1].children.push(item)
+      } else {
+        toc.push(item)
+      }
+      stack.push(item)
+    })
+    return toc
+  }
+)
+
 defineOgImageComponent('BlogPost', {
   title,
   image,
@@ -158,6 +212,7 @@ useHead({
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 45px;
   .date {
     color: var(--color-icon);
     font-weight: 400;
@@ -194,6 +249,7 @@ useHead({
     flex-direction: column-reverse;
     align-items: flex-start;
     gap: 16px;
+    height: 72px;
   }
   .latest {
     padding: 16px;

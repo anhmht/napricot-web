@@ -18,7 +18,7 @@ const props = defineProps({
     default: undefined
   }
 })
-
+const category = ref<string | undefined>(props.categoryId)
 const data = ref<ListPosts | undefined>(undefined)
 const posts = computed(() => {
   return (
@@ -26,7 +26,8 @@ const posts = computed(() => {
     []
   )
 })
-onMounted(async () => {
+
+const getPosts = async () => {
   data.value = await $postService.getPosts(
     {
       sort: 'updatedAt',
@@ -34,7 +35,18 @@ onMounted(async () => {
     },
     { page: 1, limit: 4 }
   )
-})
+}
+
+watch(
+  () => props.categoryId,
+  async (newValue, oldValue) => {
+    console.log(category.value, newValue)
+
+    if (!oldValue && newValue === category.value) return
+    await getPosts()
+  },
+  { flush: 'post', immediate: true }
+)
 </script>
 
 <style lang="postcss" module>
