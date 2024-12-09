@@ -37,16 +37,9 @@ const getPosts = async () => {
   )
 }
 
-watch(
-  () => props.categoryId,
-  async (newValue, oldValue) => {
-    console.log(category.value, newValue)
-
-    if (!oldValue && newValue === category.value) return
-    await getPosts()
-  },
-  { flush: 'post', immediate: true }
-)
+onMounted(async () => {
+  await getPosts()
+})
 </script>
 
 <style lang="postcss" module>

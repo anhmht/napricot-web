@@ -1,16 +1,12 @@
 <template>
   <div :class="$style.searchInput">
     <div :class="$style.title">Search</div>
-    <el-input :class="$style.input" v-model="search" placeholder="Search...">
-      <template #suffix>
-        <i class="icon-search"></i>
-      </template>
-    </el-input>
+    <custom-search-input @search="emit('search', $event)" />
   </div>
 </template>
 
 <script setup lang="ts">
-const search = ref('')
+const emit = defineEmits(['search'])
 </script>
 
 <style lang="postcss" module>
