@@ -23,6 +23,7 @@ const props = defineProps({
 .item {
   width: 454px;
   text-decoration: none;
+  box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.04);
   img {
     display: block;
     width: 100%;
