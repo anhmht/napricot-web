@@ -13,7 +13,7 @@
       </div>
     </div>
     <div :class="[$style.content, isOpen && $style.open]">
-      <nuxt-link to="/dashboard/admin/profile" :class="$style.item">
+      <nuxt-link to="/dashboard/setting" :class="$style.item">
         <i class="icon-settings"></i>
         <span>Settings</span>
       </nuxt-link>
