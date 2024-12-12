@@ -18,6 +18,7 @@ export interface IPost {
   updatedAt?: string
   status?: PostStatus
   keywords: string[]
+  uploading?: boolean
   tags: string[]
 }
 
