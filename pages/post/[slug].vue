@@ -66,10 +66,16 @@ import { CheerioAPI, load } from 'cheerio'
 import { TableOfContentItem } from '~/components/table-of-content/index.vue'
 
 const slug = useRoute().params.slug as string
-const { data, error } = useAsyncData('pageFetch', async () => {
-  const post = await $postService.getPostBySlug(slug)
-  return { ...post }
-})
+const { data, error } = useAsyncData(
+  'pageFetch-' + slug,
+  async () => {
+    const post = await $postService.getPostBySlug(slug)
+    return { ...post }
+  },
+  {
+    watch: [() => slug]
+  }
+)
 const title = computed(() => data?.value?.title || '')
 const image = computed(() => data.value?.image?.cloudflareUrl + 'large' || '')
 const desc = computed(() => data?.value?.desc || '')
