@@ -13,7 +13,7 @@
       <el-table-column
         prop="title"
         label="Title"
-        width="450"
+        width="400"
         show-overflow-tooltip
       >
         <template #default="{ row }">
@@ -38,7 +38,7 @@
           {{ fromNow(row.updatedAt) }}
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="Status" width="200">
+      <el-table-column prop="status" label="Status" width="120">
         <template #default="{ row }">
           <el-tag
             size="large"
@@ -49,14 +49,43 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column label="Upload Status" width="150" align="center">
+        <template #default="{ row }">
+          <el-progress
+            v-if="row.uploading"
+            :percentage="100"
+            :stroke-width="24"
+            :text-inside="true"
+            status="warning"
+            striped
+            striped-flow
+            ><span>Uploading</span></el-progress
+          >
+          <el-button
+            v-else
+            style="width: 42px"
+            type="success"
+            :icon="Check"
+            circle
+          />
+        </template>
+      </el-table-column>
       <el-table-column label="Action" width="220">
         <template #default="{ row }">
           <div :class="$style.action">
-            <custom-button type="default" @click="emit('edit', row._id)">
+            <custom-button
+              :disabled="row.uploading"
+              type="default"
+              @click="emit('edit', row._id)"
+            >
               <i class="icon-edit"></i>
               Edit
             </custom-button>
-            <custom-button type="danger" @click="emit('delete', row._id)">
+            <custom-button
+              :disabled="row.uploading"
+              type="danger"
+              @click="emit('delete', row._id)"
+            >
               <i class="icon-delete"></i>
             </custom-button>
           </div>
@@ -67,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import moment from 'moment'
+import { Check } from '@element-plus/icons-vue'
 const props = defineProps({
   list: {
     type: Object as () => ListPosts | null,
@@ -118,6 +147,9 @@ onMounted(async () => {
 <style lang="postcss" module>
 .categoryTable {
   position: relative;
+  :global(.el-progress-bar__inner) {
+    text-align: center;
+  }
 }
 .action {
   display: flex;
