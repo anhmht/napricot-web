@@ -26,7 +26,7 @@
         @sort="handleSort"
       />
       <dashboard-post-table
-        :list="data"
+        :list="posts"
         v-model:pagination="pagination"
         v-model:selected-rows="selectedRows"
         @delete="handleDelete([$event])"
@@ -43,6 +43,10 @@ definePageMeta({
   layout: 'dashboard',
   middleware: 'authorize'
 })
+
+const { notification } = useWebSocket('wss://localhost:6001')
+
+const posts = ref<ListPosts | undefined>(undefined)
 
 /** Table ref */
 const selectedRows = ref<IPost[]>([])
@@ -107,13 +111,29 @@ const reloadList = () => {
   refresh()
 }
 
-const { data, status, refresh } = await useAsyncData(
+const { status, refresh } = await useAsyncData(
   'post',
   async () => {
-    return await $postService.getPosts(filter.value, pagination.value)
+    const res = await $postService.getPosts(filter.value, pagination.value)
+    posts.value = res
   },
   {
     watch: [filter, pagination]
+  }
+)
+
+watch(
+  () => notification.value.postNotification,
+  () => {
+    const postNotification = notification.value.postNotification
+    if (postNotification) {
+      console.log(postNotification)
+      const { id, uploading } = postNotification
+      const post = posts.value?.posts.find((p) => p._id === id)
+      if (post) {
+        post.uploading = uploading
+      }
+    }
   }
 )
 </script>

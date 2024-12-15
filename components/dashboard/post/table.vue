@@ -99,7 +99,7 @@
 import { Check } from '@element-plus/icons-vue'
 const props = defineProps({
   list: {
-    type: Object as () => ListPosts | null,
+    type: Object as () => ListPosts | undefined,
     required: true
   },
   pagination: {
