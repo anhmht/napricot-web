@@ -1,4 +1,4 @@
-export const useWebSocket = (url: string) => {
+export const useWebSocket = () => {
   const config = useRuntimeConfig();
   const socket = useState<WebSocket | null>('socket', () => null);
   const isConnected = ref(false);
