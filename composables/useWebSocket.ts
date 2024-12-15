@@ -1,4 +1,5 @@
 export const useWebSocket = (url: string) => {
+  const config = useRuntimeConfig();
   const socket = useState<WebSocket | null>('socket', () => null);
   const isConnected = ref(false);
   const notification = useState<INotification>('postNotification', () => {
@@ -6,7 +7,7 @@ export const useWebSocket = (url: string) => {
   })
 
   const connect = () => {
-    socket.value = new WebSocket(url);
+    socket.value = new WebSocket(config.app.operationUrl);
 
     socket.value.onopen = () => {
       console.log('Connected to WebSocket');
