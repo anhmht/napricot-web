@@ -5,7 +5,7 @@
         <custom-button type="default" @click="navigateTo('/dashboard/post')">
           Discard</custom-button
         >
-        <custom-button type="primary" @click="handleSubmit">
+        <custom-button type="primary" @click="handleSubmit" :disabled="loading">
           <i class="icon-add"></i>
           Create</custom-button
         >
@@ -23,7 +23,7 @@
     >
       <div :class="$style.content">
         <div :class="$style.form">
-          <dashboard-post-form v-model:post="post" />
+          <dashboard-post-form v-model:post="post" v-model:loading="loading" />
         </div>
         <div :class="$style.config">
           <dashboard-post-config v-model:post="post" />
@@ -41,6 +41,8 @@ definePageMeta({
   layout: 'dashboard',
   middleware: 'authorize'
 })
+
+const loading = ref<boolean>(false)
 
 const store = useMainStore()
 

@@ -20,8 +20,8 @@ export const useWebSocket = () => {
       receiveMessage(message);
     };
 
-    socket.value.onclose = () => {
-      console.log('WebSocket disconnected');
+    socket.value.onclose = (event) => {
+      console.log(`WebSocket closed: Code ${event.code}, Reason: ${event.reason}`);
       isConnected.value = false;
     };
 
