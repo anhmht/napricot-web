@@ -5,7 +5,7 @@
         <custom-button type="default" @click="navigateTo('/dashboard/post')">
           Discard</custom-button
         >
-        <custom-button type="primary" @click="handleSubmit">
+        <custom-button type="primary" @click="handleSubmit" :disabled="loading">
           <i class="icon-edit"></i>
           Update</custom-button
         >
@@ -24,7 +24,7 @@
     >
       <div :class="$style.content">
         <div :class="$style.form">
-          <dashboard-post-form v-model:post="post" />
+          <dashboard-post-form v-model:post="post" v-model:loading="loading" />
         </div>
         <div :class="$style.config">
           <dashboard-post-config v-model:post="post" />
@@ -35,6 +35,7 @@
 </template>
 
 <script lang="ts" setup>
+import { load } from 'cheerio'
 import { FormInstance, FormRules } from 'element-plus'
 import { addIdsToHeadings } from '~/utils'
 definePageMeta({
@@ -42,7 +43,7 @@ definePageMeta({
   middleware: 'authorize'
 })
 
-const store = useMainStore()
+const loading = ref<boolean>(false)
 
 const { id } = useRoute().params
 const post = ref<IPost>({
@@ -106,7 +107,6 @@ const handleSubmit = async () => {
     post.value.images = post.value.images.filter((image) => {
       return post.value.content.includes(image.id)
     })
-    post.value.author = store.currentUser?.userId
     post.value.content = addIdsToHeadings(post.value.content)
     isLoading.value = true
     await $postService.updatePost(id.toString(), post.value)
