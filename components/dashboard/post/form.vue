@@ -33,6 +33,7 @@
       label="Content"
       v-model="form.content"
       v-model:images="form.images"
+      @loading="emit('update:loading', $event)"
       @input="updateForm('content', $event)"
     />
 
@@ -78,10 +79,14 @@ const props = defineProps({
   post: {
     type: Object as () => IPost,
     required: true
+  },
+  loading: {
+    type: Boolean as () => boolean,
+    required: true
   }
 })
 
-const emit = defineEmits(['update:post'])
+const emit = defineEmits(['update:post', 'update:loading'])
 
 const form = ref<IPost>(props.post)
 const titleWidth = ref<number>(0)

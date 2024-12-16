@@ -44,7 +44,7 @@ definePageMeta({
   middleware: 'authorize'
 })
 
-const { notification } = useWebSocket('wss://localhost:6001')
+const { notification } = useWebSocket()
 
 const posts = ref<ListPosts | undefined>(undefined)
 

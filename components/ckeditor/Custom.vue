@@ -124,6 +124,7 @@ class UploadAdapter {
     let upload = new Promise<UploadResponse>((resolve, reject) => {
       this.loader.file.then((data) => {
         if (data) {
+          this.vm.$emit('loading', true)
           $uploadService
             .uploadImage(data)
             .then((response) => {
@@ -140,6 +141,9 @@ class UploadAdapter {
             })
             .catch((err) => {
               reject(err)
+            })
+            .finally(() => {
+              this.vm.$emit('loading', false)
             })
         } else {
           reject(new Error('File is null'))
@@ -288,6 +292,7 @@ export default defineNuxtComponent({
       this.$emit('update:images', images)
     }
   },
+  emits: ['update:modelValue', 'input', 'update:images', 'loading'],
   data() {
     const vm = this
     return {
