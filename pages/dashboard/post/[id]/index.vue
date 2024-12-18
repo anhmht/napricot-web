@@ -35,7 +35,6 @@
 </template>
 
 <script lang="ts" setup>
-import { load } from 'cheerio'
 import { FormInstance, FormRules } from 'element-plus'
 import { addIdsToHeadings } from '~/utils'
 definePageMeta({
