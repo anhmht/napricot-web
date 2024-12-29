@@ -5,6 +5,9 @@
         <custom-button type="default" @click="navigateTo('/dashboard/post')">
           Discard</custom-button
         >
+        <custom-button type="default" @click="openPreview = true">
+          Preview</custom-button
+        >
         <custom-button type="primary" @click="handleSubmit" :disabled="loading">
           <i class="icon-add"></i>
           Create</custom-button
@@ -30,6 +33,8 @@
         </div>
       </div>
     </el-form>
+
+    <dashboard-post-preview-modal v-model:open="openPreview" :post="post" />
   </div>
 </template>
 
@@ -43,6 +48,7 @@ definePageMeta({
 })
 
 const loading = ref<boolean>(false)
+const openPreview = ref<boolean>(false)
 
 const store = useMainStore()
 
