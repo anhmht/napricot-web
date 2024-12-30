@@ -12,7 +12,7 @@
       v-model="form.slug"
       name="slug"
       label="Slug"
-      :disabled="true"
+      @input="updateForm('slug', $event)"
     />
     <custom-field
       v-model="form.desc"

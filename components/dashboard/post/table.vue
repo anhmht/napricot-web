@@ -83,6 +83,13 @@
             </custom-button>
             <custom-button
               :disabled="row.uploading"
+              type="default"
+              @click="emit('preview', row.slug)"
+            >
+              <i class="icon-eye"></i>
+            </custom-button>
+            <custom-button
+              :disabled="row.uploading"
               type="danger"
               @click="emit('delete', row._id)"
             >
@@ -116,7 +123,8 @@ const emit = defineEmits([
   'update:pagination',
   'edit',
   'delete',
-  'update:selectedRows'
+  'update:selectedRows',
+  'preview'
 ])
 
 const categories = ref<ICategory[]>([])

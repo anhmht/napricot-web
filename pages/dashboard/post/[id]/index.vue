@@ -5,6 +5,9 @@
         <custom-button type="default" @click="navigateTo('/dashboard/post')">
           Discard</custom-button
         >
+        <custom-button type="default" @click="openPreview = true">
+          Preview</custom-button
+        >
         <custom-button type="primary" @click="handleSubmit" :disabled="loading">
           <i class="icon-edit"></i>
           Update</custom-button
@@ -31,6 +34,8 @@
         </div>
       </div>
     </el-form>
+
+    <dashboard-post-preview-modal v-model:open="openPreview" :post="post" />
   </div>
 </template>
 
@@ -43,7 +48,7 @@ definePageMeta({
 })
 
 const loading = ref<boolean>(false)
-
+const openPreview = ref<boolean>(false)
 const { id } = useRoute().params
 const post = ref<IPost>({
   _id: id.toString(),
@@ -67,6 +72,24 @@ const rules = reactive<FormRules>({
     {
       required: true,
       message: 'Please input post title',
+      trigger: ['blur', 'change']
+    }
+  ],
+  slug: [
+    {
+      required: true,
+      message: 'Please input post slug',
+      trigger: ['blur', 'change']
+    },
+    {
+      validator: (rule, value, callback) => {
+        const kebabCaseRegex = /^[a-z0-9]+(-[a-z0-9]+)*$/
+        if (kebabCaseRegex.test(post.value.slug)) {
+          callback()
+        } else {
+          callback(new Error('The wrong slug format.'))
+        }
+      },
       trigger: ['blur', 'change']
     }
   ],
