@@ -31,6 +31,7 @@
         v-model:selected-rows="selectedRows"
         @delete="handleDelete([$event])"
         @edit="navigateTo(`/dashboard/post/${$event}`)"
+        @preview="previewPost($event)"
       />
     </div>
   </div>
@@ -79,6 +80,10 @@ const handleSort = (sort: string) => {
     ...pagination.value,
     page: 1
   }
+}
+
+const previewPost = (slug: string) => {
+  navigateTo(`/post/${slug}`, { open: { target: '_blank' } })
 }
 
 const handleDelete = async (ids: string[]) => {

@@ -75,6 +75,24 @@ const rules = reactive<FormRules>({
       trigger: ['blur', 'change']
     }
   ],
+  slug: [
+    {
+      required: true,
+      message: 'Please input post slug',
+      trigger: ['blur', 'change']
+    },
+    {
+      validator: (rule, value, callback) => {
+        const kebabCaseRegex = /^[a-z0-9]+(-[a-z0-9]+)*$/
+        if (kebabCaseRegex.test(post.value.slug)) {
+          callback()
+        } else {
+          callback(new Error('The wrong slug format.'))
+        }
+      },
+      trigger: ['blur', 'change']
+    }
+  ],
   desc: [
     {
       required: true,
