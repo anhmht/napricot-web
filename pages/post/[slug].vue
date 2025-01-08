@@ -57,6 +57,7 @@
         <post-list title="Latest Post" :post-id="data?._id" />
       </div>
     </div>
+    <post-download-url :post="data" v-if="data?.externalUrl" />
   </div>
 </template>
 
