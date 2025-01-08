@@ -57,7 +57,7 @@
         <post-list title="Latest Post" :post-id="data?._id" />
       </div>
     </div>
-    <post-download-url :post="data" v-if="data?.externalUrl" />
+    <post-download-url :post="data" v-if="data?.externalUrl && social" />
   </div>
 </template>
 
@@ -66,6 +66,8 @@ import 'ckeditor5/ckeditor5.css'
 import { CheerioAPI, load } from 'cheerio'
 import { TableOfContentItem } from '~/components/table-of-content/index.vue'
 
+const route = useRoute()
+const social = !!route.query.social as boolean
 const slug = useRoute().params.slug as string
 const { data, error } = useAsyncData(
   'pageFetch-' + slug,
