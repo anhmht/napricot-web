@@ -9,6 +9,12 @@
       @input="updateForm('status', $event)"
       :style="{ marginBottom: '16px' }"
     />
+    <custom-field
+      v-model="form.externalUrl"
+      name="externalUrl"
+      label="Download Link"
+      @input="updateForm('externalUrl', $event)"
+    />
     <h4 :class="$style.organization">Organization</h4>
     <custom-select
       v-model="form.categoryId"

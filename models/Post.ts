@@ -20,6 +20,7 @@ export interface IPost {
   keywords: string[]
   uploading?: boolean
   tags: string[]
+  externalUrl?: string
 }
 
 export interface ListPosts {
