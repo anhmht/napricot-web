@@ -55,7 +55,10 @@ const data = ref([
     title: 'Help',
     items: [
       { name: 'FAQ', link: '/help/faq' },
-      { name: 'Contact Us', link: '/help/contact-us' },
+      {
+        name: 'Cancellation & Modification',
+        link: '/help/cancellation-policy'
+      },
       { name: 'Shipping & Delivery', link: '/help/shipping' },
       { name: 'Returns & Refund', link: '/help/returns' }
     ]
@@ -73,7 +76,8 @@ const data = ref([
     title: 'About',
     items: [
       { name: 'About us', link: '/about-us' },
-      { name: 'Invite Friends', link: '/about/team' }
+      { name: 'Invite Friends', link: '/about/team' },
+      { name: 'Contact Us', link: '/contact-us' }
     ]
   }
 ])
