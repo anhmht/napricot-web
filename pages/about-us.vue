@@ -71,9 +71,9 @@
         </p>
         <NuxtImg
           provider="myProvider"
-          src="/c9787163-6e05-4788-2e77-e2c18e246300/public"
-          :srcset="`${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero 375w,
-                  ${config.app.imageUrl}/c9787163-6e05-4788-2e77-e2c18e246300/public 1410w`"
+          src="/26d0e35b-eb2a-4432-d5fc-39c682271a00/post872x424"
+          :srcset="`${config.app.imageUrl}/26d0e35b-eb2a-4432-d5fc-39c682271a00/hero 375w,
+                  ${config.app.imageUrl}/26d0e35b-eb2a-4432-d5fc-39c682271a00/post872x424 1410w`"
           sizes="375 md:1410"
           alt="Napricot Commitment"
           :class="$style.commitment"
@@ -246,7 +246,6 @@ const config = useRuntimeConfig()
 }
 .commitment {
   width: 1410px;
-  height: 340px;
 }
 .productImg {
   width: 705px;

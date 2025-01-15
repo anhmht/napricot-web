@@ -17,8 +17,8 @@
         <div>
           <h6>Do you need us?</h6>
           <p>
-            We are happy to <NuxtLink to="/help">help you</NuxtLink>. Our
-            customer service is open day and night.
+            We are happy to <NuxtLink to="/help/contact">help you</NuxtLink>.
+            Our customer service is open day and night.
           </p>
         </div>
       </div>

@@ -43,24 +43,22 @@
 <script setup lang="ts">
 const data = ref([
   {
-    title: 'Shop',
+    title: 'Policy',
     items: [
-      { name: 'Shop by Product', link: '/shop/new-arrivals' },
-      { name: 'Shop by Occasion', link: '/shop/best-sellers' },
-      { name: 'Shop by Recipient', link: '/shop/sale' },
-      { name: 'Shop by Hobby', link: '/shop/gift-cards' }
+      { name: 'Privacy', link: '/policy/privacy' },
+      {
+        name: 'Cancellation & Modification',
+        link: '/policy/cancel'
+      },
+      { name: 'Shipping & Delivery', link: '/policy/shipping' },
+      { name: 'Returns & Refund', link: '/policy/return' }
     ]
   },
   {
     title: 'Help',
     items: [
       { name: 'FAQ', link: '/help/faq' },
-      {
-        name: 'Cancellation & Modification',
-        link: '/help/cancellation-policy'
-      },
-      { name: 'Shipping & Delivery', link: '/help/shipping' },
-      { name: 'Returns & Refund', link: '/help/returns' }
+      { name: 'Contact Us', link: '/help/contact' }
     ]
   },
   {
@@ -76,8 +74,7 @@ const data = ref([
     title: 'About',
     items: [
       { name: 'About us', link: '/about-us' },
-      { name: 'Invite Friends', link: '/about/team' },
-      { name: 'Contact Us', link: '/contact-us' }
+      { name: 'Invite Friends', link: '/about/team' }
     ]
   }
 ])
