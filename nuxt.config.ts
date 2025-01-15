@@ -55,11 +55,11 @@ export default defineNuxtConfig({
     sources: ['/api/__sitemap__/urls'],
     experimentalCompression: true,
     experimentalWarmUp: true,
-    exclude: ['/email-verification', '/reset-password', '/forgot-password', '/sign-in', '/dashboard'],
+    exclude: ['/email-verification', '/reset-password', '/forgot-password', '/sign-in', '/dashboard', '/policy'],
   },
 
   robots: {
-    disallow: ['/dashboard'],
+    disallow: ['/dashboard', '/policy'],
   },
 
   nitro: {
@@ -84,6 +84,9 @@ export default defineNuxtConfig({
     '/about-us': {
       prerender: true
     },
+    '/policy/**': {
+      prerender: true
+    }
   },
 
   runtimeConfig: {

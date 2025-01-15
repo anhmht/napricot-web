@@ -8,58 +8,82 @@
     <div class="container">
       <div :class="$style.wrapper">
         <h1>Napricot Brand Introduction</h1>
-        <p>
-          The name "Napricot" is a fusion of the letter "N" and the word
-          "Apricot." Inspired by the apricot fruit, the name reflects the idea
-          that everyone has dreams they wish to realize. At
-          <strong>Napricot</strong>, we are dedicated to creating personalized
-          products that celebrate the most meaningful people and cherished
-          moments in your life
-        </p>
-        <NuxtImg
-          provider="myProvider"
-          src="/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero"
-          :srcset="`${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero 210w,
+        <h2>Our Story</h2>
+        <div :class="$style.story">
+          <div>
+            <p :class="$style.bold">
+              We are dedicated to offering you the finest products and services
+              that will make you remember us, even if it is just during a brief
+              nap.
+            </p>
+            <br />
+            <p>
+              The name <strong>"Napricot"</strong> has a special meaning,
+              derived from the word <strong>"NAP"</strong>, which means a short
+              sleep, and <strong>"Apricot"</strong>, which is the fruit. This
+              unique and cute wordplay encapsulates our mission: to provide
+              gifts and customer care services that will make you remember us in
+              your mind, even if it is just a nap. In addition to bringing
+              connections and cherished memories, we strive to create those
+              precious moments through our thoughtfully designed, personalized
+              products, celebrating the people and occasions that matter most to
+              you.
+            </p>
+          </div>
+          <NuxtImg
+            provider="myProvider"
+            src="/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero"
+            :srcset="`${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero 210w,
                   ${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/large500 500w`"
-          sizes="210 md:500"
-          alt="Napricot Logo Brand"
-          :class="$style.logo"
-        />
+            sizes="210 md:500"
+            alt="Napricot Logo Brand"
+            :class="$style.logo"
+          />
+        </div>
+
         <h2>Our Mission</h2>
-        <p>
-          To help people express their individuality through beautifully
-          crafted, custom-made items. Founded in 2022 with a passion for
-          creativity and an unwavering commitment to quality,
-          <strong>Napricot</strong> began with a simple vision: to enable
-          personal expression through custom-designed, exquisitely crafted
-          items. Today, while our reach has expanded, our mission remains rooted
-          in empowering unique expression, making each product a meaningful part
-          of our customers' lives.
-        </p>
+        <div>
+          <p :class="$style.bold">
+            To enable individuals to showcase their uniqueness through
+            exquisitely crafted, personalized items.
+          </p>
+          <br />
+          <p>
+            Our goal is to help people express their uniqueness through
+            beautifully crafted, custom-made items. With a passion for
+            creativity and a dedication to quality, We founded Napricot to
+            introduce a fresh, personalized touch to gifts and home decor. We
+            began with a simple idea: to empower personal expression through
+            custom, beautifully crafted items. Today, our mission remains
+            unchanged, though our reach and product offerings have grown beyond
+            our wildest expectations.
+          </p>
+        </div>
+
         <h2>Our Commitment</h2>
         <p>
-          At <strong>Napricot</strong>, we take pride in the exceptional quality
-          of every product. Each item is crafted meticulously using premium
-          materials and cutting-edge printing technologies, ensuring that your
-          personalized gifts are as beautiful as they are durable. Our team of
-          dedicated artisans and designers brings each idea to life, producing
-          products that are as distinctive as the individuals who order them.
+          At <strong>Napricot</strong>, we pride ourselves on the quality of our
+          products. Each item is meticulously crafted using the finest materials
+          and the latest printing technologies to ensure your personalized gifts
+          are both beautiful and durable. Our team of skilled artisans and
+          designers works tirelessly to bring your vision to life, creating
+          products that are as unique as you are.
         </p>
         <NuxtImg
           provider="myProvider"
-          src="/c9787163-6e05-4788-2e77-e2c18e246300/public"
-          :srcset="`${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero 375w,
-                  ${config.app.imageUrl}/c9787163-6e05-4788-2e77-e2c18e246300/public 1410w`"
+          src="/26d0e35b-eb2a-4432-d5fc-39c682271a00/post872x424"
+          :srcset="`${config.app.imageUrl}/26d0e35b-eb2a-4432-d5fc-39c682271a00/hero 375w,
+                  ${config.app.imageUrl}/26d0e35b-eb2a-4432-d5fc-39c682271a00/post872x424 1410w`"
           sizes="375 md:1410"
           alt="Napricot Commitment"
           :class="$style.commitment"
         />
         <h2>Our Products</h2>
         <p>
-          We offer a diverse range of personalized products tailored to suit any
-          occasion or style. From custom apparel and accessories to unique home
-          decor and thoughtful gifts, our collections are thoughtfully curated
-          to bring joy and significance to every moment.
+          We provide an extensive array of personalized items suited for every
+          occasion and style. From custom apparel and accessories to unique home
+          decor and thoughtful gifts, our curated collections are designed to
+          add joy and significance to every moment.
         </p>
         <div :class="$style.product">
           <NuxtImg
@@ -69,16 +93,6 @@
             :class="$style.productImg"
           />
           <div :class="$style.detail">
-            <h3>Print on Demand</h3>
-            <p>
-              Our Print on Demand (POD) service offers a vast array of design
-              options, allowing customers to personalize items with ease and
-              receive them on demand. This service empowers individuals to
-              create one-of-a-kind items that reflect their tastes, enabling
-              them to own pieces that are both stylish and personal. From design
-              to delivery, our POD process is seamless, making custom products
-              accessible and meaningful for all.
-            </p>
             <h3>Personalized Gifts</h3>
             <p>
               Whether it’s a birthday, anniversary, wedding, or any special
@@ -102,11 +116,93 @@
             </p>
           </div>
         </div>
+        <div :class="$style.goal">
+          <h2>Why choose Napricot?</h2>
+          <div :class="$style.reason">
+            <div :class="$style.service">
+              <div :class="$style.icon">
+                <NuxtImg
+                  src="images/personalize.svg"
+                  width="40"
+                  height="40"
+                  alt="personalize"
+                />
+              </div>
+              <h3>Unmatched Personalization</h3>
+              <p>
+                We provide a wide variety of customization options, enabling you
+                to create one-of-a-kind products that showcase your personality
+                and style.
+              </p>
+            </div>
+            <div :class="$style.service">
+              <div :class="$style.icon">
+                <NuxtImg
+                  src="images/service.svg"
+                  width="40"
+                  height="40"
+                  alt="service"
+                />
+              </div>
+              <h3>Exceptional Customer Service</h3>
+              <p>
+                Our friendly and knowledgeable customer service team is ready to
+                assist you in selecting and customizing the perfect product,
+                ensuring a seamless and enjoyable shopping experience.
+              </p>
+            </div>
+            <div :class="$style.service">
+              <div :class="$style.icon">
+                <NuxtImg
+                  src="images/delivery.svg"
+                  width="40"
+                  height="40"
+                  alt="delivery"
+                />
+              </div>
+              <h3>Fast and Reliable Shipping</h3>
+              <p>
+                Understanding the importance of timely delivery for special
+                occasions, we offer fast and reliable shipping to ensure your
+                personalized gifts arrive on time.
+              </p>
+            </div>
+          </div>
+        </div>
+        <h2>Join the Napricot Community</h2>
         <p>
-          <strong>Napricot</strong> proudly stands as a brand founded by four
-          passionate individuals – Huy Tran, Hieu Nguyen, Anh Mai, and Hung Vu –
-          united by a shared vision of bringing unique, high-quality
-          personalized products to life.
+          Follow us on social media for the latest updates, exclusive offers,
+          and inspiring ideas.
+        </p>
+        <div :class="$style.social">
+          <NuxtLink to="#" _target="blank" aria-label="Facebook">
+            <i class="icon-facebook"></i>
+          </NuxtLink>
+          <NuxtLink to="#" _target="blank" aria-label="Twitter">
+            <i class="icon-twitter"></i>
+          </NuxtLink>
+          <NuxtLink to="#" _target="blank" aria-label="Amazon">
+            <i class="icon-amazon"></i>
+          </NuxtLink>
+          <NuxtLink to="#" _target="blank" aria-label="Etsy">
+            <i class="icon-etsy"></i>
+          </NuxtLink>
+          <NuxtLink to="#" _target="blank" aria-label="Walmart">
+            <i class="icon-walmart"></i>
+          </NuxtLink>
+          <NuxtLink to="#" _target="blank" aria-label="Tiktok">
+            <i class="icon-tiktok"></i>
+          </NuxtLink>
+        </div>
+        <p>Nappricot © 2024. All Rights Reserved</p>
+        <p>
+          Stay connected with us on social media for the latest updates,
+          exclusive offers, and inspiring ideas. Become part of the Napricot
+          community and share your unique creations with us. We love to see how
+          our products bring joy and personalization to your lives! Thank you
+          for choosing Napricot. We're excited to help you create beautiful
+          memories and celebrate life's special moments with our personalized
+          products.
         </p>
       </div>
     </div>
@@ -150,11 +246,47 @@ const config = useRuntimeConfig()
 }
 .commitment {
   width: 1410px;
-  height: 340px;
 }
 .productImg {
   width: 705px;
   height: 705px;
+}
+.story {
+  display: flex;
+  gap: 24px;
+}
+.bold {
+  font-weight: 450;
+}
+.goal {
+  padding: 36px 0;
+  text-align: center;
+  h2 {
+    margin-bottom: 24px;
+  }
+}
+.reason {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+.service {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  h3 {
+    font-size: 3rem;
+  }
+}
+.icon {
+  padding: 16px;
+  display: flex;
+  background: var(--color-primary);
+  border-radius: 24px;
+  img {
+    filter: invert(1);
+  }
 }
 .wrapper {
   padding: 36px 0;
@@ -172,6 +304,23 @@ const config = useRuntimeConfig()
   flex-direction: column;
   gap: 24px;
 }
+.social {
+  display: flex;
+  gap: 16px;
+  a {
+    font-size: 1.4rem;
+    color: var(--color-background-secondary);
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 50%;
+    border: 1px solid #dcdcdc;
+    display: flex;
+    align-items: center;
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+}
 
 @media (max-width: 768px) {
   .wrapper {
@@ -183,6 +332,12 @@ const config = useRuntimeConfig()
   .logo {
     width: 210px;
     height: 55px;
+  }
+  .story {
+    flex-wrap: wrap;
+  }
+  .reason {
+    flex-wrap: wrap;
   }
   .commitment {
     width: 100%;

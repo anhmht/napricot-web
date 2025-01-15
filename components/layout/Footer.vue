@@ -110,23 +110,23 @@
 const data = ref([
   {
     name: 'Terms & Conditions',
-    link: '/terms'
+    link: '/policy/terms'
   },
   {
     name: 'Privacy Policy',
-    link: '/privacy'
+    link: '/policy/privacy'
   },
   {
     name: 'Shipping Policy',
-    link: '/shipping'
+    link: '/policy/shipping'
   },
   {
     name: 'Legal Statement',
-    link: '/legal'
+    link: '/policy/legal'
   },
   {
     name: 'Return Policy',
-    link: '/return'
+    link: '/policy/return'
   }
 ])
 </script>
