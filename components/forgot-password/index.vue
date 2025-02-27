@@ -27,8 +27,9 @@
         </div>
       </div>
       <div :class="$style.contact">
-        You may contact <NuxtLink to="/contact">Customer Service</NuxtLink> for
-        help restoring access to your account.
+        You may contact
+        <NuxtLink to="/help/contact">Customer Service</NuxtLink> for help
+        restoring access to your account.
       </div>
     </el-form>
   </div>

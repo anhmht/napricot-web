@@ -1,12 +1,9 @@
-
 const deploy = async (): Promise<any> => {
   try {
     const data = await $api('/config/deploy', {
       method: 'POST',
-      body: {},
+      body: {}
     })
-    console.log(123);
-
     return data
   } catch (error: any) {
     throw errorHandler(error)

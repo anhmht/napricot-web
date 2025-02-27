@@ -1,20 +1,20 @@
-
 const getAllLinks = async (): Promise<{
-  links: ILink[],
+  links: ILink[]
 }> => {
   try {
     const data = await $api('/link')
     return {
-      links: data.links,
+      links: data.links
     } as { links: ILink[] }
   } catch (error: any) {
-    console.log(error);
-
     throw errorHandler(error)
   }
 }
 
-const getLinks = async (filter: LinkFilter, pagination: Pagination): Promise<ListLinks> => {
+const getLinks = async (
+  filter: LinkFilter,
+  pagination: Pagination
+): Promise<ListLinks> => {
   try {
     const data = await $api('/link', {
       query: createPayload(filter, pagination)
@@ -71,7 +71,7 @@ const deleteLinks = async (ids: string[]): Promise<void> => {
 
 interface LinkService {
   getAllLinks: () => Promise<{
-    links: ILink[],
+    links: ILink[]
   }>
   getLinks: (filter: LinkFilter, pagination: Pagination) => Promise<ListLinks>
   getLink: (id: string) => Promise<ILink>
@@ -82,7 +82,8 @@ interface LinkService {
 
 export const $linkService: LinkService = {
   getAllLinks: () => getAllLinks(),
-  getLinks: (filter: LinkFilter, pagination: Pagination) => getLinks(filter, pagination),
+  getLinks: (filter: LinkFilter, pagination: Pagination) =>
+    getLinks(filter, pagination),
   getLink: (id: string) => getLink(id),
   createLink: (link: ILink) => createLink(link),
   updateLink: (id: string, link: ILink) => updateLink(id, link),

@@ -29,6 +29,11 @@
       }
     }
   }
+  :global(.el-textarea) {
+    :global(.el-textarea__inner) {
+      border-radius: 12px;
+    }
+  }
   :global(.el-select__wrapper) {
     min-height: 44px;
     border-radius: 12px;

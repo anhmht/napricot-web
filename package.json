@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "yarn fetch-routes && nuxt build && yarn revert-routes",
-    "serve": "nuxt dev --host",
+    "serve": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server.mjs",
     "postinstall": "nuxt prepare",

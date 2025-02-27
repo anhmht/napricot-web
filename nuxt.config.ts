@@ -1,8 +1,8 @@
-import { RuntimeConfig, getRunTimeConfig } from "./config/RuntimeConfig"
+import { RuntimeConfig, getRunTimeConfig } from './config/RuntimeConfig'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
-import fontsPreload from "./config/Font"
-import routes from './dynamic-routes.json';
+import fontsPreload from './config/Font'
+import routes from './dynamic-routes.json'
 
 const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 
@@ -12,23 +12,20 @@ export default defineNuxtConfig({
 
   experimental: {
     componentIslands: true,
-    payloadExtraction: true,
+    payloadExtraction: true
   },
 
   vite: {
-    plugins: [
-      nodePolyfills()
-    ],
+    plugins: [nodePolyfills()]
   },
 
-  build: {
-
-  },
+  build: {},
 
   /*
    ** SSL on local development (checkout README.md for instructions)
    */
   devServer: {
+    host: 'dev.napricot.com',
     port: Number(process.env.NUXT_PORT),
     https: {
       key: '.ssl/localhost.key',
@@ -45,41 +42,53 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: 'Napricot is the best place to find gifts for your loved ones. We have a wide range of gifts for all occasions.' }
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            'Napricot is the best place to find gifts for your loved ones. We have a wide range of gifts for all occasions.'
+        }
       ],
       link: [...fontsPreload]
-    },
+    }
   },
 
   sitemap: {
     sources: ['/api/__sitemap__/urls'],
     experimentalCompression: true,
     experimentalWarmUp: true,
-    exclude: ['/email-verification', '/reset-password', '/forgot-password', '/sign-in', '/dashboard', '/policy'],
+    exclude: [
+      '/email-verification',
+      '/reset-password',
+      '/forgot-password',
+      '/sign-in',
+      '/dashboard',
+      '/policy'
+    ]
   },
 
   robots: {
-    disallow: ['/dashboard', '/policy'],
+    disallow: ['/dashboard', '/policy']
   },
 
   nitro: {
     compressPublicAssets: true,
     minify: true,
     prerender: {
-      routes: routes as string[],
+      routes: routes as string[]
     }
   },
 
   routeRules: {
     '/dashboard/post/**': { ssr: false },
     '/sign-in': {
-      prerender: true,
+      prerender: true
     },
     '/reset-password': {
-      prerender: true,
+      prerender: true
     },
     '/forgot-password': {
-      prerender: true,
+      prerender: true
     },
     '/about-us': {
       prerender: true
@@ -92,7 +101,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     app: {
       ...runtimeConfig
-    },
+    }
   },
 
   socialShare: {
@@ -106,7 +115,7 @@ export default defineNuxtConfig({
     providers: {
       myProvider: {
         name: 'myProvider', // optional value to overrider provider name
-        provider: '~/providers/my-provider.ts', // Path to custom provider
+        provider: '~/providers/my-provider.ts' // Path to custom provider
       }
     }
   },
@@ -118,11 +127,11 @@ export default defineNuxtConfig({
 
   modules: [
     '@pinia/nuxt',
-    "@nuxt/image-edge",
-    "@element-plus/nuxt",
-    "@stefanobartoletti/nuxt-social-share",
-    "@nuxtjs/seo",
-    "@nuxt/scripts"
+    '@nuxt/image-edge',
+    '@element-plus/nuxt',
+    '@stefanobartoletti/nuxt-social-share',
+    '@nuxtjs/seo',
+    '@nuxt/scripts'
   ],
 
   imports: {
@@ -137,5 +146,5 @@ export default defineNuxtConfig({
     }
   },
 
-  compatibilityDate: '2024-10-02',
+  compatibilityDate: '2024-10-02'
 })
