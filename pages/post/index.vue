@@ -42,7 +42,7 @@
           :page-size="pagination.limit"
           :current-page="pagination.page"
           :total="data?.total"
-          @current-change="pagination.page = $event"
+          @current-change="pagination = { ...pagination, page: $event }"
         />
       </div>
     </div>

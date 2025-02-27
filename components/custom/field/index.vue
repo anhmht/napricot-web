@@ -69,6 +69,9 @@ const handlePasswordVisibility = () => {
   :global(.el-input__wrapper) {
     border-radius: 2px;
   }
+  :global(.el-textarea__inner) {
+    border-radius: 2px;
+  }
   :global(.el-input__inner) {
     height: 44px;
     font-size: 1.6rem;
@@ -76,9 +79,6 @@ const handlePasswordVisibility = () => {
   }
   :global(.el-icon) {
     display: none;
-  }
-  :global(.el-textarea__inner) {
-    border-radius: 12px;
   }
 }
 </style>

@@ -60,4 +60,8 @@ const emit = defineEmits(['update:modelValue', 'input'])
 :global(.el-select-dropdown__item) {
   font-weight: 400;
 }
+:global(.el-select__wrapper) {
+  min-height: 44px;
+  border-radius: 2px;
+}
 </style>

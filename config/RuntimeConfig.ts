@@ -6,6 +6,7 @@ export interface RuntimeConfig {
   stripePublicKey: string
   isDevelopment: boolean
   imageUrl: string
+  recaptchaSiteKey?: string
 }
 
 export const getRunTimeConfig = (env: string): RuntimeConfig => {
@@ -17,5 +18,6 @@ export const getRunTimeConfig = (env: string): RuntimeConfig => {
     stripePublicKey: process.env.STRIPE_PUBLIC_KEY as string,
     isDevelopment: process.env.TARGET_ENV === 'staging',
     imageUrl: process.env.IMAGE_URL as string,
+    recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY as string
   }
 }

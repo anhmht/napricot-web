@@ -123,7 +123,7 @@ const options = computed<OptionGroup[]>(() => {
       options: [
         { label: 'Home', value: '/' },
         { label: 'About us', value: '/about-us' },
-        { label: 'Contact us', value: '/contact' }
+        { label: 'Contact us', value: '/help/contact' }
       ]
     }
   ]

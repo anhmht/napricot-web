@@ -32,7 +32,7 @@
           </NuxtLink>
         </div>
         <div :class="$style.napricot">
-          Nappricot © 2024. All Rights Reserved
+          Nappricot © 2025. All Rights Reserved
         </div>
       </div>
       <layout-language :class="$style.lang" />

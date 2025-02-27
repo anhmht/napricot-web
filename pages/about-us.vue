@@ -194,7 +194,7 @@
             <i class="icon-tiktok"></i>
           </NuxtLink>
         </div>
-        <p>Nappricot © 2024. All Rights Reserved</p>
+        <p>Nappricot © 2025. All Rights Reserved</p>
         <p>
           Stay connected with us on social media for the latest updates,
           exclusive offers, and inspiring ideas. Become part of the Napricot
