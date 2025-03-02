@@ -121,8 +121,8 @@ const data = ref([
     link: '/policy/shipping'
   },
   {
-    name: 'Legal Statement',
-    link: '/policy/legal'
+    name: 'Cancellation Policy',
+    link: '/policy/cancel'
   },
   {
     name: 'Return Policy',
