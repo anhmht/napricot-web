@@ -1,8 +1,8 @@
 export interface Menu {
-  name: string;
-  icon: string;
-  route: string;
-  children?: Menu[];
+  name: string
+  icon: string
+  route: string
+  children?: Menu[]
   activePath?: string[]
 }
 
@@ -10,7 +10,7 @@ export const menu: Menu[] = [
   {
     name: 'Dashboard',
     icon: 'icon-home',
-    route: '/dashboard',
+    route: '/dashboard'
   },
   {
     name: 'Categories',
@@ -44,8 +44,8 @@ export const menu: Menu[] = [
     route: '/dashboard/order'
   },
   {
-    name: 'Mail Template',
+    name: 'Contacts',
     icon: 'icon-mail',
-    route: '/dashboard/mail-template'
+    route: '/dashboard/contact'
   }
 ]

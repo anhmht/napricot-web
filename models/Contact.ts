@@ -12,6 +12,17 @@ export interface Contact {
   updatedAt?: string
 }
 
+export interface ListContacts {
+  contacts: Contact[]
+  total: number
+  totalPages: number
+}
+
+export interface ContactFilter {
+  name?: string
+  sort?: string
+}
+
 export const contactTypes: Array<{
   type: string
   label: string
