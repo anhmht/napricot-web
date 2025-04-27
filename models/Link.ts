@@ -21,3 +21,10 @@ export interface LinkFilter {
   words?: string
   sort?: string
 }
+
+export interface LinkPreview {
+  title: string
+  description: string
+  image: string
+  url: string
+}

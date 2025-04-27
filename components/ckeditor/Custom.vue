@@ -19,6 +19,11 @@
         }
       "
     ></ckeditor>
+    <LinkedAMZModal
+      :open="openAmazonModal"
+      @update:open="openAmazonModal = $event"
+      @submit-success="handleAmazonButtonSubmit"
+    />
   </el-form-item>
 </template>
 
@@ -62,6 +67,7 @@ import 'ckeditor5/ckeditor5.css'
 import { Ckeditor } from '@ckeditor/ckeditor5-vue'
 
 import { Image as CustomImage } from '~/models/Image'
+import LinkedAMZModal from './LinkedAMZModal.vue'
 
 class ImageId extends Plugin {
   init() {
@@ -217,10 +223,7 @@ class LinkAmazonAffiliate extends Plugin {
   }
   init() {
     const editor = this.editor
-    // The button must be registered among the UI components of the editor
-    // to be displayed in the toolbar.
     editor.ui.componentFactory.add('linkAmazonAffiliate', () => {
-      // The button will be an instance of ButtonView.
       const button = new ButtonView()
 
       button.set({
@@ -240,23 +243,7 @@ class LinkAmazonAffiliate extends Plugin {
       })
 
       button.on('execute', () => {
-        // Change the model using the model writer.
-        editor.model.change((writer) => {
-          // Insert the text at the user's current position.
-          const viewFragment = editor.data.processor.toView(
-            '<div>Amazon Affiliate buy box</div><p></p>'
-          )
-          const modelFragment = editor.data.toModel(viewFragment)
-          this.editor.model.insertContent(modelFragment)
-
-          writer.setSelection(
-            writer.createPositionAt(
-              editor.model.document.getRoot() as any,
-              'end'
-            )
-          )
-          editor.focus()
-        })
+        this.vm.openAmazonModal = true
       })
 
       return button
@@ -264,9 +251,28 @@ class LinkAmazonAffiliate extends Plugin {
   }
 }
 
+function getPreviewHtml(preview: {
+  image: string
+  title: string
+  description: string
+  url: string
+}) {
+  if (!preview) return ''
+  return `
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:20px;background:#fafbfc;border:1px solid #eee;border-radius:8px;padding:20px;margin:12px 0;max-width:100%;">
+      <img src="${preview.image}" alt="Preview" style="width:80px;max-width:100%;height:80px;object-fit:cover;border-radius:12px;flex-shrink:0;display:block;margin:auto 0;">
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;justify-content:center;">
+        <div style="font-size:1.2rem;font-weight:600;color:#222;margin-bottom:2px;word-break:break-word;">${preview.title}</div>
+        <div style="font-size:1rem;color:#666;word-break:break-word;line-height:1.3;">${preview.description}</div>
+      </div>
+    </div>
+  `
+}
+
 export default defineNuxtComponent({
   components: {
-    ckeditor: Ckeditor
+    ckeditor: Ckeditor,
+    LinkedAMZModal
   },
   props: {
     modelValue: {
@@ -286,16 +292,10 @@ export default defineNuxtComponent({
       required: true
     }
   },
-  methods: {
-    setImages(image: CustomImage): void {
-      const images = [...this.images, image]
-      this.$emit('update:images', images)
-    }
-  },
-  emits: ['update:modelValue', 'input', 'update:images', 'loading'],
   data() {
     const vm = this
     return {
+      openAmazonModal: false,
       openLinkProductModal: false,
       editor: ClassicEditor,
       editorData: this.modelValue,
@@ -345,6 +345,30 @@ export default defineNuxtComponent({
         ],
         htmlSupport: {
           allow: [
+            {
+              name: 'svg',
+              attributes: true,
+              classes: true,
+              styles: true
+            },
+            {
+              name: 'g',
+              attributes: true,
+              classes: true,
+              styles: true
+            },
+            {
+              name: 'text',
+              attributes: true,
+              classes: true,
+              styles: true
+            },
+            {
+              name: 'path',
+              attributes: true,
+              classes: true,
+              styles: true
+            },
             {
               name: /.*/,
               attributes: true,
@@ -405,10 +429,73 @@ export default defineNuxtComponent({
             'linkImage'
           ]
         },
-        extraPlugins: []
+        extraPlugins: [
+          function (editor) {
+            if (editor.plugins.has('DataFilter')) {
+              editor.plugins.get('DataFilter').allowElement('svg')
+              editor.plugins.get('DataFilter').allowElement('g')
+              editor.plugins.get('DataFilter').allowElement('text')
+              editor.plugins.get('DataFilter').allowElement('path')
+            }
+          }
+        ]
       }
     }
   },
+  methods: {
+    setImages(image: CustomImage): void {
+      const images = [...this.images, image]
+      this.$emit('update:images', images)
+    },
+    handleAmazonButtonSubmit(data: {
+      label: string
+      url: string
+      preview?: {
+        image: string
+        title: string
+        description: string
+        url: string
+      }
+    }) {
+      const editor = (this.$refs.editorRef as any).instance
+      editor.model.change((writer) => {
+        let html = ''
+        if (data.preview) {
+          html = getPreviewHtml(data.preview)
+        }
+        // Always add the View on Amazon button after the preview
+        html += `<div style="text-align: center;">
+          <a href="${data.url}" style="
+            display: inline-flex;
+            align-items: center;
+            background: #fad250;
+            color: #111;
+            padding: 18px;
+            border-radius: 8px;
+            font-size: 1.8rem;
+            font-weight: 500;
+            font-family: Arial Black, Arial, sans-serif;
+            text-decoration: none;
+            line-height: 1.2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            border: none;
+          " target="_blank">
+            View on Amazon
+            <img src="/amazon-a.svg" alt="Amazon a" style="height: 30px; display: inline-block; vertical-align: middle; margin-left: 12px;" />
+          </a>
+        </div><p></p>`
+        const viewFragment = editor.data.processor.toView(html)
+        const modelFragment = editor.data.toModel(viewFragment)
+        editor.model.insertContent(modelFragment)
+
+        writer.setSelection(
+          writer.createPositionAt(editor.model.document.getRoot() as any, 'end')
+        )
+        editor.focus()
+      })
+    }
+  },
+  emits: ['update:modelValue', 'input', 'update:images', 'loading'],
   mounted() {
     this.$eventBus.on('replaceLink', (value: string) => {
       ;(this.$refs?.editorRef as any).instance.data.set(value)
