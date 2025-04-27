@@ -260,7 +260,7 @@ function getPreviewHtml(preview: {
   if (!preview) return ''
   return `
     <div style="display:flex;flex-wrap:wrap;align-items:center;gap:20px;background:#fafbfc;border:1px solid #eee;border-radius:8px;padding:20px;margin:12px 0;max-width:100%;">
-      <img src="${preview.image}" alt="Preview" style="width:80px;max-width:100%;height:80px;object-fit:cover;border-radius:12px;flex-shrink:0;display:block;margin:auto 0;">
+      <img src="${preview.image}" alt="Preview" style="width:160px;max-width:100%;height:160px;object-fit:cover;border-radius:12px;flex-shrink:0;display:block;margin:auto 0;">
       <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;justify-content:center;">
         <div style="font-size:1.2rem;font-weight:600;color:#222;margin-bottom:2px;word-break:break-word;">${preview.title}</div>
         <div style="font-size:1rem;color:#666;word-break:break-word;line-height:1.3;">${preview.description}</div>
