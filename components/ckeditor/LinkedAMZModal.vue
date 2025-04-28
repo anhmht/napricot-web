@@ -37,7 +37,7 @@
               align-items: center;
               background: #fad250;
               color: #111;
-              padding: 18px;
+              padding: 12px;
               border-radius: 8px;
               font-size: 1.8rem;
               font-weight: 500;
