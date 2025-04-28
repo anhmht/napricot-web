@@ -470,7 +470,7 @@ export default defineNuxtComponent({
             align-items: center;
             background: #fad250;
             color: #111;
-            padding: 18px;
+            padding: 12px;
             border-radius: 8px;
             font-size: 1.8rem;
             font-weight: 500;
@@ -481,7 +481,7 @@ export default defineNuxtComponent({
             border: none;
           " target="_blank">
             View on Amazon
-            <img src="/amazon-a.svg" alt="Amazon a" style="height: 30px; display: inline-block; vertical-align: middle; margin-left: 12px;" />
+            <img src="/amazon-a.svg" alt="Amazon a" style="height: 30px; display: inline-block; vertical-align: middle; margin-left: 12px;" width="30" height="30"/>
           </a>
         </div><p></p>`
         const viewFragment = editor.data.processor.toView(html)
