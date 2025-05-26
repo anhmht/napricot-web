@@ -3,16 +3,24 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "yarn fetch-routes && nuxt build && yarn revert-routes",
+    "build": "yarn fetch-routes && cross-env NODE_OPTIONS='--max-old-space-size=4096 --no-deprecation' nuxt build && yarn revert-routes",
+    "build:fast": "yarn fetch-routes && NITRO_PRESET=node-server cross-env NODE_ENV=production NODE_OPTIONS='--max-old-space-size=4096 --no-deprecation' nuxt build",
+    "build:silent": "node scripts/silent-build.js",
+    "build:analyze": "ANALYZE=true yarn build",
+    "build:timed": "node scripts/timed-build.js",
+    "analyze": "node scripts/optimize-build.js",
     "serve": "nuxt dev",
+    "start": "npx serve .output/public -l 3000",
     "generate": "nuxt generate",
     "preview": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server.mjs",
     "postinstall": "nuxt prepare",
     "fetch-routes": "node scripts/fetch-routes.js",
-    "revert-routes": "node scripts/revert-routes.js"
+    "revert-routes": "node scripts/revert-routes.js",
+    "clean": "rm -rf node_modules/.cache .nuxt .output"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.2.0",
+    "@element-plus/icons-vue": "^2.1.0",
     "@element-plus/nuxt": "^1.0.10",
     "@nuxt/image-edge": "^1.3.0-28493895.369b747",
     "@nuxt/scripts": "^0.9.5",
@@ -36,6 +44,12 @@
     "yoastseo": "^2.0.0-alpha.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "vite-plugin-node-polyfills": "^0.22.0"
-  }
+  },
+  "resolutions": {
+    "vue": "3.5.10",
+    "@unocss/preset-wind": "^0.58.0"
+  },
+  "packageManager": "yarn@1.22.22"
 }
