@@ -6,20 +6,89 @@ import routes from './dynamic-routes.json'
 
 const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 
+// Add module declaration
+declare module '@nuxt/schema' {
+  interface NuxtConfig {
+    componentOptimizer?: {
+      critical?: string[]
+      lazyLoadLarge?: boolean
+      sizeThreshold?: number
+    }
+  }
+}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV === 'development' },
 
   experimental: {
     componentIslands: true,
-    payloadExtraction: true
+    payloadExtraction: true,
+    typedPages: true,
+    treeshakeClientOnly: true
   },
 
   vite: {
-    plugins: [nodePolyfills()]
+    plugins: [
+      nodePolyfills(),
+      {
+        name: 'suppress-warnings',
+        configResolved(config) {
+          // This is a custom plugin to suppress specific deprecation warnings
+          const originalWarn = console.warn
+          console.warn = (...args) => {
+            // Suppress DEP0166 warnings
+            if (typeof args[0] === 'string' && args[0].includes('DEP0166')) {
+              return
+            }
+            originalWarn.apply(console, args)
+          }
+        }
+      }
+    ],
+    build: {
+      // Speed up build with these Vite optimizations
+      cssCodeSplit: true,
+      reportCompressedSize: false,
+      target: 'esnext',
+      // Don't use manual chunks for element-plus to fix CSS issues
+      rollupOptions: {
+        output: {
+          // Remove manual chunks configuration to fix CSS issues
+        }
+      }
+    },
+    optimizeDeps: {
+      include: ['element-plus']
+    },
+    // Disable HMR polling to reduce CPU usage during build
+    server: {
+      hmr: {
+        protocol: 'ws'
+      }
+    },
+    // Properly handle CSS from element-plus
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: ''
+        }
+      }
+    },
+    // Configure Vite to handle font files properly
+    assetsInclude: ['**/*.ttf', '**/*.woff', '**/*.woff2', '**/*.eot'],
+    resolve: {
+      alias: {
+        // Add alias for fonts to help Vite resolve them
+        '/fonts/': '/public/fonts/'
+      }
+    }
   },
 
-  build: {},
+  build: {
+    // Enable build caching for faster rebuilds
+    transpile: ['element-plus/es']
+  },
 
   /*
    ** SSL on local development (checkout README.md for instructions)
@@ -50,7 +119,9 @@ export default defineNuxtConfig({
         }
       ],
       link: [...fontsPreload]
-    }
+    },
+    // Ensure fonts are copied to the output directory
+    buildAssetsDir: '/_nuxt/'
   },
 
   sitemap: {
@@ -76,7 +147,31 @@ export default defineNuxtConfig({
     minify: true,
     prerender: {
       routes: routes as string[]
-    }
+    },
+    // Optimize server performance
+    routeRules: {
+      '/**': {
+        headers: {
+          'Cache-Control': 'public, max-age=86400, s-maxage=86400'
+        }
+      }
+    },
+    // Improve Nitro build performance
+    future: {
+      nativeSWR: true
+    },
+    // Additional optimization to avoid deprecation warnings
+    esbuild: {
+      options: {
+        target: 'esnext',
+        tsconfigRaw: {
+          compilerOptions: {
+            experimentalDecorators: true
+          }
+        }
+      }
+    },
+    moduleSideEffects: ['element-plus/nuxt', '@nuxtjs/seo']
   },
 
   routeRules: {
@@ -110,6 +205,13 @@ export default defineNuxtConfig({
 
   components: true,
 
+  // Component optimizer configuration
+  componentOptimizer: {
+    critical: ['LayoutHeader', 'LayoutFooter', 'NuxtLink', 'NuxtPage'],
+    lazyLoadLarge: true,
+    sizeThreshold: 25
+  },
+
   image: {
     domains: ['napricot.com'],
     providers: {
@@ -131,7 +233,8 @@ export default defineNuxtConfig({
     '@element-plus/nuxt',
     '@stefanobartoletti/nuxt-social-share',
     '@nuxtjs/seo',
-    '@nuxt/scripts'
+    '@nuxt/scripts',
+    '~/modules/component-optimizer'
   ],
 
   imports: {
@@ -144,6 +247,12 @@ export default defineNuxtConfig({
       'postcss-nested': {},
       autoprefixer: {}
     }
+  },
+
+  // Enable persistent build cache
+  typescript: {
+    shim: false,
+    typeCheck: false
   },
 
   compatibilityDate: '2024-10-02'

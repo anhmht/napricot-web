@@ -41,7 +41,7 @@
                 children: 'children',
                 label: 'name'
               }"
-              :icon="ElIconArrowRight"
+              :icon="ArrowRight"
             />
           </el-collapse-item>
         </el-collapse>
@@ -51,6 +51,8 @@
 </template>
 
 <script setup lang="ts">
+import { ArrowRight } from '@element-plus/icons-vue'
+
 const props = defineProps({
   open: {
     type: Boolean,
