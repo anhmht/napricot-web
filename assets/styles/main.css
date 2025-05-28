@@ -12,6 +12,7 @@ body {
   font-weight: 450;
   font-size: 1.6rem;
   margin: 0;
+  --el-font-family: 'SVN-Circular', sans-serif;
   --el-font-size-base: 1.6rem;
   --el-text-color-regular: var(--color-text);
   --el-color-primary: var(--color-primary);

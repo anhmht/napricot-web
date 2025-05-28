@@ -23,6 +23,7 @@ if (data.value) store.setCategories(data.value)
 const route = useRoute()
 
 if (!app.isDevelopment) {
+  // Google Analytics
   const { proxy } = useScriptGoogleAnalytics({
     id: 'G-6K500GJZ6H'
   })
@@ -33,6 +34,24 @@ if (!app.isDevelopment) {
   proxy.dataLayer.push({
     event: 'page_view',
     path: route.path
+  })
+
+  // Google Ads (Google Tag Manager)
+  const { proxy: gtmProxy } = useScriptGoogleTagManager({
+    id: 'AW-17125966453'
+  })
+
+  // Configure Google Ads through dataLayer
+  gtmProxy.dataLayer.push({
+    event: 'config',
+    google_ads_id: 'AW-17125966453'
+  })
+
+  // Send page view event to GTM
+  gtmProxy.dataLayer.push({
+    event: 'pageview',
+    page_path: route.path,
+    page_title: document.title
   })
 }
 
