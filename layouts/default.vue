@@ -47,12 +47,14 @@ if (!app.isDevelopment) {
     google_ads_id: 'AW-17125966453'
   })
 
-  // Send page view event to GTM
-  gtmProxy.dataLayer.push({
-    event: 'pageview',
-    page_path: route.path,
-    page_title: document.title
-  })
+  // Send page view event to GTM (client-side only)
+  if (process.client) {
+    gtmProxy.dataLayer.push({
+      event: 'pageview',
+      page_path: route.path,
+      page_title: document?.title || ''
+    })
+  }
 }
 
 useHead(() => ({
