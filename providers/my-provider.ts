@@ -3,25 +3,21 @@ import type { ProviderGetImage } from '@nuxt/image-edge'
 
 export const getImage: ProviderGetImage = (
   src,
-  { baseURL, width, height, format, quality, fit } = {}
+  { width, height, format, quality, fit } = {}
 ) => {
-  if (!baseURL) {
-    // also support runtime config
-    baseURL = useRuntimeConfig().app.imageUrl
-  }
-
+  const imgUrl = useRuntimeConfig().app.imageUrl
   // Check if src is already a complete URL or already includes baseURL
   let url: string
   if (
     src.startsWith('http://') ||
     src.startsWith('https://') ||
-    src.includes(baseURL)
+    src.includes(imgUrl) ||
+    src.includes('.')
   ) {
     // src is already a complete URL or includes baseURL, use as is
     url = src
   } else {
-    // src is a relative path, join with baseURL
-    url = joinURL(baseURL, src)
+    url = joinURL(imgUrl, src)
   }
 
   // Add query parameters for transformations if needed

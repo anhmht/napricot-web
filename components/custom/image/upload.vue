@@ -102,7 +102,7 @@ const convertUploadFile = (image: Image): IUploadFile => {
     progress: 100,
     name: image.id,
     url: image.url,
-    base64: image.cloudflareUrl + '/large500'
+    base64: image.cloudflareUrl + 'large500'
   }
 }
 const formItemRef = ref()
