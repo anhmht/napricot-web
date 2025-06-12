@@ -214,12 +214,19 @@ export default defineNuxtConfig({
 
   image: {
     domains: ['napricot.com'],
+    // Disable IPX to prevent /_ipx/_/ prefix in URLs
+    ipx: {
+      // Set to false to disable IPX processing entirely for your custom provider
+      modifiers: {}
+    },
     providers: {
       myProvider: {
         name: 'myProvider', // optional value to overrider provider name
         provider: '~/providers/my-provider.ts' // Path to custom provider
       }
-    }
+    },
+    // Set default provider to use your custom provider
+    provider: 'myProvider'
   },
 
   css: [
