@@ -160,8 +160,6 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     minify: true,
-    // Enable Nitro build cache
-    buildDir: '.nitro',
     // Optimize build cache
     storage: {
       // File system storage for caching
