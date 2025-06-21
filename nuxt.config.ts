@@ -158,6 +158,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    preset: 'node-server',
     compressPublicAssets: true,
     minify: true,
     // Optimize build cache
