@@ -59,12 +59,25 @@ export default defineNuxtConfig({
       }
     },
     optimizeDeps: {
-      include: ['element-plus']
+      include: ['element-plus'],
+      // Enable dependency pre-bundling cache
+      force: false,
+      entries: [
+        './pages/**/*.vue',
+        './components/**/*.vue',
+        './layouts/**/*.vue'
+      ]
     },
+    // Enable Vite build cache
+    cacheDir: 'node_modules/.vite',
     // Disable HMR polling to reduce CPU usage during build
     server: {
       hmr: {
         protocol: 'ws'
+      },
+      fs: {
+        // Allow serving files from one level up to the project root
+        allow: ['..']
       }
     },
     // Properly handle CSS from element-plus
@@ -87,7 +100,9 @@ export default defineNuxtConfig({
 
   build: {
     // Enable build caching for faster rebuilds
-    transpile: ['element-plus/es']
+    transpile: ['element-plus/es'],
+    // Enable Nuxt build cache
+    analyze: false
   },
 
   /*
@@ -145,14 +160,59 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     minify: true,
+    // Enable Nitro build cache
+    buildDir: '.nitro',
+    // Optimize build cache
+    storage: {
+      // File system storage for caching
+      fs: {
+        driver: 'fs',
+        base: './.nitro/cache'
+      },
+      // Memory storage for runtime caching
+      memory: {
+        driver: 'memory'
+      }
+    },
     prerender: {
       routes: routes as string[]
     },
-    // Optimize server performance
+    // Optimize server performance with enhanced caching
     routeRules: {
       '/**': {
         headers: {
           'Cache-Control': 'public, max-age=86400, s-maxage=86400'
+        }
+      },
+      // Static assets - long cache
+      '/_nuxt/**': {
+        headers: {
+          'Cache-Control': 'public, max-age=31536000, immutable'
+        }
+      },
+      // Images - medium cache
+      '/images/**': {
+        headers: {
+          'Cache-Control': 'public, max-age=604800, s-maxage=604800'
+        }
+      },
+      // API routes - short cache with revalidation
+      '/api/**': {
+        headers: {
+          'Cache-Control': 'public, max-age=300, s-maxage=300, must-revalidate'
+        }
+      },
+      // Posts - medium cache with stale-while-revalidate
+      '/post/**': {
+        headers: {
+          'Cache-Control':
+            'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400'
+        }
+      },
+      // Dashboard - no cache
+      '/dashboard/**': {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
         }
       }
     },
@@ -171,7 +231,11 @@ export default defineNuxtConfig({
         }
       }
     },
-    moduleSideEffects: ['element-plus/nuxt', '@nuxtjs/seo']
+    moduleSideEffects: ['element-plus/nuxt', '@nuxtjs/seo'],
+    // Enable experimental features for better caching
+    experimental: {
+      wasm: true
+    }
   },
 
   routeRules: {
@@ -190,6 +254,14 @@ export default defineNuxtConfig({
     },
     '/policy/**': {
       prerender: true
+    },
+    // Add ISR (Incremental Static Regeneration) for dynamic content
+    '/post/**': {
+      isr: 3600 // Regenerate every hour
+    },
+    // Add caching for homepage
+    '/': {
+      isr: 1800 // Regenerate every 30 minutes
     }
   },
 
