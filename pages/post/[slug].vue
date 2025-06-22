@@ -68,7 +68,7 @@ import { TableOfContentItem } from '~/components/table-of-content/index.vue'
 
 const route = useRoute()
 const social = !!route.query.social as boolean
-const slug = useRoute().params.slug as string
+const { slug } = route.params as { slug: string }
 const { data, error } = useAsyncData(
   'pageFetch-' + slug,
   async () => {
@@ -148,7 +148,8 @@ useServerSeoMeta({
   title: () => `${title.value}`,
   description: () => desc.value,
   ogTitle: () => `${title.value}`,
-  ogDescription: () => desc.value
+  ogDescription: () => desc.value,
+  ogImage: () => image.value
 })
 
 useHead({

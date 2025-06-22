@@ -1,8 +1,8 @@
 import { RuntimeConfig, getRunTimeConfig } from './config/RuntimeConfig'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
+// import { nodePolyfills } from 'vite-plugin-node-polyfills'
 const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
 import fontsPreload from './config/Font'
-import routes from './dynamic-routes.json'
+// import routes from './dynamic-routes.json'
 
 const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 
@@ -30,21 +30,7 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [
-      nodePolyfills(),
-      {
-        name: 'suppress-warnings',
-        configResolved(config) {
-          // This is a custom plugin to suppress specific deprecation warnings
-          const originalWarn = console.warn
-          console.warn = (...args) => {
-            // Suppress DEP0166 warnings
-            if (typeof args[0] === 'string' && args[0].includes('DEP0166')) {
-              return
-            }
-            originalWarn.apply(console, args)
-          }
-        }
-      }
+      // nodePolyfills(), // Use for nuxt dev (yarn serve)
     ],
     build: {
       // Speed up build with these Vite optimizations
@@ -157,8 +143,16 @@ export default defineNuxtConfig({
     disallow: ['/dashboard', '/policy']
   },
 
+  // Disable SEO validation warnings
+  seo: {
+    debug: false
+  },
+
+  linkChecker: {
+    enabled: false
+  },
+
   nitro: {
-    preset: 'node-server',
     compressPublicAssets: true,
     minify: true,
     // Optimize build cache
@@ -173,9 +167,9 @@ export default defineNuxtConfig({
         driver: 'memory'
       }
     },
-    prerender: {
-      routes: routes as string[]
-    },
+    // prerender: {
+    //   routes: routes as string[]
+    // },
     // Optimize server performance with enhanced caching
     routeRules: {
       '/**': {
@@ -254,13 +248,14 @@ export default defineNuxtConfig({
     '/policy/**': {
       prerender: true
     },
-    // Add ISR (Incremental Static Regeneration) for dynamic content
     '/post/**': {
-      isr: 3600 // Regenerate every hour
+      isr: true
     },
-    // Add caching for homepage
     '/': {
-      isr: 1800 // Regenerate every 30 minutes
+      isr: true
+    },
+    '/sitemap.xml': {
+      isr: true
     }
   },
 

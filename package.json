@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "yarn fetch-routes && cross-env NODE_OPTIONS='--max-old-space-size=4096 --no-deprecation' nuxt build && yarn revert-routes",
+    "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096 --no-deprecation' nuxt build",
     "build:fast": "yarn fetch-routes && NITRO_PRESET=node-server cross-env NODE_ENV=production NODE_OPTIONS='--max-old-space-size=4096 --no-deprecation' nuxt build",
     "build:silent": "node scripts/silent-build.js",
     "build:analyze": "ANALYZE=true yarn build",

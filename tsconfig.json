@@ -3,6 +3,7 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "verbatimModuleSyntax": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "types": ["@nuxtjs/seo"]
   }
 }
