@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.error">
     <NuxtPicture
-      :src="`${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/934fe936-5e07-449a-1750-9e2789bcc100/large500`"
+      src="/error.avif"
       format="avif,webp"
       alt="Napricot Error 404"
       width="500"

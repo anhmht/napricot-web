@@ -19,12 +19,14 @@
             </h1>
             <div :class="$style.info">
               <div :class="$style.date">
-                <span>Created: {{ formatDate(data?.createdAt) }}</span>
-                <span>Updated: {{ formatDate(data?.updatedAt) }}</span>
+                <ClientOnly>
+                  <span>Created: {{ formatDate(data?.createdAt) }}</span>
+                  <span>Updated: {{ formatDate(data?.updatedAt) }}</span>
+                </ClientOnly>
               </div>
-              <client-only>
+              <ClientOnly>
                 <social-share-component />
-              </client-only>
+              </ClientOnly>
             </div>
             <div :class="$style.desc">
               {{ data?.desc }}
