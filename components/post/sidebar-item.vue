@@ -8,7 +8,9 @@
     />
     <div :class="$style.info">
       <h4>{{ post.title }}</h4>
-      <span>{{ formatDate(post.createdAt) }}</span>
+      <ClientOnly>
+        <span>{{ formatDate(post.createdAt) }}</span>
+      </ClientOnly>
     </div>
   </NuxtLink>
 </template>

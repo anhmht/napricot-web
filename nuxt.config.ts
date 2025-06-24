@@ -6,17 +6,6 @@ import fontsPreload from './config/Font'
 
 const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 
-// Add module declaration
-declare module '@nuxt/schema' {
-  interface NuxtConfig {
-    componentOptimizer?: {
-      critical?: string[]
-      lazyLoadLarge?: boolean
-      sizeThreshold?: number
-    }
-  }
-}
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV === 'development' },
@@ -30,7 +19,7 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [
-      // nodePolyfills(), // Use for nuxt dev (yarn serve)
+      // nodePolyfills() // Use for nuxt dev (yarn serve)
     ],
     build: {
       // Speed up build with these Vite optimizations
