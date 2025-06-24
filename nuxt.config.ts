@@ -1,8 +1,8 @@
 import { RuntimeConfig, getRunTimeConfig } from './config/RuntimeConfig'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
+// import { nodePolyfills } from 'vite-plugin-node-polyfills'
 const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
 import fontsPreload from './config/Font'
-import routes from './dynamic-routes.json'
+// import routes from './dynamic-routes.json'
 
 const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 
@@ -30,21 +30,7 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [
-      nodePolyfills(),
-      {
-        name: 'suppress-warnings',
-        configResolved(config) {
-          // This is a custom plugin to suppress specific deprecation warnings
-          const originalWarn = console.warn
-          console.warn = (...args) => {
-            // Suppress DEP0166 warnings
-            if (typeof args[0] === 'string' && args[0].includes('DEP0166')) {
-              return
-            }
-            originalWarn.apply(console, args)
-          }
-        }
-      }
+      // nodePolyfills(), // Use for nuxt dev (yarn serve)
     ],
     build: {
       // Speed up build with these Vite optimizations
@@ -59,12 +45,25 @@ export default defineNuxtConfig({
       }
     },
     optimizeDeps: {
-      include: ['element-plus']
+      include: ['element-plus'],
+      // Enable dependency pre-bundling cache
+      force: false,
+      entries: [
+        './pages/**/*.vue',
+        './components/**/*.vue',
+        './layouts/**/*.vue'
+      ]
     },
+    // Enable Vite build cache
+    cacheDir: 'node_modules/.vite',
     // Disable HMR polling to reduce CPU usage during build
     server: {
       hmr: {
         protocol: 'ws'
+      },
+      fs: {
+        // Allow serving files from one level up to the project root
+        allow: ['..']
       }
     },
     // Properly handle CSS from element-plus
@@ -87,7 +86,9 @@ export default defineNuxtConfig({
 
   build: {
     // Enable build caching for faster rebuilds
-    transpile: ['element-plus/es']
+    transpile: ['element-plus/es'],
+    // Enable Nuxt build cache
+    analyze: false
   },
 
   /*
@@ -142,17 +143,69 @@ export default defineNuxtConfig({
     disallow: ['/dashboard', '/policy']
   },
 
+  // Disable SEO validation warnings
+  seo: {
+    debug: false
+  },
+
+  linkChecker: {
+    enabled: false
+  },
+
   nitro: {
     compressPublicAssets: true,
     minify: true,
-    prerender: {
-      routes: routes as string[]
+    // Optimize build cache
+    storage: {
+      // File system storage for caching
+      fs: {
+        driver: 'fs',
+        base: './.nitro/cache'
+      },
+      // Memory storage for runtime caching
+      memory: {
+        driver: 'memory'
+      }
     },
-    // Optimize server performance
+    // prerender: {
+    //   routes: routes as string[]
+    // },
+    // Optimize server performance with enhanced caching
     routeRules: {
       '/**': {
         headers: {
           'Cache-Control': 'public, max-age=86400, s-maxage=86400'
+        }
+      },
+      // Static assets - long cache
+      '/_nuxt/**': {
+        headers: {
+          'Cache-Control': 'public, max-age=31536000, immutable'
+        }
+      },
+      // Images - medium cache
+      '/images/**': {
+        headers: {
+          'Cache-Control': 'public, max-age=604800, s-maxage=604800'
+        }
+      },
+      // API routes - short cache with revalidation
+      '/api/**': {
+        headers: {
+          'Cache-Control': 'public, max-age=300, s-maxage=300, must-revalidate'
+        }
+      },
+      // Posts - medium cache with stale-while-revalidate
+      '/post/**': {
+        headers: {
+          'Cache-Control':
+            'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400'
+        }
+      },
+      // Dashboard - no cache
+      '/dashboard/**': {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
         }
       }
     },
@@ -171,7 +224,11 @@ export default defineNuxtConfig({
         }
       }
     },
-    moduleSideEffects: ['element-plus/nuxt', '@nuxtjs/seo']
+    moduleSideEffects: ['element-plus/nuxt', '@nuxtjs/seo'],
+    // Enable experimental features for better caching
+    experimental: {
+      wasm: true
+    }
   },
 
   routeRules: {
@@ -190,6 +247,15 @@ export default defineNuxtConfig({
     },
     '/policy/**': {
       prerender: true
+    },
+    '/post/**': {
+      isr: true
+    },
+    '/': {
+      isr: true
+    },
+    '/sitemap.xml': {
+      isr: true
     }
   },
 
