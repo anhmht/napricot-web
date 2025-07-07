@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import debounce from 'lodash/debounce'
+import { debounce } from '~/utils'
 import { OptionType } from 'element-plus/lib/components/select-v2/src/select.types.js'
 import { OptionGroup } from 'element-plus/es/components/select-v2/src/select.types.mjs'
 

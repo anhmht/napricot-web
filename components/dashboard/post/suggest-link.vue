@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import unescape from 'lodash/unescape'
+import { unescape } from '~/utils'
 
 const props = defineProps({
   content: {

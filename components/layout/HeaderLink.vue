@@ -36,7 +36,7 @@
   a {
     text-decoration: none;
     color: var(--color-text);
-    font-weight: 500;
+    font-weight: 700;
     font-size: 1.6rem;
     display: flex;
     &:hover {

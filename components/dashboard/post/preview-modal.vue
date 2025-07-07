@@ -180,7 +180,7 @@ const generateTableOfContents = computed<TableOfContentItem[] | undefined>(
     gap: 24px;
     h1 {
       font-size: 3.6rem;
-      font-weight: 500;
+      font-weight: 700;
     }
   }
 }
@@ -219,7 +219,7 @@ const generateTableOfContents = computed<TableOfContentItem[] | undefined>(
 }
 .tocTitle {
   font-size: 1.6rem;
-  font-weight: 500;
+  font-weight: 700;
   margin-bottom: 16px;
 }
 :global(.el-drawer__header) {

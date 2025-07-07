@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 const {
-  app: { imageUrl }
+  public: { imageUrl }
 } = useRuntimeConfig()
 const customers = [
   {

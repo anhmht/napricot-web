@@ -44,7 +44,7 @@ const handleMouseOver = (index: number) => {
   }
   li {
     padding: 8px 16px;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
     &.active {
       background: var(--color-background);

@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import debounce from 'lodash/debounce'
+import { debounce } from '~/utils'
 
 definePageMeta({
   layout: 'dashboard',
@@ -105,7 +105,7 @@ const reloadList = () => {
 }
 
 const { data, status, refresh } = await useAsyncData(
-  'contact',
+  'contacts',
   async () => {
     return await $contactService.getContacts(filter.value, pagination.value)
   },

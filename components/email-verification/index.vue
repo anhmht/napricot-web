@@ -118,7 +118,7 @@ const submitForm = () => {
 .header {
   margin-bottom: 24px;
   h5 {
-    font-weight: 500;
+    font-weight: 700;
     text-align: center;
     line-height: 28px;
     margin-bottom: 12px;

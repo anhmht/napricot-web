@@ -75,7 +75,7 @@
 <script setup lang="ts">
 const loading = ref(true)
 const {
-  app: { imageUrl }
+  public: { imageUrl }
 } = useRuntimeConfig()
 </script>
 
@@ -140,7 +140,7 @@ const {
     line-height: 44px;
   }
   h6 {
-    font-weight: 500;
+    font-weight: 700;
   }
   button {
     width: fit-content;

@@ -35,7 +35,7 @@ const config = useRuntimeConfig()
 const emit = defineEmits(['update:titleWidth'])
 
 const url = computed(() => {
-  return `${config.app.baseUrl}/post/${props.slug}`
+  return `${config.public.baseUrl}/post/${props.slug}`
 })
 
 const metaDesc = computed(() => {

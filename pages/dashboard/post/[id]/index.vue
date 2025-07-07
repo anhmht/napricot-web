@@ -44,12 +44,13 @@ import { FormInstance, FormRules } from 'element-plus'
 import { addIdsToHeadings } from '~/utils'
 definePageMeta({
   layout: 'dashboard',
-  middleware: 'authorize'
+  middleware: 'authorize',
+  ssr: false
 })
 
 const loading = ref<boolean>(false)
 const openPreview = ref<boolean>(false)
-const { id } = useRoute().params
+const { id } = useRoute().params as { id: string }
 const post = ref<IPost>({
   _id: id.toString(),
   title: '',

@@ -8,10 +8,10 @@ const uploadImage = async (file: File): Promise<Image | undefined> => {
     const data = await $api('/images/upload', {
       headers: {
         contentType: 'multipart/form-data',
-        accept: '*/*',
+        accept: '*/*'
       },
       method: 'POST',
-      body: formData,
+      body: formData
     })
 
     return data as Image
@@ -21,18 +21,24 @@ const uploadImage = async (file: File): Promise<Image | undefined> => {
   return undefined
 }
 
-const uploadImageWithAxios = async (formData: FormData,
-  onUploadProgress: (progressEvent: AxiosProgressEvent) => void | undefined): Promise<Image | undefined> => {
+const uploadImageWithAxios = async (
+  formData: FormData,
+  onUploadProgress: (progressEvent: AxiosProgressEvent) => void | undefined
+): Promise<Image | undefined> => {
   const config = useRuntimeConfig()
   try {
-    const { data } = await axios.post(config.app.apiBaseUrl +'/images/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        accept: '*/*',
-        Authorization: `Bearer ${useCookie('token').value}`,
-      },
-      onUploadProgress
-    })
+    const { data } = await axios.post(
+      config.public.apiBaseUrl + '/images/upload',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          accept: '*/*',
+          Authorization: `Bearer ${useCookie('token').value}`
+        },
+        onUploadProgress
+      }
+    )
 
     return data as Image
   } catch (error: any) {
@@ -43,10 +49,14 @@ const uploadImageWithAxios = async (formData: FormData,
 
 interface UploadService {
   uploadImage: (file: File) => Promise<Image | undefined>
-  uploadImageWithAxios: (formData: FormData, onUploadProgress: (progressEvent: AxiosProgressEvent) => void | undefined) => Promise<Image | undefined>
+  uploadImageWithAxios: (
+    formData: FormData,
+    onUploadProgress: (progressEvent: AxiosProgressEvent) => void | undefined
+  ) => Promise<Image | undefined>
 }
 
 export const $uploadService: UploadService = {
   uploadImage: (file) => uploadImage(file),
-  uploadImageWithAxios: (formData, onUploadProgress) => uploadImageWithAxios(formData, onUploadProgress)
+  uploadImageWithAxios: (formData, onUploadProgress) =>
+    uploadImageWithAxios(formData, onUploadProgress)
 }

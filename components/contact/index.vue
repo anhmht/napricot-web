@@ -183,7 +183,7 @@ const onRecaptchaSuccess = (token: string) => {
 const loadRecaptcha = () => {
   if (window.grecaptcha) {
     window.grecaptcha.render('recaptcha-container', {
-      sitekey: config.app.recaptchaSiteKey,
+      sitekey: config.public.recaptchaSiteKey,
       callback: onRecaptchaSuccess
     })
   }
@@ -239,7 +239,7 @@ onMounted(() => {
 .header {
   margin-bottom: 24px;
   h5 {
-    font-weight: 500;
+    font-weight: 700;
     text-align: center;
     line-height: 28px;
     margin-bottom: 12px;

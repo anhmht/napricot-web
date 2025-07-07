@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import debounce from 'lodash/debounce'
+import { debounce } from '~/utils'
 import { Paper, ContentAssessor, interpreters } from 'yoastseo'
 import Researcher from 'yoastseo/build/languageProcessing/languages/en/Researcher.js'
 import TextAlignmentAssessment from 'yoastseo/build/scoring/assessments/readability/TextAlignmentAssessment.js'

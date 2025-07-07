@@ -54,7 +54,7 @@ const headerClick = (type: 'sign-in' | 'sign-up') => {
   display: flex;
   border-bottom: 1px solid #dcdcdc;
   color: var(--color-icon);
-  font-weight: 500;
+  font-weight: 700;
 }
 .hr {
   position: absolute;

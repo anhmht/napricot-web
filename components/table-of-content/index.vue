@@ -93,7 +93,7 @@ const top = computed<number>(() => {
       transition: all 0.3s ease-in-out;
       &.active {
         color: var(--color-text);
-        font-weight: 500;
+        font-weight: 700;
       }
       &:hover {
         color: var(--color-text);

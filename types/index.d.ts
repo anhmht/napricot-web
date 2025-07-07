@@ -1,10 +1,10 @@
-
-
 import Vue from 'vue'
 import { ComponentCustomProperties } from 'vue'
-import type { EventBus } from '~/plugins/03.event-bus';
+import type { EventBus } from '~/plugins/03.event-bus'
+import type { Store } from 'pinia'
 
 interface PluginsInjections {
+  $store: Store
   $eventBus: EventBus
 
   // Composables
@@ -12,25 +12,33 @@ interface PluginsInjections {
   fromNow: typeof import('~/composables/format').fromNow
 
   // router
-  navigateTo: (path: string) => (to: RouteLocationRaw | undefined | null, options?: NavigateToOptions) => Promise<void | NavigationFailure | false> | false | void | RouteLocationRaw;
+  navigateTo: (
+    path: string
+  ) => (
+    to: RouteLocationRaw | undefined | null,
+    options?: NavigateToOptions
+  ) =>
+    | Promise<void | NavigationFailure | false>
+    | false
+    | void
+    | RouteLocationRaw
 }
 
 declare module '#app' {
-  interface NuxtApp extends PluginsInjections { }
+  interface NuxtApp extends PluginsInjections {}
 }
 
 declare module 'nuxt/app' {
-  interface NuxtApp extends PluginsInjections { }
+  interface NuxtApp extends PluginsInjections {}
 }
 
 declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties extends PluginsInjections { }
+  interface ComponentCustomProperties extends PluginsInjections {}
 }
 
 declare module 'vue/types/vue' {
   // 3. Declare augmentation for Vue
-  interface Vue extends PluginsInjections { }
+  interface Vue extends PluginsInjections {}
 }
 
-
-export { }
+export {}

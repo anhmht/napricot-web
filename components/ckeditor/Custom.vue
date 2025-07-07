@@ -473,7 +473,7 @@ export default defineNuxtComponent({
             padding: 12px;
             border-radius: 8px;
             font-size: 1.8rem;
-            font-weight: 500;
+            font-weight: 700;
             font-family: Arial Black, Arial, sans-serif;
             text-decoration: none;
             line-height: 1.2;

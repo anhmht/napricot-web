@@ -137,7 +137,7 @@ function submitForm() {
 .hr {
   :global(.el-divider__text) {
     font-size: 1.4rem;
-    font-weight: 500;
+    font-weight: 700;
     color: var(--color-icon);
   }
 }

@@ -56,7 +56,7 @@ const props = defineProps({
     color: #8b8b8b;
   }
   h5 {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 1.8rem;
     color: var(--color-text);
     margin-bottom: 12px;
@@ -84,7 +84,7 @@ const props = defineProps({
     border-radius: 4px;
     padding: 16px 48px;
     border: 1px solid var(--color-primary);
-    font-weight: 500;
+    font-weight: 700;
     font-family: 'SVN-Circular';
     width: fit-content;
     margin-top: auto;

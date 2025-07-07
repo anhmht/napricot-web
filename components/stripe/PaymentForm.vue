@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 const config = useRuntimeConfig()
-const STRIPE_PUBLIC_KEY = config.app.stripePublicKey
+const STRIPE_PUBLIC_KEY = config.public.stripePublicKey
 
 const message = ref<string | undefined>(undefined)
 // @ts-ignore

@@ -110,7 +110,7 @@ const handleSelectionChange = (rows: any[]) => {
       padding: 0;
       color: var(--color-grayscale-900);
       font-size: 1.8rem;
-      font-weight: 500;
+      font-weight: 700;
     }
   }
   :global(.el-table__body .el-table__row) {

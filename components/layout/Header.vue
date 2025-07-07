@@ -81,6 +81,13 @@ onMounted(() => {
     lastScroll = currentScroll
   })
 })
+
+watch(
+  () => store.showOverlay,
+  (newVal) => {
+    console.log('showOverlay', newVal)
+  }
+)
 </script>
 
 <style lang="postcss" module>

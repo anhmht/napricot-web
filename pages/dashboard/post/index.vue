@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import debounce from 'lodash/debounce'
+import { debounce } from '~/utils'
 
 definePageMeta({
   layout: 'dashboard',
@@ -117,7 +117,7 @@ const reloadList = () => {
 }
 
 const { status, refresh } = await useAsyncData(
-  'post',
+  'posts',
   async () => {
     const res = await $postService.getPosts(filter.value, pagination.value)
     posts.value = res

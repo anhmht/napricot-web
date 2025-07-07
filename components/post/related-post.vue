@@ -51,7 +51,7 @@ onMounted(async () => {
 }
 .title {
   font-size: 1.6rem;
-  font-weight: 500;
+  font-weight: 700;
   margin-bottom: 16px;
 }
 .posts {
