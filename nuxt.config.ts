@@ -1,5 +1,6 @@
 import { RuntimeConfig, getRunTimeConfig } from './config/RuntimeConfig'
 // import { nodePolyfills } from 'vite-plugin-node-polyfills'
+// import { visualizer } from 'rollup-plugin-visualizer'
 const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
 import fontsPreload from './config/Font'
 // import routes from './dynamic-routes.json'
@@ -28,6 +29,7 @@ export default defineNuxtConfig({
       target: 'esnext',
       // Don't use manual chunks for element-plus to fix CSS issues
       rollupOptions: {
+        // plugins: [visualizer({ open: true })],
         output: {
           // Remove manual chunks configuration to fix CSS issues
         }
@@ -129,7 +131,17 @@ export default defineNuxtConfig({
   },
 
   robots: {
-    disallow: ['/dashboard', '/policy']
+    disallow: [
+      '/dashboard',
+      '/policy',
+      '/cdn-cgi/imagedelivery/',
+      '/api/',
+      '/email-verification',
+      '/reset-password',
+      '/forgot-password',
+      '/sign-in'
+    ],
+    sitemap: 'https://napricot.com/sitemap.xml'
   },
 
   // Disable SEO validation warnings

@@ -23,26 +23,37 @@ export default defineSitemapEventHandler(async () => {
       })
     })
   ])
-  const sitemap = posts.flatMap((p) => {
+
+  // Create sitemap entries for individual posts
+  const postPages = posts.flatMap((p) => {
     return [
       {
         loc: p.url,
-        priority: 1.0,
+        priority: 1 as const,
         lastmod: p.lastmod,
         images: p.images.map((img: string, index) => ({
           loc: img,
           title: p.title + index,
           caption: p.title + index
         })),
-        news: [
-          {
-            title: p.title,
-            publication_date: p.publication_date,
-            publication: { name: p.title, language: 'en' }
-          }
-        ]
+        news: {
+          title: p.title,
+          publication_date: p.publication_date,
+          publication: { name: p.title, language: 'en' }
+        }
       }
     ]
   })
-  return sitemap
+
+  // Add the main posts listing page
+  const mainPages = [
+    {
+      loc: '/post',
+      priority: 0.8 as const,
+      lastmod: posts.length > 0 ? posts[0].lastmod : new Date().toISOString(),
+      changefreq: 'daily' as const
+    }
+  ]
+
+  return [...mainPages, ...postPages]
 })
