@@ -33,7 +33,7 @@ const props = defineProps({
   gap: 16px;
   h4 {
     font-size: 2.4rem;
-    font-weight: 500;
+    font-weight: 700;
   }
 }
 .action {

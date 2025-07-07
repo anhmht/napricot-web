@@ -4,9 +4,6 @@ Allow: /
 # Prevent indexing of Cloudflare image delivery URLs
 Disallow: /cdn-cgi/imagedelivery/
 
-# Prevent indexing of API endpoints
-Disallow: /api/
-
 # Prevent indexing of admin/dashboard areas
 Disallow: /dashboard/
 Disallow: /email-verification

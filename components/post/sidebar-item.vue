@@ -49,7 +49,7 @@ const props = defineProps({
   justify-content: space-between;
   h4 {
     font-size: 1.6rem;
-    font-weight: 500;
+    font-weight: 700;
     margin: 0;
     color: var(--color-text);
   }

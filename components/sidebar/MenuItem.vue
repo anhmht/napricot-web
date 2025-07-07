@@ -30,7 +30,7 @@ defineProps({
   display: flex;
   padding: 8px 12px;
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 700;
   align-items: center;
   justify-content: space-between;
   color: var(--color-text-grayscale-500);

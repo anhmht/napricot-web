@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts" setup>
-import debounce from 'lodash/debounce'
+import { debounce } from '~/utils'
 import { OptionType } from 'element-plus/lib/components/select-v2/src/select.types.js'
 /** Filter and pagination */
 const filter = ref<PostFilter>({
@@ -109,7 +109,7 @@ const handleSort = (value: string) => {
 }
 
 const { data, status, error, refresh } = await useAsyncData(
-  'posts',
+  'posts-fetch',
   async () => {
     return await $postService.getPosts(filter.value, pagination.value)
   },

@@ -16,13 +16,13 @@ const store = useMainStore()
 const { data } = await useAsyncData('categories', () =>
   $categoryService.getAllCategories()
 )
-const { app } = useRuntimeConfig()
+const config = useRuntimeConfig()
 
 if (data.value) store.setCategories(data.value)
 
 const route = useRoute()
 
-if (!app.isDevelopment) {
+if (!config.public.isDevelopment) {
   // Google Analytics
   const { proxy } = useScriptGoogleAnalytics({
     id: 'G-6K500GJZ6H'

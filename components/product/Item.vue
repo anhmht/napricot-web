@@ -63,7 +63,7 @@ const oldPrice = computed(() => (props.data.price * 1.8).toFixed(2))
     }
   }
   p {
-    font-weight: 500;
+    font-weight: 700;
     color: var(--color-text);
   }
   .price {
@@ -86,7 +86,7 @@ const oldPrice = computed(() => (props.data.price * 1.8).toFixed(2))
   }
 }
 p {
-  font-weight: 500;
+  font-weight: 700;
   color: var(--color-text);
 }
 .bestSell {
@@ -111,7 +111,7 @@ p {
   right: 12px;
   color: #fff;
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 700;
 }
 .sale {
   padding: 4px 12px;

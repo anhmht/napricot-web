@@ -33,8 +33,8 @@
           <NuxtImg
             provider="myProvider"
             src="/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero"
-            :srcset="`${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero 210w,
-                  ${config.app.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/large500 500w`"
+            :srcset="`${config.public.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/hero 210w,
+                  ${config.public.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/large500 500w`"
             sizes="210 md:500"
             alt="Napricot Logo Brand"
             :class="$style.logo"
@@ -72,8 +72,8 @@
         <NuxtImg
           provider="myProvider"
           src="/26d0e35b-eb2a-4432-d5fc-39c682271a00/post872x424"
-          :srcset="`${config.app.imageUrl}/26d0e35b-eb2a-4432-d5fc-39c682271a00/hero 375w,
-                  ${config.app.imageUrl}/26d0e35b-eb2a-4432-d5fc-39c682271a00/post872x424 1410w`"
+          :srcset="`${config.public.imageUrl}/26d0e35b-eb2a-4432-d5fc-39c682271a00/hero 375w,
+                  ${config.public.imageUrl}/26d0e35b-eb2a-4432-d5fc-39c682271a00/post872x424 1410w`"
           sizes="375 md:1410"
           alt="Napricot Commitment"
           :class="$style.commitment"

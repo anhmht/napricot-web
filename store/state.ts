@@ -7,15 +7,16 @@ export interface State {
   }
 }
 
-
-export const states = defineStore({
-  id: 'state',
-
-  state: (): State => {
-    return {
-      currentUser: undefined,
-      showOverlay: false,
-      categories: undefined
-    }
+export const states = defineStore('state', () => {
+  return {
+    currentUser: ref<User | undefined>(undefined),
+    showOverlay: ref(false),
+    categories: ref<
+      | {
+          categories: ICategory[]
+          treeCategories: ICategory[]
+        }
+      | undefined
+    >(undefined)
   }
 })

@@ -180,7 +180,7 @@ const uploadFile = async (file: IUploadFile) => {
   } else {
     if (uploadedFile) {
       uploadedFile.url = 'error'
-      uploadedFile.base64 = `${config.app.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/934fe936-5e07-449a-1750-9e2789bcc100/large500`
+      uploadedFile.base64 = `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/934fe936-5e07-449a-1750-9e2789bcc100/large500`
       uploadedImages.value.push({
         url: 'error',
         id: 'error',

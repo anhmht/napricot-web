@@ -85,7 +85,7 @@ const config = useRuntimeConfig()
       }
     }
     p {
-      font-weight: 500;
+      font-weight: 700;
       font-size: 1.8rem;
       color: var(--color-text);
     }

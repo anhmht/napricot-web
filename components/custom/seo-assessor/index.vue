@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import debounce from 'lodash/debounce'
+import { debounce } from '~/utils'
 import { Paper, SeoAssessor, interpreters } from 'yoastseo'
 import Researcher from 'yoastseo/build/languageProcessing/languages/en/Researcher.js'
 

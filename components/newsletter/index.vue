@@ -73,7 +73,7 @@ const input = ref('')
   border-radius: 62px;
   font-size: 16px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
   background-image: linear-gradient(
     90deg,
     var(--color-primary) 20%,

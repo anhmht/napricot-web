@@ -5,19 +5,21 @@ export const getImage: ProviderGetImage = (
   src,
   { width, height, format, quality, fit } = {}
 ) => {
-  const imgUrl = useRuntimeConfig().app.imageUrl
+  const {
+    public: { imageUrl }
+  } = useRuntimeConfig()
   // Check if src is already a complete URL or already includes baseURL
   let url: string
   if (
     src.startsWith('http://') ||
     src.startsWith('https://') ||
-    src.includes(imgUrl) ||
+    src.includes(imageUrl) ||
     src.includes('.')
   ) {
     // src is already a complete URL or includes baseURL, use as is
     url = src
   } else {
-    url = joinURL(imgUrl, src)
+    url = joinURL(imageUrl, src)
   }
 
   // Add query parameters for transformations if needed

@@ -1,9 +1,7 @@
 import { RuntimeConfig, getRunTimeConfig } from './config/RuntimeConfig'
-// import { nodePolyfills } from 'vite-plugin-node-polyfills'
 // import { visualizer } from 'rollup-plugin-visualizer'
 const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
 import fontsPreload from './config/Font'
-// import routes from './dynamic-routes.json'
 
 const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 
@@ -11,17 +9,7 @@ const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV === 'development' },
 
-  experimental: {
-    componentIslands: true,
-    payloadExtraction: true,
-    typedPages: true,
-    treeshakeClientOnly: true
-  },
-
   vite: {
-    plugins: [
-      // nodePolyfills() // Use for nuxt dev (yarn serve)
-    ],
     build: {
       // Speed up build with these Vite optimizations
       cssCodeSplit: true,
@@ -104,7 +92,7 @@ export default defineNuxtConfig({
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
-          hid: 'description',
+          key: 'description',
           name: 'description',
           content:
             'Napricot is the best place to find gifts for your loved ones. We have a wide range of gifts for all occasions.'
@@ -135,7 +123,6 @@ export default defineNuxtConfig({
       '/dashboard',
       '/policy',
       '/cdn-cgi/imagedelivery/',
-      '/api/',
       '/email-verification',
       '/reset-password',
       '/forgot-password',
@@ -156,64 +143,6 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     minify: true,
-    // Optimize build cache
-    storage: {
-      // File system storage for caching
-      fs: {
-        driver: 'fs',
-        base: './.nitro/cache'
-      },
-      // Memory storage for runtime caching
-      memory: {
-        driver: 'memory'
-      }
-    },
-    // prerender: {
-    //   routes: routes as string[]
-    // },
-    // Optimize server performance with enhanced caching
-    routeRules: {
-      '/**': {
-        headers: {
-          'Cache-Control': 'public, max-age=86400, s-maxage=86400'
-        }
-      },
-      // Static assets - long cache
-      '/_nuxt/**': {
-        headers: {
-          'Cache-Control': 'public, max-age=31536000, immutable'
-        }
-      },
-      // Images - medium cache
-      '/images/**': {
-        headers: {
-          'Cache-Control': 'public, max-age=604800, s-maxage=604800'
-        }
-      },
-      // API routes - short cache with revalidation
-      '/api/**': {
-        headers: {
-          'Cache-Control': 'public, max-age=300, s-maxage=300, must-revalidate'
-        }
-      },
-      // Posts - medium cache with stale-while-revalidate
-      '/post/**': {
-        headers: {
-          'Cache-Control':
-            'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400'
-        }
-      },
-      // Dashboard - no cache
-      '/dashboard/**': {
-        headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate'
-        }
-      }
-    },
-    // Improve Nitro build performance
-    future: {
-      nativeSWR: true
-    },
     // Additional optimization to avoid deprecation warnings
     esbuild: {
       options: {
@@ -233,21 +162,13 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/dashboard/post/**': { ssr: false },
-    '/sign-in': {
-      prerender: true
+    '/dashboard/**': {
+      // @ts-ignore - ssr: false is valid in Nuxt 3 routeRules but TypeScript definitions are incomplete
+      ssr: false
     },
-    '/reset-password': {
-      prerender: true
-    },
-    '/forgot-password': {
-      prerender: true
-    },
-    '/about-us': {
-      prerender: true
-    },
-    '/policy/**': {
-      prerender: true
+    '/dashboard/post/**': {
+      // @ts-ignore - ssr: false is valid in Nuxt 3 routeRules but TypeScript definitions are incomplete
+      ssr: false
     },
     '/post/**': {
       isr: true
@@ -261,7 +182,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    app: {
+    public: {
       ...runtimeConfig
     }
   },

@@ -71,7 +71,7 @@ const route = useRoute()
 const social = !!route.query.social as boolean
 const { slug } = route.params as { slug: string }
 const { data, error } = useAsyncData(
-  'pageFetch-' + slug,
+  'post-fetch-' + slug,
   async () => {
     const post = await $postService.getPostBySlug(slug)
     return { ...post }
@@ -204,7 +204,7 @@ useHead({
     gap: 24px;
     h1 {
       font-size: 3.6rem;
-      font-weight: 500;
+      font-weight: 700;
     }
   }
 }
@@ -243,7 +243,7 @@ useHead({
 }
 .tocTitle {
   font-size: 1.6rem;
-  font-weight: 500;
+  font-weight: 700;
   margin-bottom: 16px;
 }
 @media (max-width: 1120px) {
