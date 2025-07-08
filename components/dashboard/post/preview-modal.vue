@@ -75,7 +75,6 @@
 </template>
 
 <script setup lang="ts">
-import 'ckeditor5/ckeditor5.css'
 import { CheerioAPI, load } from 'cheerio'
 import { TableOfContentItem } from '~/components/table-of-content/index.vue'
 
