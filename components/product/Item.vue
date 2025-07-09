@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="`/product/${data.slug}`" :class="$style.product">
+  <NuxtLink :to="`${data.slug}`" :class="$style.product">
     <div :class="bestSelling && $style.bestSell">
       <NuxtImg
         loading="lazy"

@@ -58,23 +58,23 @@ const data = ref([
     title: 'Help',
     items: [
       { name: 'FAQ', link: '/help/faq' },
-      { name: 'Contact Us', link: '/help/contact' }
+      { name: 'Contact Us', link: '#' }
     ]
   },
   {
     title: 'Order',
     items: [
-      { name: 'Tracking', link: '/order/track' },
-      { name: 'Orders', link: '/order/history' },
-      { name: 'Account', link: '/order/status' },
-      { name: 'Payment', link: '/order/payment' }
+      { name: 'Tracking', link: '#' },
+      { name: 'Orders', link: '#' },
+      { name: 'Account', link: '#' },
+      { name: 'Payment', link: '#' }
     ]
   },
   {
     title: 'About',
     items: [
       { name: 'About us', link: '/about-us' },
-      { name: 'Invite Friends', link: '/about/team' }
+      { name: 'Invite Friends', link: '#' }
     ]
   }
 ])

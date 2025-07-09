@@ -1,6 +1,6 @@
 <template>
-  <div :class="$style.carousel">
-    <div :class="$style.wrapper" v-if="loading">
+  <div class="carousel">
+    <div class="wrapper" v-if="loading">
       <NuxtImg
         provider="myProvider"
         src="/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public"
@@ -11,9 +11,9 @@
         preload
         @load="loading = false"
       />
-      <div :class="$style.overlay">
-        <div :class="$style.contentWrapper">
-          <div :class="$style.content">
+      <div class="overlay">
+        <div class="content-wrapper">
+          <div class="content">
             <p><i class="icon-verified_user" /> napricot GUARANTEED FIT</p>
             <h3>Rev up your T-shirt</h3>
             <h6>
@@ -24,26 +24,27 @@
         </div>
       </div>
     </div>
-    <el-carousel
+    <CommonCarousel
       v-else
-      motion-blur
+      :autoplay="true"
       :interval="3000"
-      arrow="never"
       height="340px"
+      mobile-height="340px"
+      :slide-count="2"
     >
-      <el-carousel-item>
-        <div :class="$style.wrapper">
+      <template v-slot:[`slide-1`]>
+        <div class="wrapper">
           <NuxtImg
             provider="myProvider"
             src="/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public"
             :srcset="`${imageUrl}/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/large500 375w,
-            ${imageUrl}/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public 1410w`"
+              ${imageUrl}/711e1703-1ca3-4eb2-9e9d-be6e44e2e400/public 1410w`"
             sizes="375 md:1410"
             alt="Napricot Banner 1"
           />
-          <div :class="$style.overlay">
-            <div :class="$style.contentWrapper">
-              <div :class="$style.content">
+          <div class="overlay">
+            <div class="content-wrapper">
+              <div class="content">
                 <p><i class="icon-verified_user" /> napricot GUARANTEED FIT</p>
                 <h3>Rev up your T-shirt</h3>
                 <h6>
@@ -55,20 +56,20 @@
             </div>
           </div>
         </div>
-      </el-carousel-item>
-      <el-carousel-item>
+      </template>
+      <template v-slot:[`slide-2`]>
         <NuxtLink to="#">
           <NuxtImg
             provider="myProvider"
             src="/51f64545-6417-4083-5e4e-c3d211e16e00/public"
             :srcset="`${imageUrl}/51f64545-6417-4083-5e4e-c3d211e16e00/large500 375w,
-            ${imageUrl}/51f64545-6417-4083-5e4e-c3d211e16e00/public 1410w`"
+              ${imageUrl}/51f64545-6417-4083-5e4e-c3d211e16e00/public 1410w`"
             sizes="375 md:1410"
             alt="Napricot Banner 2"
           />
         </NuxtLink>
-      </el-carousel-item>
-    </el-carousel>
+      </template>
+    </CommonCarousel>
   </div>
 </template>
 
@@ -79,7 +80,7 @@ const {
 } = useRuntimeConfig()
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" scoped>
 .carousel {
   height: 340px;
   img {
@@ -89,6 +90,13 @@ const {
     width: 100%;
     height: 340px;
   }
+
+  :deep(.swiper-slide img) {
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    object-position: center;
+  }
   a:hover {
     opacity: 0.8;
   }
@@ -96,6 +104,10 @@ const {
 .wrapper {
   position: relative;
   width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .overlay {
   position: absolute;
@@ -109,7 +121,7 @@ const {
     ),
     rgb(211 211 211 / 0%) 50% / cover no-repeat;
 }
-.contentWrapper {
+.content-wrapper {
   position: relative;
   display: flex;
   height: 100%;
@@ -153,25 +165,6 @@ const {
     &:hover {
       background-color: var(--color-primary-light);
     }
-  }
-}
-:global(.el-carousel__indicators) {
-  z-index: 1;
-}
-:global(.el-carousel__indicator) {
-  width: 10px;
-  height: 10px;
-  button {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #fff;
-    opacity: 1;
-  }
-}
-:global(.el-carousel__indicator.is-active) {
-  button {
-    background-color: var(--color-primary);
   }
 }
 </style>

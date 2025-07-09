@@ -9,17 +9,18 @@
     </div>
     <div :class="$style.content">
       <custom-tab :tabs="tabs" @change="changeTab"></custom-tab>
-      <el-carousel
+      <CommonCarousel
         ref="carousel"
         :autoplay="false"
-        motion-blur
-        indicator-position="none"
-        arrow="never"
         height="936px"
+        mobile-height="990px"
+        :slide-count="4"
+        :display-indicator="false"
       >
-        <el-carousel-item
+        <template
           v-for="(item, index) in newArrival(config)"
           :key="index"
+          v-slot:[`slide-${index+1}`]
         >
           <div :class="$style.wrapper">
             <product-item
@@ -28,19 +29,22 @@
               :key="i"
             />
           </div>
-        </el-carousel-item>
-      </el-carousel>
+        </template>
+      </CommonCarousel>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { newArrival } from '~/data/NewArrival'
+
 const config = useRuntimeConfig()
 const tabs = newArrival(config).map((item) => item.name)
+
 const carousel = ref()
 
 const changeTab = (index: number) => {
-  carousel.value?.setActiveItem(index)
+  carousel.value?.changeSlide(index)
 }
 </script>
 

@@ -8,42 +8,39 @@
       </NuxtLink>
     </div>
     <div :class="$style.content">
-      <el-carousel
-        arrow="never"
-        :height="isDesktop ? '244px' : '396px'"
-        :autoplay="false"
-        motion-blur
-        indicator-position="none"
+      <CommonCarousel
         ref="carousel"
+        :autoplay="false"
+        height="244px"
+        mobile-height="396px"
+        :slide-count="2"
+        :display-indicator="false"
       >
-        <el-carousel-item
-          :class="$style.category"
+        <template
           v-for="(item, index) in categories"
           :key="index"
+          v-slot:[`slide-${index+1}`]
         >
-          <NuxtLink
-            v-for="(category, index) in item"
-            :key="index"
-            :to="`/categories?category=${category.slug}`"
-          >
-            <div>
-              <NuxtImg
-                :src="`${category.src}hero`"
-                format="webp"
-                :alt="`${category.name} image`"
-                :class="$style.picture"
-              />
-            </div>
-            <p>{{ category.name }}</p>
-          </NuxtLink>
-        </el-carousel-item>
-      </el-carousel>
-
+          <div :class="$style.category">
+            <NuxtLink v-for="(category, index) in item" :key="index" :to="`/#`">
+              <div>
+                <NuxtImg
+                  :src="`${category.src}hero`"
+                  format="webp"
+                  :alt="`${category.name} image`"
+                  :class="$style.picture"
+                />
+              </div>
+              <p>{{ category.name }}</p>
+            </NuxtLink>
+          </div>
+        </template>
+      </CommonCarousel>
       <button aria-label="Left" :class="$style.left" @click="prev">
-        <i class="icon-arrow-right" />
+        <i class="icon-arrow-right"></i>
       </button>
       <button aria-label="Right" :class="$style.right" @click="next">
-        <i class="icon-arrow-right" />
+        <i class="icon-arrow-right"></i>
       </button>
     </div>
   </div>
@@ -219,6 +216,7 @@ const next = () => carousel.value?.next()
     padding: 8px;
     cursor: pointer;
     display: flex;
+    z-index: 1;
     &:hover {
       i {
         color: var(--color-primary);

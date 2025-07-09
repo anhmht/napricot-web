@@ -2,13 +2,13 @@
   <div :class="$style.profile">
     <div :class="$style.link">
       <NuxtLink v-show="!currentUser" to="/sign-in"> Sign in </NuxtLink>
-      <NuxtLink v-show="currentUser" to="/tracking"> Tracking </NuxtLink>
+      <NuxtLink v-show="currentUser" to="#"> Tracking </NuxtLink>
     </div>
     <div :class="$style.iconDesktop">
-      <NuxtLink to="/favorite" aria-label="Wishlist">
+      <NuxtLink to="#" aria-label="Wishlist">
         <i class="icon-favorite"></i>
       </NuxtLink>
-      <NuxtLink to="/cart" aria-label="Cart">
+      <NuxtLink to="#" aria-label="Cart">
         <i class="icon-shopping-cart"></i>
       </NuxtLink>
       <NuxtLink
