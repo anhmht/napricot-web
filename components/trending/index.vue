@@ -18,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+import { trending } from '~/data/Trending'
 const config = useRuntimeConfig()
 </script>
 
