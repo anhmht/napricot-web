@@ -7,8 +7,8 @@
         <div>
           <h6>Arrange quickly in your account</h6>
           <p>
-            Track <NuxtLink to="/order">your order</NuxtLink>, pay invoices or
-            return an item.
+            Track <NuxtLink to="#">your order</NuxtLink>, pay invoices or return
+            an item.
           </p>
         </div>
       </div>

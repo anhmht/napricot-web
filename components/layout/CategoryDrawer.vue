@@ -24,7 +24,7 @@
         >
           Sign in or Register</NuxtLink
         >
-        <NuxtLink to="/tracking" @click="$emit('update:open', false)">
+        <NuxtLink to="#" @click="$emit('update:open', false)">
           Tracking
         </NuxtLink>
       </div>
