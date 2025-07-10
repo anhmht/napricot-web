@@ -33,11 +33,10 @@
 
 <script setup lang="ts">
 const emit = defineEmits(['close'])
-const signOut = () => {
+const signOut = async () => {
   emit('close')
-  setTimeout(() => {
-    $userService.signOut()
-  }, 500)
+  const { signOut } = useAuth()
+  await signOut()
 }
 </script>
 

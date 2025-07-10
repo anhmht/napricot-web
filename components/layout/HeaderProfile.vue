@@ -53,8 +53,8 @@ const open = ref(false)
 const onClickOutside = () => {
   unref(popoverRef).popperRef?.delayHide?.()
 }
-const store = useMainStore()
-const currentUser = computed(() => store.currentUser)
+const { user } = useAuth()
+const currentUser = computed(() => user.value)
 </script>
 
 <style lang="postcss" module>

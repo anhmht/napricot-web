@@ -1,7 +1,6 @@
 import { RuntimeConfig, getRunTimeConfig } from './config/RuntimeConfig'
 // import { visualizer } from 'rollup-plugin-visualizer'
 const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
-import fontsPreload from './config/Font'
 
 const runtimeConfig: RuntimeConfig = getRunTimeConfig(TARGET_ENV)
 
@@ -38,7 +37,7 @@ export default defineNuxtConfig({
     // Disable HMR polling to reduce CPU usage during build
     server: {
       hmr: {
-        protocol: 'ws'
+        protocol: 'wss'
       },
       fs: {
         // Allow serving files from one level up to the project root
@@ -97,8 +96,7 @@ export default defineNuxtConfig({
           content:
             'Napricot is the best place to find gifts for your loved ones. We have a wide range of gifts for all occasions.'
         }
-      ],
-      link: [...fontsPreload]
+      ]
     },
     // Ensure fonts are copied to the output directory
     buildAssetsDir: '/_nuxt/'

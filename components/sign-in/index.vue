@@ -79,18 +79,8 @@ function submitForm() {
         isLoading.value = true
         emit('loading', true)
         try {
-          const user = await $userService.signIn(form.email, form.password)
-          store.setCurrentUser(user as User)
-          ElNotification.success({
-            title: 'Sign in successfully',
-            message: `Welcome back ${user?.name}`
-          })
-          if (form.rememberMe) {
-            const cookie = useCookie('token')
-            if (user?.token) {
-              cookie.value = user.token.replaceAll('.', '*napricot*')
-            }
-          }
+          const { signIn } = useAuth()
+          await signIn(form.email, form.password, form.rememberMe)
           navigateTo('/')
         } catch (error: any) {
           errorMessage.value = error.message

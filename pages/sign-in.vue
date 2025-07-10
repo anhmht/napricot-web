@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'no-auth'
+  middleware: 'guest'
 })
 defineOgImageComponent('DefaultOg')
 </script>

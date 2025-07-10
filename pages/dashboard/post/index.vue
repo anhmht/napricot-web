@@ -132,7 +132,6 @@ watch(
   () => {
     const postNotification = notification.value.postNotification
     if (postNotification) {
-      console.log(postNotification)
       const { id, uploading } = postNotification
       const post = posts.value?.posts.find((p) => p._id === id)
       if (post) {
