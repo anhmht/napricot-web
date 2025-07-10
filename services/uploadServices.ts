@@ -1,4 +1,6 @@
 import axios, { AxiosProgressEvent } from 'axios'
+import { generateUniqSerial } from '~/utils/index'
+import { errorHandler } from '~/utils/error'
 
 const uploadImage = async (file: File): Promise<Image | undefined> => {
   try {
@@ -7,8 +9,7 @@ const uploadImage = async (file: File): Promise<Image | undefined> => {
 
     const data = await $api('/images/upload', {
       headers: {
-        contentType: 'multipart/form-data',
-        accept: '*/*'
+        Accept: '*/*'
       },
       method: 'POST',
       body: formData
@@ -32,10 +33,9 @@ const uploadImageWithAxios = async (
       formData,
       {
         headers: {
-          'Content-Type': 'multipart/form-data',
-          accept: '*/*',
-          Authorization: `Bearer ${useCookie('token').value}`
+          accept: '*/*'
         },
+        withCredentials: true,
         onUploadProgress
       }
     )

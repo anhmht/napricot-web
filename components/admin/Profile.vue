@@ -17,7 +17,7 @@
         <i class="icon-settings"></i>
         <span>Settings</span>
       </nuxt-link>
-      <div :class="$style.item">
+      <div :class="$style.item" @click="handleSignOut">
         <i class="icon-logout-circle"></i>
         <span>Log out</span>
       </div>
@@ -29,6 +29,12 @@
 const isOpen = ref(false)
 const toggle = () => {
   isOpen.value = !isOpen.value
+}
+
+const handleSignOut = async () => {
+  const { signOut } = useAuth()
+  await signOut()
+  navigateTo('/')
 }
 </script>
 

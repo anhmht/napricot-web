@@ -42,7 +42,6 @@ const updateContact = async (
       method: 'PUT',
       body: contact
     })
-    console.log(data)
 
     return data.contact as Contact
   } catch (error: any) {

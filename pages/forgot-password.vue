@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'no-auth'
+  middleware: 'guest'
 })
 </script>
 

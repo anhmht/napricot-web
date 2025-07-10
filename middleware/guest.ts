@@ -6,16 +6,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
       startLoading()
     }
     const user = await checkAuthStatus()
-    if (
-      !user ||
-      (!user.roles?.includes(ROLE.SUPER_ADMIN) &&
-        !user.roles?.includes(ROLE.ADMIN))
-    ) {
-      return await navigateTo('/', { replace: true })
+    if (user) {
+      return navigateTo('/')
     }
   } catch (error) {
-    // User is not authenticated, redirect to login
-    return await navigateTo('/', { replace: true })
+    return navigateTo('/')
   } finally {
     if (import.meta.client) {
       stopLoading()

@@ -7,7 +7,6 @@
         :alt="item.alt"
         :srcset="`${imageUrl}${item.src}avatar176 160w, ${imageUrl}${item.src}thumbnail 330w`"
         sizes="160 md:330"
-        preload
       />
     </NuxtLink>
   </div>

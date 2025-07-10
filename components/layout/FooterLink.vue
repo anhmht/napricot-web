@@ -58,7 +58,7 @@ const data = ref([
     title: 'Help',
     items: [
       { name: 'FAQ', link: '/help/faq' },
-      { name: 'Contact Us', link: '#' }
+      { name: 'Contact Us', link: '/help/contact' }
     ]
   },
   {

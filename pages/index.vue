@@ -4,9 +4,7 @@
       <carousel />
       <sales />
       <trending />
-      <client-only>
-        <shop-by-product />
-      </client-only>
+      <shop-by-product />
       <best-seller />
       <banner />
       <shop-by-recipient />
