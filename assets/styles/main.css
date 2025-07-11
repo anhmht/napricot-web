@@ -130,7 +130,8 @@ p strong {
       margin: 0;
     }
   }
-  ul {
+  ul,
+  ol {
     li {
       font-weight: 400;
     }

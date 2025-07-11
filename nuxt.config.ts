@@ -43,22 +43,6 @@ export default defineNuxtConfig({
         // Allow serving files from one level up to the project root
         allow: ['..']
       }
-    },
-    // Properly handle CSS from element-plus
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: ''
-        }
-      }
-    },
-    // Configure Vite to handle font files properly
-    assetsInclude: ['**/*.ttf', '**/*.woff', '**/*.woff2', '**/*.eot'],
-    resolve: {
-      alias: {
-        // Add alias for fonts to help Vite resolve them
-        '/fonts/': '/public/fonts/'
-      }
     }
   },
 
@@ -160,14 +144,6 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/dashboard/**': {
-      // @ts-ignore - ssr: false is valid in Nuxt 3 routeRules but TypeScript definitions are incomplete
-      ssr: false
-    },
-    '/dashboard/post/**': {
-      // @ts-ignore - ssr: false is valid in Nuxt 3 routeRules but TypeScript definitions are incomplete
-      ssr: false
-    },
     '/post/**': {
       isr: true
     },

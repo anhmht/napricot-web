@@ -19,11 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-const { connect } = useWebSocket()
 const { loading } = useLoading()
-onMounted(() => {
-  connect()
-})
 </script>
 
 <style lang="postcss" module>
