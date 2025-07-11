@@ -3,7 +3,7 @@
     <div :class="$style.title">Categories</div>
     <ul :class="$style.list">
       <li v-for="category in categories" :key="category._id">
-        <nuxt-link :to="`/categories/${category.slug}`">
+        <nuxt-link :to="`#`">
           {{ category.name }}
         </nuxt-link>
       </li>
