@@ -15,7 +15,12 @@
       ${{ price }} <span v-if="data.sale">${{ oldPrice }}</span>
     </div>
     <ClientOnly>
-      <el-rate v-model="rate" disabled show-score score-template="({value})" />
+      <CustomRate
+        v-model="rate"
+        :disabled="true"
+        :show-score="true"
+        score-template="({value})"
+      />
     </ClientOnly>
     <div :class="$style.tag">
       <span v-if="data.sale" :class="$style.sale">SALE!</span>
@@ -80,9 +85,6 @@ const oldPrice = computed(() => (props.data.price * 1.8).toFixed(2))
       font-weight: 400;
       text-decoration: line-through;
     }
-  }
-  :global(.el-rate) {
-    height: 22px;
   }
 }
 p {

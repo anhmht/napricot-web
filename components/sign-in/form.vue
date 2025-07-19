@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading" :class="$style.form">
+  <div :class="$style.form">
     <div :class="$style.header">
       <div
         :class="[$style.item, active === 'sign-in' && $style.active]"
@@ -25,20 +25,20 @@
         @loading="(e: boolean) => (loading = e)"
       />
     </div>
+    <custom-loading :loading="loading" />
   </div>
 </template>
 
 <script setup lang="ts">
 const active = ref('sign-in')
 const route = useRoute()
-const router = useRouter()
 active.value =
   (route.query.active as string | 'sign-in' | 'sign-up') || 'sign-in'
 const loading = ref(false)
 
 const headerClick = (type: 'sign-in' | 'sign-up') => {
   active.value = type
-  router.push({ query: { active: type } })
+  navigateTo({ query: { active: type } })
 }
 </script>
 

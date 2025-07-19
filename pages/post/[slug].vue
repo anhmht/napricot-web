@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data" :class="$style.post">
+  <div :class="$style.post">
     <div :class="$style.breadcrumb">
       <div class="container">
         <breadcrumb
@@ -35,7 +35,7 @@
           </article>
           <post-tags :class="$style.tags" :tags="data?.tags" />
         </div>
-        <div :class="$style.sidebar">
+        <div v-if="data" :class="$style.sidebar">
           <nav>
             <div>
               <div :class="$style.toc">
@@ -60,6 +60,7 @@
       </div>
     </div>
     <post-download-url :post="data" v-if="data?.externalUrl && social" />
+    <custom-loading :loading="status === 'pending'" />
   </div>
 </template>
 
@@ -70,7 +71,7 @@ import { TableOfContentItem } from '~/components/table-of-content/index.vue'
 const route = useRoute()
 const social = !!route.query.social as boolean
 const { slug } = route.params as { slug: string }
-const { data, error } = useAsyncData(
+const { data, error, status } = useAsyncData(
   'post-fetch-' + slug,
   async () => {
     const post = await $postService.getPostBySlug(slug)
@@ -149,6 +150,7 @@ useServerSeoMeta({
   title: () => `${title.value}`,
   description: () => desc.value,
   ogTitle: () => `${title.value}`,
+  ogSiteName: () => 'Napricot Eyelash Beauty',
   ogDescription: () => desc.value,
   ogImage: () => image.value
 })
@@ -160,6 +162,7 @@ useHead({
       children: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'WebPage',
+        name: 'Napricot Eyelash Beauty',
         headline: title.value,
         keywords: Array.isArray(keywords.value) ? keywords.value.join(',') : '',
         description: desc.value,
@@ -175,6 +178,9 @@ useHead({
 </script>
 
 <style lang="postcss" module scoped>
+.post {
+  position: relative;
+}
 .breadcrumb {
   background-color: var(--color-background);
   color: var(--color-icon);

@@ -1,35 +1,42 @@
 <template>
-  <div :class="$style.category">
-    <el-popover
-      width="240"
+  <div class="category">
+    <CustomPopover
+      :width="240"
       placement="bottom-start"
-      :teleported="false"
+      :append-to-body="false"
       :show-arrow="false"
-      popper-class="customPopper"
-      transition="el-zoom-in-top"
       :offset="17"
+      trigger="hover"
+      popperClass="custom-category-popover"
       @before-enter="store.displayOverlay()"
       @before-leave="store.displayOverlay()"
     >
       <layout-header-category-list />
       <template #reference>
-        <div :class="[$style.title, store.showOverlay && $style.active]">
+        <div :class="['title', store.showOverlay && 'active']">
           <i class="icon-menu"></i>
           Categories
         </div>
       </template>
-    </el-popover>
+    </CustomPopover>
   </div>
 </template>
 
 <script setup lang="ts">
+import CustomPopover from '../custom/popover/index.vue'
+
 const store = useMainStore()
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" scoped>
 .category {
   position: relative;
   display: flex;
+
+  :deep(.popover-trigger) {
+    height: 100% !important;
+    align-content: center !important;
+  }
 }
 .title {
   i {
@@ -46,13 +53,16 @@ const store = useMainStore()
   }
 }
 </style>
+
+<!-- Global styles for teleported popover -->
 <style lang="postcss">
-.customPopper {
-  &.el-popover.el-popper {
-    box-shadow: none;
-    border: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
+.custom-category-popover {
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.custom-category-popover .popover__content {
+  padding: 0 !important;
 }
 </style>

@@ -1,34 +1,23 @@
 <template>
-  <div class="form-group" :class="{ 'has-validator': !!validator }">
-    <label v-if="label">{{ label }}</label>
-    <div class="input-wrapper">
-      <div v-if="$slots.prefix" class="input-prefix">
-        <slot name="prefix"></slot>
-      </div>
-      <input
+  <div class="form-group">
+    <label :for="label" v-if="label">{{ label }}</label>
+    <div class="textarea-wrapper">
+      <textarea
         :value="modelValue"
-        :type="typeRef"
         :placeholder="placeholder"
         :required="required"
         :disabled="disabled"
-        :class="{
-          error: hasError,
-          'has-prefix': $slots.prefix,
-          'has-suffix': $slots.suffix || type === 'password'
-        }"
-        :autocomplete="autocompleteValue"
+        :rows="rows"
+        :cols="cols"
+        :maxlength="maxlength"
+        :class="{ error: hasError }"
+        :style="{ resize: resize }"
         @input="handleInput"
         @blur="handleBlur"
         @keyup.enter="$emit('keyup')"
-      />
-      <div v-if="$slots.suffix || type === 'password'" class="input-suffix">
-        <slot name="suffix"></slot>
-        <i
-          v-if="type === 'password'"
-          :class="visible ? 'icon-visibility-off' : 'icon-eye'"
-          class="password-toggle"
-          @click="handlePasswordVisibility"
-        ></i>
+      ></textarea>
+      <div v-if="showCharCount && maxlength" class="char-count">
+        {{ modelValue.length }}/{{ maxlength }}
       </div>
     </div>
     <Transition name="error-slide">
@@ -43,24 +32,30 @@
 interface Props {
   modelValue: string
   label?: string
-  type?: string
   placeholder?: string
   required?: boolean
   disabled?: boolean
   errorMessage?: string
   id?: string
   validator?: (value: string) => string
-  autocomplete?: string
+  rows?: number
+  cols?: number
+  maxlength?: number
+  resize?: 'none' | 'both' | 'horizontal' | 'vertical'
+  showCharCount?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type: 'text',
   placeholder: '',
   required: false,
   disabled: false,
   errorMessage: '',
   validator: undefined,
-  autocomplete: undefined
+  rows: 4,
+  cols: undefined,
+  maxlength: undefined,
+  resize: 'vertical',
+  showCharCount: false
 })
 
 const emit = defineEmits<{
@@ -77,27 +72,17 @@ const hasError = computed(() => {
   return !!internalErrorMessage.value || !!props.errorMessage
 })
 
-// Password visibility toggle
-const visible = ref(false)
-const typeRef = ref(props.type)
-
-const handlePasswordVisibility = () => {
-  visible.value = !visible.value
-  typeRef.value = visible.value ? 'text' : 'password'
-}
-
 // Validation function
 const validateField = () => {
   if (props.validator) {
     internalErrorMessage.value = props.validator(props.modelValue)
-
     return internalErrorMessage.value
   }
   return ''
 }
 
 const handleInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
+  const target = event.target as HTMLTextAreaElement
   emit('update:modelValue', target.value)
   emit('input', event)
 
@@ -118,15 +103,6 @@ const handleBlur = (event: FocusEvent) => {
   }
 }
 
-// Update typeRef when props.type changes
-watch(
-  () => props.type,
-  (newType) => {
-    typeRef.value = newType
-    visible.value = false
-  }
-)
-
 // Watch for changes in props.errorMessage
 watch(
   () => props.errorMessage,
@@ -134,25 +110,6 @@ watch(
     internalErrorMessage.value = newMessage
   }
 )
-
-// Compute autocomplete value based on type if not explicitly provided
-const autocompleteValue = computed(() => {
-  if (props.autocomplete !== undefined) {
-    return props.autocomplete
-  }
-
-  // Default autocomplete values based on input type
-  switch (props.type) {
-    case 'password':
-      return 'current-password'
-    case 'email':
-      return 'email'
-    case 'text':
-      return 'off'
-    default:
-      return 'off'
-  }
-})
 
 // Expose functions to parent component
 defineExpose({
@@ -169,10 +126,6 @@ defineExpose({
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  margin-bottom: 0;
-}
-
-.form-group.has-validator {
   margin-bottom: 2rem;
 }
 
@@ -182,35 +135,11 @@ defineExpose({
   font-size: 1.6rem;
 }
 
-.input-wrapper {
+.textarea-wrapper {
   position: relative;
-  display: flex;
-  align-items: center;
 }
 
-.input-prefix,
-.input-suffix {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  color: var(--color-grayscale-60);
-  font-size: 1.6rem;
-}
-
-.input-prefix {
-  left: 1.6rem;
-}
-
-.input-suffix {
-  right: 1.6rem;
-  gap: 0.8rem;
-}
-
-.form-group input {
+.form-group textarea {
   width: 100%;
   padding: 1.2rem 1.6rem;
   border: 1px solid var(--color-grayscale-40);
@@ -220,49 +149,36 @@ defineExpose({
   background: white;
   color: var(--color-text);
   box-sizing: border-box;
+  font-family: inherit;
+  line-height: 1.5;
+  min-height: 4rem;
 }
 
-.form-group input.has-prefix {
-  padding-left: 4.8rem;
-}
-
-.form-group input.has-suffix {
-  padding-right: 4.8rem;
-}
-
-.form-group input[type='password'] {
-  padding-right: 4.8rem;
-}
-
-.form-group input[type='password'].has-suffix {
-  padding-right: 7.2rem;
-}
-
-.password-toggle {
-  cursor: pointer;
-  font-size: 1.8rem;
-  color: var(--color-grayscale-60);
-  transition: color 0.2s ease;
-}
-
-.password-toggle:hover {
-  color: var(--color-primary);
-}
-
-.form-group input:focus {
+.form-group textarea:focus {
   outline: none;
   border-color: var(--color-primary);
 }
 
-.form-group input:disabled {
+.form-group textarea:disabled {
   background: var(--color-bg-disabled);
   cursor: not-allowed;
   opacity: 0.7;
 }
 
-.form-group input.error {
+.form-group textarea.error {
   border-color: var(--color-error);
   border-width: 1px;
+}
+
+.char-count {
+  position: absolute;
+  bottom: 0.8rem;
+  right: 1.2rem;
+  font-size: 1.2rem;
+  color: var(--color-grayscale-60);
+  background: white;
+  padding: 0 0.4rem;
+  pointer-events: none;
 }
 
 .field-error {
@@ -295,28 +211,14 @@ defineExpose({
 
 /* Responsive */
 @media (max-width: 768px) {
-  .form-group input {
+  .form-group textarea {
     padding: 1rem 1.4rem;
   }
 
-  .form-group input.has-prefix {
-    padding-left: 4.4rem;
-  }
-
-  .form-group input.has-suffix {
-    padding-right: 4.4rem;
-  }
-
-  .form-group input[type='password'].has-suffix {
-    padding-right: 6.8rem;
-  }
-
-  .input-prefix {
-    left: 1.4rem;
-  }
-
-  .input-suffix {
-    right: 1.4rem;
+  .char-count {
+    bottom: 0.6rem;
+    right: 1rem;
+    font-size: 1.1rem;
   }
 }
 </style>

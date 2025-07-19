@@ -12,7 +12,7 @@
       <CommonCarousel
         ref="carousel"
         :autoplay="false"
-        height="936px"
+        height="952px"
         mobile-height="990px"
         :slide-count="4"
         :display-indicator="false"

@@ -4,109 +4,111 @@
       <h5>Reset Password</h5>
       <p>You will receive instructions for resetting your password.</p>
     </div>
-    <el-form ref="formRef" :model="form" :rules="rules" hide-required-asterisk>
+    <form :class="$style.formContent">
       <custom-alert v-if="errorMessage" type="error" :title="errorMessage" />
-      <custom-field
+      <CustomInputField
+        ref="passwordRef"
         v-model="form.password"
         name="password"
         label="New Password"
         type="password"
         :disabled="isLoading"
         placeholder="8+ characters"
+        :validator="validatePassword"
       >
-      </custom-field>
-      <custom-field
+      </CustomInputField>
+      <CustomInputField
+        ref="confirmPasswordRef"
         v-model="form.confirmPassword"
         name="confirmPassword"
         label="Confirm Password"
         type="password"
         :disabled="isLoading"
+        :validator="validateConfirmPassword"
       >
-      </custom-field>
+      </CustomInputField>
       <custom-button type="primary" @click="submitForm" :disabled="isLoading"
         >Reset Password
         <i class="icon-arrow-right" />
       </custom-button>
-    </el-form>
+    </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { FormInstance, FormRules } from 'element-plus'
+import CustomInputField from '~/components/custom/field/index.vue'
 
+const { success, error } = useNotification()
 const errorMessage = ref('')
 const isLoading = ref(false)
-const formRef = ref<FormInstance>()
 const form = reactive({
   password: '',
   confirmPassword: ''
 })
-const rules = reactive<FormRules>({
-  password: [
-    {
-      required: true,
-      message: 'Please input email address',
-      trigger: ['blur', 'change']
-    },
-    {
-      min: 8,
-      message: 'Password must be at least 8 characters',
-      trigger: ['blur', 'change']
-    }
-  ],
-  confirmPassword: [
-    {
-      required: true,
-      message: 'Please input confirm password',
-      trigger: ['blur', 'change']
-    },
-    {
-      validator: (rule, value, callback) => {
-        if (value === form.password) {
-          callback()
-        } else {
-          callback(new Error('The password does not match'))
-        }
-      },
-      trigger: ['blur', 'change']
-    }
-  ]
-})
+const passwordRef = ref(null)
+const confirmPasswordRef = ref(null)
 
 const route = useRoute()
 const token = route.query.token as string
 
-const submitForm = () => {
+const validatePassword = (password: string) => {
+  if (!password) {
+    return 'Password is required'
+  }
+  if (password.length < 8) {
+    return 'Password must be at least 8 characters'
+  }
+  return ''
+}
+
+const validateConfirmPassword = (confirmPassword: string) => {
+  if (!confirmPassword) {
+    return 'Confirm password is required'
+  }
+  if (confirmPassword !== form.password) {
+    return 'Passwords do not match'
+  }
+  return ''
+}
+
+const validation = useFormValidation('resetPassword')
+validation.registerField('password', passwordRef, validatePassword)
+validation.registerField(
+  'confirmPassword',
+  confirmPasswordRef,
+  validateConfirmPassword
+)
+
+const submitForm = async () => {
   if (!token) {
-    ElNotification.error({
+    error({
       title: 'Something went wrong',
       message: 'Please request a new reset password link'
     })
     errorMessage.value = 'Invalid token'
   }
-  return new Promise<void>((resolve) => {
-    formRef.value?.validate(async (valid: boolean) => {
-      if (valid) {
-        isLoading.value = true
-        try {
-          await $userService.resetPassword(form.password, token)
-          ElNotification.success({
-            title: 'Password has been reset',
-            message: `You can now login with your new password`
-          })
-          navigateTo('/sign-in')
-        } catch (error: any) {
-          errorMessage.value = error.message
-        }
-        isLoading.value = false
-        resolve()
-      } else {
-        console.log('Form is invalid')
-        resolve()
-      }
-    })
-  })
+
+  const isValid = await validation.validateAllFields()
+  if (isValid) {
+    isLoading.value = true
+    try {
+      await $userService.resetPassword(form.password, token)
+      success({
+        title: 'Password has been reset',
+        message: `You can now login with your new password`
+      })
+      navigateTo('/sign-in')
+    } catch (error: any) {
+      errorMessage.value = error.message
+    } finally {
+      isLoading.value = false
+    }
+  }
 }
+
+onUnmounted(() => {
+  validation.destroyForm()
+})
 </script>
 
 <style lang="postcss" module>
@@ -116,6 +118,11 @@ const submitForm = () => {
   box-shadow: 0px 8px 40px 0px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
   padding: 32px;
+}
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
 }
 .header {
   margin-bottom: 24px;

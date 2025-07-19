@@ -1,76 +1,147 @@
 <template>
-  <div :class="[$style.checkbox, !showRequired && $style.hideRequired]">
-    <el-form-item :prop="name">
-      <el-checkbox
-        :model-value="modelValue"
-        :label="label"
-        size="large"
-        @change="(value) => $emit('update:modelValue', value)"
+  <div class="form-group" :class="{ 'hide-required': !showRequired }">
+    <label :for="inputId" class="checkbox-wrapper">
+      <input
+        :id="inputId"
+        :checked="modelValue"
+        :name="name"
+        type="checkbox"
+        class="checkbox-input"
+        @change="handleChange"
         v-bind="$attrs"
       />
-    </el-form-item>
+      <span class="checkbox-custom"></span>
+      <span class="checkbox-label">{{ label }}</span>
+    </label>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-  modelValue: {
-    type: Boolean,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  label: {
-    type: String,
-    required: true
-  },
-  showRequired: {
-    type: Boolean,
-    default: false
-  }
+interface Props {
+  modelValue: boolean
+  name: string
+  label: string
+  showRequired?: boolean
+  id?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  showRequired: false,
+  id: ''
 })
-defineEmits(['update:modelValue'])
+
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+}>()
+
+// Generate unique ID if not provided
+const inputId = computed(() => {
+  return props.id || `checkbox-${Math.random().toString(36).substr(2, 9)}`
+})
+
+const handleChange = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  emit('update:modelValue', target.checked)
+}
 </script>
 
-<style lang="postcss" module>
-.checkbox {
+<style scoped>
+.form-group {
   position: relative;
-  :global(.el-form-item) {
-    margin-bottom: 16px;
-  }
-  :global(.el-checkbox.el-checkbox--large) {
-    height: 20px;
-  }
-  :global(.el-checkbox__inner) {
-    height: 20px !important;
-    width: 20px !important;
-    border-radius: 4px;
-    &::after {
-      border: 2px solid transparent;
-      border-left: 0 !important;
-      border-top: 0 !important;
-      height: 9px !important;
-      width: 4px !important;
-      left: 6px !important;
-      top: 2px !important;
-    }
-  }
-  :global(.el-checkbox__label) {
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: var(--color-text);
-  }
-  :global(.el-checkbox__input.is-checked + .el-checkbox__label) {
-    color: var(--color-text);
-  }
 }
-.hideRequired {
-  label {
-    &::before {
-      content: '' !important;
-    }
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkbox-custom {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  border-radius: 2px;
+  background: white;
+  transition: all 0.2s ease;
+  outline: 1px solid var(--color-grayscale-40);
+}
+
+.checkbox-custom::after {
+  content: '';
+  position: absolute;
+  display: none;
+  left: 7px;
+  top: 3px;
+  width: 4px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-input:checked ~ .checkbox-custom {
+  background: var(--color-primary);
+  outline-color: var(--color-primary);
+}
+
+.checkbox-input:checked ~ .checkbox-custom::after {
+  display: block;
+}
+
+.checkbox-label {
+  flex: 1;
+  margin-left: 1rem;
+}
+
+/* Hover effects */
+.checkbox-wrapper:hover .checkbox-custom {
+  border-color: var(--color-primary);
+}
+
+/* Disabled state */
+.checkbox-input:disabled ~ .checkbox-custom {
+  background: var(--color-bg-disabled);
+  border-color: var(--color-grayscale-40);
+  cursor: not-allowed;
+}
+
+.checkbox-input:disabled ~ .checkbox-label {
+  color: var(--color-grayscale-60);
+  cursor: not-allowed;
+}
+
+.checkbox-input:disabled:checked ~ .checkbox-custom {
+  background: var(--color-grayscale-60);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .checkbox-wrapper {
+    font-size: 1.3rem;
+  }
+
+  .checkbox-custom {
+    height: 18px;
+    width: 18px;
+  }
+
+  .checkbox-custom::after {
+    left: 5px;
+    top: 1px;
+    width: 3px;
+    height: 8px;
   }
 }
 </style>

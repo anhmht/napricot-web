@@ -1,33 +1,42 @@
 <template>
   <div :class="$style.signUp">
-    <el-form ref="formRef" :model="form" :rules="rules" hide-required-asterisk>
+    <form>
       <custom-alert v-if="errorMessage" type="error" :title="errorMessage" />
-      <custom-field
+      <InputField
+        ref="fullNameRef"
         v-model="form.fullName"
-        name="fullName"
         label="Full Name"
         :disabled="isLoading"
+        autocomplete="name"
+        :validator="validateFullName"
       />
-      <custom-field
+      <InputField
+        ref="emailRef"
         v-model="form.email"
-        name="email"
         label="Email Address"
+        type="email"
         :disabled="isLoading"
+        autocomplete="email"
+        :validator="validateEmail"
       />
-      <custom-field
+      <InputField
+        ref="passwordRef"
         v-model="form.password"
-        name="password"
         label="Password"
         type="password"
         :disabled="isLoading"
         placeholder="8+ characters"
+        autocomplete="new-password"
+        :validator="validatePassword"
       />
-      <custom-field
+      <InputField
+        ref="confirmPasswordRef"
         v-model="form.confirmPassword"
-        name="confirmPassword"
         label="Confirm Password"
         type="password"
         :disabled="isLoading"
+        autocomplete="new-password"
+        :validator="validateConfirmPassword"
       />
       <div :class="$style.agreement">
         <custom-checkbox
@@ -39,8 +48,8 @@
         />
         <span>
           I agree to Napricot
-          <NuxtLink to="/terms">Terms of Service</NuxtLink> and
-          <NuxtLink to="/privacy"> Privacy Policy </NuxtLink></span
+          <NuxtLink to="/policy/terms">Terms of Service</NuxtLink> and
+          <NuxtLink to="/policy/privacy"> Privacy Policy </NuxtLink></span
         >
       </div>
       <custom-button
@@ -50,13 +59,18 @@
         >Sign up
         <i class="icon-arrow-right" />
       </custom-button>
-    </el-form>
+    </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { FormInstance, FormRules } from 'element-plus'
-const formRef = ref<FormInstance>()
+import InputField from '~/components/custom/field/index.vue'
+
+const { success } = useNotification()
+const fullNameRef = ref()
+const emailRef = ref()
+const passwordRef = ref()
+const confirmPasswordRef = ref()
 const isLoading = ref(false)
 const errorMessage = ref('')
 const emit = defineEmits(['loading'])
@@ -68,99 +82,99 @@ const form = reactive({
   confirmPassword: '',
   agree: true
 })
-const rules = reactive<FormRules>({
-  fullName: [
-    {
-      required: true,
-      message: 'Please input full name',
-      trigger: ['blur', 'change']
-    }
-  ],
-  email: [
-    {
-      required: true,
-      message: 'Please input email address',
-      trigger: ['blur', 'change']
-    },
-    {
-      type: 'email',
-      message: 'Please input correct email address',
-      trigger: ['blur', 'change']
-    }
-  ],
-  password: [
-    {
-      required: true,
-      message: 'Please input password',
-      trigger: ['blur', 'change']
-    },
-    {
-      min: 8,
-      message: 'Password must be at least 8 characters',
-      trigger: ['blur', 'change']
-    }
-  ],
-  confirmPassword: [
-    {
-      required: true,
-      message: 'Please input confirm password',
-      trigger: ['blur', 'change']
-    },
-    {
-      validator: (rule, value, callback) => {
-        if (value === form.password) {
-          callback()
-        } else {
-          callback(new Error('The password does not match'))
-        }
-      },
-      trigger: ['blur', 'change']
-    }
-  ],
-  agree: [
-    {
-      required: true,
-      message: 'Please agree to the terms of service and privacy policy'
-    }
-  ]
-})
-
-const submitForm = () => {
-  return new Promise<void>((resolve) => {
-    formRef.value?.validate(async (valid: boolean) => {
-      if (valid) {
-        isLoading.value = true
-        emit('loading', true)
-        try {
-          const user = await $userService.register({
-            name: form.fullName,
-            email: form.email,
-            password: form.password
-          })
-
-          ElNotification.success({
-            title: 'Sign up successfully',
-            message: `An email has been sent to you`
-          })
-
-          store.setCurrentUser(user as User)
-          const cookie = useCookie('token')
-          cookie.value = user?.token?.replaceAll('.', '*napricot*')
-          navigateTo('/email-verification')
-        } catch (error: any) {
-          errorMessage.value = error.message
-        }
-
-        isLoading.value = false
-        emit('loading', false)
-        resolve()
-      } else {
-        console.log('Form is invalid')
-        resolve()
-      }
-    })
-  })
+// Validation functions
+const validateFullName = (value: string) => {
+  if (!value || value.trim() === '') {
+    return 'Please input full name'
+  }
+  return ''
 }
+
+const validateEmail = (value: string) => {
+  if (!value || value.trim() === '') {
+    return 'Please input email address'
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(value)) {
+    return 'Please input correct email address'
+  }
+  return ''
+}
+
+const validatePassword = (value: string) => {
+  if (!value || value.trim() === '') {
+    return 'Please input password'
+  }
+  if (value.length < 8) {
+    return 'Password must be at least 8 characters'
+  }
+  return ''
+}
+
+const validateConfirmPassword = (value: string) => {
+  if (!value || value.trim() === '') {
+    return 'Please input confirm password'
+  }
+  if (value !== form.password) {
+    return 'The password does not match'
+  }
+  return ''
+}
+
+const validation = useFormValidation('signUp')
+validation.registerField('fullName', fullNameRef, validateFullName)
+validation.registerField('email', emailRef, validateEmail)
+validation.registerField('password', passwordRef, validatePassword)
+validation.registerField(
+  'confirmPassword',
+  confirmPasswordRef,
+  validateConfirmPassword
+)
+
+const { setUser } = useAuth()
+
+const submitForm = async () => {
+  // Check agreement
+  if (!form.agree) {
+    errorMessage.value =
+      'Please agree to the terms of service and privacy policy'
+    return
+  }
+
+  const isValid = await validation.validateAllFields()
+  if (!isValid) {
+    return
+  }
+
+  isLoading.value = true
+  emit('loading', true)
+  errorMessage.value = ''
+
+  try {
+    const user = await $userService.register({
+      name: form.fullName,
+      email: form.email,
+      password: form.password
+    })
+
+    setUser(user)
+    success({
+      title: 'Sign up successfully',
+      message: `An email has been sent to you`
+    })
+
+    navigateTo('/email-verification')
+  } catch (error: any) {
+    errorMessage.value = error.message
+  }
+
+  isLoading.value = false
+  emit('loading', false)
+}
+
+onUnmounted(() => {
+  validation.destroyForm()
+})
 </script>
 
 <style lang="postcss" module>

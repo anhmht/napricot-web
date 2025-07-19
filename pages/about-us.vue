@@ -217,6 +217,7 @@ useServerSeoMeta({
   description: () => `we are dedicated to creating personalized
           products that celebrate the most meaningful people and cherished
           moments in your life`,
+  ogSiteName: () => 'Napricot Eyelash Beauty',
   ogTitle: () => `About Us | Napricot Brand Introduction`,
   ogDescription: () => `we are dedicated to creating personalized
           products that celebrate the most meaningful people and cherished

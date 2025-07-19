@@ -8,10 +8,10 @@
     />
 
     <!-- Loading overlay -->
-    <div v-show="loading" :class="$style.loadingOverlay">
+    <!-- <div v-show="loading" :class="$style.loadingOverlay">
       <div :class="$style.loadingSpinner"></div>
       <p>Loading...</p>
-    </div>
+    </div> -->
 
     <NuxtLayout>
       <NuxtPage />

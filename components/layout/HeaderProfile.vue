@@ -11,26 +11,22 @@
       <NuxtLink to="#" aria-label="Cart">
         <i class="icon-shopping-cart"></i>
       </NuxtLink>
-      <NuxtLink
+      <CustomPopover
         v-show="currentUser"
-        to="#"
-        ref="buttonRef"
-        v-click-outside="onClickOutside"
-      >
-        <i class="icon-person"></i>
-      </NuxtLink>
-      <el-popover
         ref="popoverRef"
-        :virtual-ref="buttonRef"
         trigger="click"
         placement="bottom-end"
         :show-arrow="false"
-        virtual-triggering
-        :teleported="false"
         :width="200"
+        :append-to-body="true"
       >
-        <layout-header-account @close="popoverRef.hide()" />
-      </el-popover>
+        <template #reference>
+          <NuxtLink to="#" ref="buttonRef" aria-label="User Account">
+            <i class="icon-person"></i>
+          </NuxtLink>
+        </template>
+        <layout-header-account @close="popoverRef?.hide()" />
+      </CustomPopover>
     </div>
     <div :class="$style.icon">
       <layout-search-icon @search="$emit('search', $event)" />
@@ -42,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ClickOutside as vClickOutside } from 'element-plus'
+import CustomPopover from '../custom/popover/index.vue'
 
 defineEmits(['search'])
 
@@ -50,9 +46,6 @@ const buttonRef = ref()
 const popoverRef = ref()
 const open = ref(false)
 
-const onClickOutside = () => {
-  unref(popoverRef).popperRef?.delayHide?.()
-}
 const { user } = useAuth()
 const currentUser = computed(() => user.value)
 </script>
@@ -96,9 +89,6 @@ const currentUser = computed(() => user.value)
     font-size: 2.3rem;
     color: var(--color-icon);
   }
-}
-:global(.el-popover.el-popper) {
-  padding: 0;
 }
 @media (max-width: 768px) {
   .link {

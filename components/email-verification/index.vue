@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="isLoading" :class="$style.form">
+  <div :class="$style.form">
     <div :class="$style.header">
       <h5>An email has been sent to you</h5>
       <p>
@@ -7,63 +7,54 @@
         code.
       </p>
     </div>
-    <el-form ref="formRef" :model="form" :rules="rules" hide-required-asterisk>
+    <form :class="$style.formContent">
       <custom-alert v-if="errorMessage" type="error" :title="errorMessage" />
-      <custom-field
+      <CustomInputField
+        ref="codeRef"
         v-model="form.code"
         name="code"
         label="Verification Code"
         :disabled="isLoading"
+        :validator="validateCode"
       >
         <template #button>
           <a :class="$style.resend" @click="resendCode">Resend code</a>
         </template>
-      </custom-field>
+      </CustomInputField>
       <custom-button type="primary" @click="submitForm" :disabled="isLoading"
         >Verify code
         <i class="icon-arrow-right" />
       </custom-button>
-    </el-form>
+    </form>
+    <custom-loading :loading="isLoading" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { FormInstance, FormRules } from 'element-plus'
-
-const store = useMainStore()
+import CustomInputField from '~/components/custom/field/index.vue'
+const { success } = useNotification()
+const { isLoggedIn, user } = useAuth()
 const errorMessage = ref('')
 const isLoading = ref(false)
-const formRef = ref<FormInstance>()
+const codeRef = ref(null)
 const form = reactive({
   code: ''
 })
-const rules = reactive<FormRules>({
-  code: [
-    {
-      required: true,
-      message: 'Please input verification code',
-      trigger: ['blur', 'change']
-    }
-  ]
-})
 
 const resendCode = async () => {
-  if (store.currentUser?.email === undefined) {
-    ElNotification.error({
-      title: 'Error',
-      message: `Please sign in first`
-    })
+  if (!isLoggedIn.value || !user.value?.email) {
     errorMessage.value = `Please sign in first`
     return
   }
+
   isLoading.value = true
 
   try {
-    await $userService.resendCode(store.currentUser!.email)
+    await $userService.resendCode(user.value?.email)
 
-    ElNotification.success({
+    success({
       title: 'Resend code successfully',
-      message: `please check your email ${store.currentUser!.email}`
+      message: `please check your email ${user.value?.email}`
     })
   } catch (error: any) {
     errorMessage.value = error.message
@@ -71,40 +62,43 @@ const resendCode = async () => {
   isLoading.value = false
 }
 
-const submitForm = () => {
-  if (store.currentUser?.email === undefined) {
-    ElNotification.error({
-      title: 'Error',
-      message: `Please sign in first`
-    })
+const validateCode = (value: string) => {
+  if (!value || value.trim() === '') {
+    return 'Please input verification code'
+  }
+  return ''
+}
+
+const validation = useFormValidation('emailVerification')
+validation.registerField('code', codeRef, validateCode)
+
+const submitForm = async () => {
+  if (!isLoggedIn.value || !user.value) {
     errorMessage.value = `Please sign in first`
     return
   }
-  return new Promise<void>((resolve) => {
-    formRef.value?.validate(async (valid: boolean) => {
-      if (valid) {
-        isLoading.value = true
 
-        try {
-          await $userService.verifyCode(form.code, store.currentUser!.email!)
-
-          ElNotification.success({
-            title: 'Email verified',
-            message: `Welcome ${store.currentUser!.name}`
-          })
-        } catch (error: any) {
-          errorMessage.value = error.message
-        }
-        isLoading.value = false
-        navigateTo('/')
-        resolve()
-      } else {
-        console.log('Form is invalid')
-        resolve()
-      }
+  const isValid = await validation.validateAllFields()
+  if (!isValid) {
+    return
+  }
+  isLoading.value = true
+  try {
+    await $userService.verifyCode(form.code, user.value?.email!)
+    success({
+      title: 'Email verified',
+      message: `Welcome ${user.value?.name}`
     })
-  })
+  } catch (error: any) {
+    errorMessage.value = error.message
+  }
+  isLoading.value = false
+  navigateTo('/')
 }
+
+onUnmounted(() => {
+  validation.destroyForm()
+})
 </script>
 
 <style lang="postcss" module>
@@ -129,6 +123,11 @@ const submitForm = () => {
     line-height: 20px;
     color: var(--color-icon);
   }
+}
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
 }
 .resend {
   position: absolute;
