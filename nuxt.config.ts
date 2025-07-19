@@ -13,17 +13,9 @@ export default defineNuxtConfig({
       // Speed up build with these Vite optimizations
       cssCodeSplit: true,
       reportCompressedSize: false,
-      target: 'esnext',
-      // Don't use manual chunks for element-plus to fix CSS issues
-      rollupOptions: {
-        // plugins: [visualizer({ open: true })],
-        output: {
-          // Remove manual chunks configuration to fix CSS issues
-        }
-      }
+      target: 'esnext'
     },
     optimizeDeps: {
-      include: ['element-plus'],
       // Enable dependency pre-bundling cache
       force: false,
       entries: [
@@ -47,8 +39,6 @@ export default defineNuxtConfig({
   },
 
   build: {
-    // Enable build caching for faster rebuilds
-    transpile: ['element-plus/es'],
     // Enable Nuxt build cache
     analyze: false
   },
@@ -104,7 +94,6 @@ export default defineNuxtConfig({
     disallow: [
       '/dashboard',
       '/policy',
-      '/cdn-cgi/imagedelivery/',
       '/email-verification',
       '/reset-password',
       '/forgot-password',
@@ -136,7 +125,7 @@ export default defineNuxtConfig({
         }
       }
     },
-    moduleSideEffects: ['element-plus/nuxt', '@nuxtjs/seo'],
+    moduleSideEffects: ['@nuxtjs/seo'],
     // Enable experimental features for better caching
     experimental: {
       wasm: true
@@ -199,7 +188,6 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@nuxt/image-edge',
-    '@element-plus/nuxt',
     '@stefanobartoletti/nuxt-social-share',
     '@nuxtjs/seo',
     '@nuxt/scripts',

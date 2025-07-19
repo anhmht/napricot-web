@@ -48,6 +48,9 @@
         scrollUp && $style.scrollUp,
         scrollDown && $style.scrollDown
       ]"
+      :style="{
+        position: 'absolute'
+      }"
     >
       <layout-header-link />
     </div>
@@ -117,11 +120,11 @@ onMounted(() => {
   transition: all 0.3s ease;
   max-width: 1410px;
   transform: translateX(-50%);
-  &.scrollUp {
-    transform: none;
-  }
+  /* &.scrollUp {
+    transform: translateX(-50%);
+  } */
   &.scrollDown {
-    transform: translate3d(0, -100%, 0);
+    top: 0;
     z-index: -1;
   }
 }
@@ -145,7 +148,6 @@ onMounted(() => {
   margin-left: 72px;
 }
 .subHeader {
-  position: absolute;
   bottom: -55px;
   left: 0;
   right: 0;

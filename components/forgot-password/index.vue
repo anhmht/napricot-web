@@ -4,15 +4,17 @@
       <h5>Forgot Password</h5>
       <p>Enter the email address associated with your account.</p>
     </div>
-    <el-form ref="formRef" :model="form" :rules="rules" hide-required-asterisk>
+    <form :class="$style.formContent">
       <custom-alert v-if="errorMessage" type="error" :title="errorMessage" />
-      <custom-field
+      <CustomInputField
+        ref="emailRef"
         v-model="form.email"
         name="email"
         label="Email address"
         :disabled="isLoading"
+        :validator="validateEmail"
       >
-      </custom-field>
+      </CustomInputField>
       <custom-button type="primary" @click="submitForm" :disabled="isLoading"
         >Send reset link
         <i class="icon-arrow-right" />
@@ -31,58 +33,59 @@
         <NuxtLink to="/help/contact">Customer Service</NuxtLink> for help
         restoring access to your account.
       </div>
-    </el-form>
+    </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { FormInstance, FormRules } from 'element-plus'
+import CustomInputField from '~/components/custom/field/index.vue'
 
+const { success } = useNotification()
 const errorMessage = ref('')
 const isLoading = ref(false)
-const formRef = ref<FormInstance>()
+const emailRef = ref(null)
 const form = reactive({
   email: ''
 })
-const rules = reactive<FormRules>({
-  email: [
-    {
-      required: true,
-      message: 'Please input email address',
-      trigger: ['blur', 'change']
-    },
-    {
-      type: 'email',
-      message: 'Please input a valid email address',
-      trigger: ['blur', 'change']
-    }
-  ]
-})
 
-const submitForm = () => {
-  return new Promise<void>((resolve) => {
-    formRef.value?.validate(async (valid: boolean) => {
-      if (valid) {
-        isLoading.value = true
-        try {
-          await $userService.forgotPassword(form.email)
-
-          ElNotification.success({
-            title: 'An email has been sent',
-            message: `Check the email that's associated with your account for the reset password link`
-          })
-        } catch (error: any) {
-          errorMessage.value = error.message
-        }
-        isLoading.value = false
-        resolve()
-      } else {
-        console.log('Form is invalid')
-        resolve()
-      }
-    })
-  })
+const validateEmail = (email: string) => {
+  if (!email) {
+    return 'Email is required'
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(email)) {
+    return 'Please enter a valid email address'
+  }
+  return ''
 }
+
+const validation = useFormValidation('forgotPassword')
+validation.registerField('email', emailRef, validateEmail)
+
+const submitForm = async () => {
+  const isValid = await validation.validateAllFields()
+  if (!isValid) {
+    return
+  }
+
+  isLoading.value = true
+  try {
+    await $userService.forgotPassword(form.email)
+
+    success({
+      title: 'An email has been sent',
+      message: `Check the email that's associated with your account for the reset password link`
+    })
+  } catch (error: any) {
+    errorMessage.value = error.message
+  }
+
+  isLoading.value = false
+}
+
+onUnmounted(() => {
+  validation.destroyForm()
+})
 </script>
 
 <style lang="postcss" module>
@@ -92,6 +95,11 @@ const submitForm = () => {
   box-shadow: 0px 8px 40px 0px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
   padding: 32px;
+}
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
 }
 .header {
   margin-bottom: 24px;
@@ -113,7 +121,7 @@ const submitForm = () => {
   margin-top: 24px;
 }
 .footer {
-  padding: 24px 0;
+  padding: 1.6rem 0;
   border-bottom: 1px solid var(--color-bg-disabled);
   color: var(--color-icon);
   font-weight: 400;
@@ -127,7 +135,6 @@ const submitForm = () => {
   }
 }
 .contact {
-  margin-top: 24px;
   font-size: 1.6rem;
   font-weight: 400;
   a {

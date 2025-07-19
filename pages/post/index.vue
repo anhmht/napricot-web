@@ -1,57 +1,68 @@
 <template>
-  <div :class="$style.post">
-    <div :class="$style.breadcrumb">
+  <div class="post">
+    <div class="breadcrumb">
       <div class="container">
         <breadcrumb :links="[{ name: 'posts', path: '/post' }]" />
       </div>
     </div>
-    <div class="container" v-loading="status === 'pending'">
-      <div :class="$style.filter">
-        <custom-search-input :class="$style.search" @search="search" />
-        <div :class="$style.select">
+    <div class="container page-container">
+      <div class="filter">
+        <custom-field
+          v-model="searchQuery"
+          class="search"
+          placeholder="Search posts..."
+          @keyup="handleSearchKeyup"
+          @input="handleSearchInput"
+        >
+          <template #suffix>
+            <i class="icon-search" @click="handleSearchKeyup" />
+          </template>
+        </custom-field>
+        <div class="select-wrapper">
           Categories:
-          <el-select-v2
+          <custom-select
+            class="select"
             :model-value="filter.categoryId"
             :options="categories"
             placeholder="Please select"
-            :class="$style.select"
-            :empty-values="[undefined, null]"
+            clearable
             @change="handleChange"
           />
         </div>
-        <div :class="$style.select">
+        <div class="select-wrapper">
           Sort:
-          <el-select-v2
+          <custom-select
+            class="select"
             :model-value="filter.sort"
             :options="sorts"
             placeholder="Please select"
-            :class="$style.select"
-            :empty-values="[undefined, null]"
+            clearable
             @change="handleSort"
           />
         </div>
       </div>
-      <div v-if="data" :class="$style.list">
+      <div v-if="data" class="list">
         <post-item v-for="post in data?.posts" :key="post._id" :post="post" />
       </div>
-      <div :class="$style.pagination">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :default-current-page="1"
+      <div class="pagination">
+        <Pagination
+          v-model="pagination.page"
           :page-size="pagination.limit"
-          :current-page="pagination.page"
-          :total="data?.total"
-          @current-change="pagination = { ...pagination, page: $event }"
+          :total="data?.total || 0"
+          :show-total="false"
+          :show-first-last="false"
+          @change="pagination = { ...pagination, page: $event }"
         />
       </div>
+      <custom-loading :loading="status === 'pending'" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { debounce } from '~/utils'
-import { OptionType } from 'element-plus/lib/components/select-v2/src/select.types.js'
+import type { SelectOption } from '~/components/custom/select/index.vue'
+import Pagination from '~/components/custom/pagination/index.vue'
 /** Filter and pagination */
 const filter = ref<PostFilter>({
   title: '',
@@ -63,17 +74,22 @@ const pagination = ref<Pagination>({
   page: 1,
   limit: 15
 })
+
+// Search query reactive variable
+const searchQuery = ref('')
 const { getCategories } = useMainStore()
-const categories = computed<OptionType[]>(() => {
+const categories = computed<SelectOption[]>(() => {
   return [
     { label: 'All categories', value: '' },
-    ...(getCategories(CategoryType.Post) || []).map((category) => ({
-      label: category.name,
-      value: category._id
-    }))
+    ...(getCategories(CategoryType.Post) || [])
+      .filter((category) => category._id)
+      .map((category) => ({
+        label: category.name,
+        value: category._id as string
+      }))
   ]
 })
-const sorts = computed<OptionType[]>(() => {
+const sorts = computed<SelectOption[]>(() => {
   return [
     { label: 'Latest Post', value: 'createdAt' },
     { label: 'Last Updated', value: 'updatedAt' }
@@ -88,20 +104,28 @@ const handleSearch = debounce((query: string) => {
   }
 }, 500)
 
-const search = (query: string) => {
-  handleSearch(query.trim())
+const handleSearchInput = () => {
+  handleSearch(searchQuery.value.trim())
 }
 
-const handleChange = (value: string) => {
-  filter.value.categoryId = value
+const handleSearchKeyup = () => {
+  handleSearch(searchQuery.value.trim())
+}
+
+const handleChange = (
+  value: string | number | string[] | number[] | undefined
+) => {
+  filter.value.categoryId = (value as string) || ''
   pagination.value = {
     ...pagination.value,
     page: 1
   }
 }
 
-const handleSort = (value: string) => {
-  filter.value.sort = value
+const handleSort = (
+  value: string | number | string[] | number[] | undefined
+) => {
+  filter.value.sort = (value as string) || 'createdAt'
   pagination.value = {
     ...pagination.value,
     page: 1
@@ -114,7 +138,8 @@ const { data, status, error, refresh } = await useAsyncData(
     return await $postService.getPosts(filter.value, pagination.value)
   },
   {
-    watch: [filter, pagination]
+    watch: [filter, pagination],
+    lazy: true
   }
 )
 
@@ -134,13 +159,14 @@ useServerSeoMeta({
           products that celebrate the most meaningful people and cherished
           moments in your life`,
   ogTitle: () => `Posts | Napricot Post`,
+  ogSiteName: () => 'Napricot Eyelash Beauty',
   ogDescription: () => `we are dedicated to creating personalized
           products that celebrate the most meaningful people and cherished
           moments in your life`
 })
 </script>
 
-<style lang="postcss" module>
+<style lang="postcss" scoped>
 .breadcrumb {
   background-color: var(--color-background);
   color: var(--color-icon);
@@ -151,19 +177,93 @@ useServerSeoMeta({
   gap: 24px;
   justify-content: flex-end;
   padding-top: 24px;
-}
-.search {
-  margin-right: auto;
-  :global(.el-input__wrapper) {
-    width: 300px;
+  padding: 24px 16px;
+
+  /* Tablet and below */
+  @media (max-width: 1024px) {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
   }
 }
+
+.search {
+  margin-right: auto;
+  width: 300px;
+
+  /* Tablet and below */
+  @media (max-width: 1024px) {
+    width: 250px;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-right: 0;
+    order: -1; /* Move search to top on mobile */
+  }
+}
+
+.page-container {
+  min-height: calc(100vh - 300px);
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    min-height: calc(100vh - 250px);
+  }
+}
+
+.select-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+  }
+
+  /* Small mobile */
+  @media (max-width: 480px) {
+    gap: 6px;
+  }
+}
+
 .select {
   display: flex;
   gap: 8px;
   align-items: center;
-  :global(.el-select__wrapper) {
-    width: 270px;
+  min-width: 270px;
+  flex-direction: row;
+
+  /* Tablet and below */
+  @media (max-width: 1024px) {
+    min-width: 220px;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  /* Small mobile */
+  @media (max-width: 480px) {
+    min-width: 100%;
+    gap: 6px;
+  }
+
+  :deep(.select-wrapper) {
+    width: 100%;
   }
 }
 .list {
@@ -178,22 +278,5 @@ useServerSeoMeta({
   font-weight: 400;
   justify-content: center;
   padding: 24px 0;
-  :global(.el-pagination) {
-    button {
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--color-background-grayscale-100);
-      background-color: #fff !important;
-    }
-  }
-  :global(.el-pager) {
-    li {
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--color-background-grayscale-100);
-    }
-  }
 }
 </style>

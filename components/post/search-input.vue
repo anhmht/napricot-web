@@ -1,12 +1,26 @@
 <template>
   <div :class="$style.searchInput">
     <div :class="$style.title">Search</div>
-    <custom-search-input @search="emit('search', $event)" />
+    <custom-field
+      v-model="searchQuery"
+      placeholder="Search posts..."
+      @keyup="handleSearch"
+      @input="handleSearch"
+    >
+      <template #suffix>
+        <i class="icon-search" @click="handleSearch" />
+      </template>
+    </custom-field>
   </div>
 </template>
 
 <script setup lang="ts">
 const emit = defineEmits(['search'])
+const searchQuery = ref('')
+
+const handleSearch = () => {
+  emit('search', searchQuery.value.trim())
+}
 </script>
 
 <style lang="postcss" module>
@@ -15,9 +29,6 @@ const emit = defineEmits(['search'])
   padding: 24px;
   border: 1px solid #dcdcdc;
   border-radius: 4px;
-  :global(.el-input__wrapper) {
-    padding: 8px 16px;
-  }
 }
 .title {
   font-size: 1.6rem;

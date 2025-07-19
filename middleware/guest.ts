@@ -1,12 +1,11 @@
 export default defineNuxtRouteMiddleware(async (to) => {
   const { startLoading, stopLoading } = useLoading()
-  const { checkAuthStatus } = useAuth()
+  const { user } = useAuth()
   try {
     if (import.meta.client) {
       startLoading()
     }
-    const user = await checkAuthStatus()
-    if (user) {
+    if (user.value) {
       return navigateTo('/')
     }
   } catch (error) {

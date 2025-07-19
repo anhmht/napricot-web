@@ -1,21 +1,26 @@
 <template>
   <div :class="$style.signIn">
-    <el-form ref="formRef" :model="form" :rules="rules" hide-required-asterisk>
+    <form>
       <custom-alert v-if="errorMessage" type="error" :title="errorMessage" />
-      <custom-field
+      <CustomInputField
+        ref="emailRef"
         :disabled="isLoading"
         v-model="form.email"
         name="email"
         label="Email Address"
-        @keyup="submitForm"
+        type="email"
+        autocomplete="email"
+        :validator="validateEmail"
       />
-      <custom-field
+      <CustomInputField
+        ref="passwordRef"
         v-model="form.password"
         name="password"
         label="Password"
         type="password"
+        autocomplete="current-password"
         :disabled="isLoading"
-        @keyup="submitForm"
+        :validator="validatePassword"
       />
       <div :class="$style.remember">
         <custom-checkbox
@@ -29,71 +34,85 @@
           Forgot password?
         </NuxtLink>
       </div>
-      <custom-button type="primary" @click="submitForm" :disabled="isLoading"
+      <custom-button
+        :class="$style.btnSignIn"
+        type="primary"
+        @click="submitForm"
+        :disabled="isLoading"
+        :loading="isLoading"
         >Sign in
         <i class="icon-arrow-right" v-if="!isLoading" />
-        <custom-loading :class="$style.loading" v-if="isLoading" />
       </custom-button>
-    </el-form>
+    </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { FormInstance, FormRules } from 'element-plus'
-const store = useMainStore()
-const formRef = ref<FormInstance>()
+import CustomInputField from '~/components/custom/field/index.vue'
 const form = reactive({
   email: '',
   password: '',
-  rememberMe: false
+  rememberMe: true
 })
+
+const emailRef = ref(null)
+const passwordRef = ref(null)
+
 const isLoading = ref(false)
 const errorMessage = ref('')
 const emit = defineEmits(['loading'])
-const rules = reactive<FormRules>({
-  email: [
-    {
-      required: true,
-      message: 'Please input email address',
-      trigger: 'blur'
-    },
-    {
-      type: 'email',
-      message: 'Please input correct email address',
-      trigger: ['blur', 'change']
-    }
-  ],
-  password: [
-    {
-      required: true,
-      message: 'Please input password',
-      trigger: ['blur', 'change']
-    }
-  ]
-})
 
-function submitForm() {
-  return new Promise<void>((resolve) => {
-    formRef.value?.validate(async (valid: boolean) => {
-      if (valid) {
-        isLoading.value = true
-        emit('loading', true)
-        try {
-          const { signIn } = useAuth()
-          await signIn(form.email, form.password, form.rememberMe)
-          navigateTo('/')
-        } catch (error: any) {
-          errorMessage.value = error.message
-        }
-        isLoading.value = false
-        emit('loading', false)
-        resolve()
-      } else {
-        resolve()
-      }
-    })
-  })
+// Validation functions
+const validateEmail = (email) => {
+  if (!email) {
+    return 'Email is required'
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(email)) {
+    return 'Please enter a valid email address'
+  }
+  return ''
 }
+
+const validatePassword = (password) => {
+  if (!password) {
+    return 'Password is required'
+  }
+  return ''
+}
+const { success } = useNotification()
+const validation = useFormValidation('signIn')
+// Register fields first
+validation.registerField('email', emailRef, validateEmail)
+validation.registerField('password', passwordRef, validatePassword)
+
+const submitForm = async (e: Event) => {
+  e.preventDefault()
+  const isValid = await validation.validateAllFields()
+  if (isValid) {
+    isLoading.value = true
+    emit('loading', true)
+    try {
+      const { signIn } = useAuth()
+      await signIn(form.email, form.password, form.rememberMe)
+      success({
+        title: 'Success',
+        message: 'You have successfully signed in'
+      })
+      navigateTo('/')
+    } catch (error: any) {
+      const errorData = errorHandler(error)
+      errorMessage.value = errorData?.message
+    } finally {
+      isLoading.value = false
+      emit('loading', false)
+    }
+  }
+}
+
+onUnmounted(() => {
+  validation.destroyForm()
+})
 </script>
 
 <style lang="postcss" module>
@@ -103,6 +122,8 @@ function submitForm() {
 .remember {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 1.6rem 0;
   a {
     text-decoration: none;
     line-height: 20px;
@@ -124,12 +145,8 @@ function submitForm() {
     }
   }
 }
-.hr {
-  :global(.el-divider__text) {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--color-icon);
-  }
+.btnSignIn {
+  margin-top: 1rem;
 }
 .loading {
   margin-left: 4px;

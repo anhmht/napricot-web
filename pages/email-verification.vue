@@ -9,21 +9,14 @@
     </div>
     <div class="container">
       <div :class="$style.wrapper">
-        <email-verification v-if="user" />
+        <email-verification v-if="isLoggedIn" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-const store = useMainStore()
-const user = store.currentUser
-const token = route.query.token as string
-const cookie = useCookie('token')
-if (token) {
-  cookie.value = token.replaceAll('.', '*napricot*')
-}
+const { isLoggedIn } = useAuth()
 </script>
 
 <style lang="postcss" module>

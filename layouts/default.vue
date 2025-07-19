@@ -7,6 +7,7 @@
       <slot />
     </div>
     <layout-footer />
+    <custom-notification />
   </div>
 </template>
 
@@ -61,7 +62,9 @@ useHead(() => ({
   link: [
     {
       rel: 'canonical',
-      href: 'https://napricot.com' + route.path
+      href: `https://napricot.com${
+        route.path === '/' ? route.path.replace(/\/$/, '') : route.path
+      }`
     }
   ]
 }))
