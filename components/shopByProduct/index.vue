@@ -52,32 +52,32 @@ const { isDesktop } = useMediaQuery()
 
 const page1 = ref([
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/961a4543-42cb-4e59-bda9-49caa4de8c00/`,
+    src: `${config.public.imageUrl}/961a4543-42cb-4e59-bda9-49caa4de8c00/`,
     slug: 'category-1',
     name: 'Hanging Suncatcher'
   },
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/3b49c6d4-805a-4e96-adc5-b96f41aefa00/`,
+    src: `${config.public.imageUrl}/3b49c6d4-805a-4e96-adc5-b96f41aefa00/`,
     slug: 'category-1',
     name: 'Glass Cup'
   },
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/faaf5686-b294-4115-cf33-a22b8862c300/`,
+    src: `${config.public.imageUrl}/faaf5686-b294-4115-cf33-a22b8862c300/`,
     slug: 'category-1',
     name: 'Whiskey Glass'
   },
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/fba3e489-8489-4836-6a45-36ea881a0a00/`,
+    src: `${config.public.imageUrl}/fba3e489-8489-4836-6a45-36ea881a0a00/`,
     slug: 'category-1',
     name: 'Leather Belt'
   },
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/f23b31ed-4079-439a-9f26-4ceaaf434800/`,
+    src: `${config.public.imageUrl}/f23b31ed-4079-439a-9f26-4ceaaf434800/`,
     slug: 'category-1',
     name: 'Solar Light'
   },
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/7a20bfa3-6b4a-4708-be3d-1447688aaf00/`,
+    src: `${config.public.imageUrl}/7a20bfa3-6b4a-4708-be3d-1447688aaf00/`,
     slug: 'category-1',
     name: 'Mug'
   }
@@ -85,17 +85,17 @@ const page1 = ref([
 
 const page2 = ref([
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/eb0fc99c-7de9-47c8-37e1-a9f43223ab00/`,
+    src: `${config.public.imageUrl}/eb0fc99c-7de9-47c8-37e1-a9f43223ab00/`,
     slug: 'category-1',
     name: 'Ornament'
   },
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/81cd0e9d-7ac0-4d23-7854-47913eef6000/`,
+    src: `${config.public.imageUrl}/81cd0e9d-7ac0-4d23-7854-47913eef6000/`,
     slug: 'category-1',
     name: 'T-shirt'
   },
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/3c03ce56-a8fd-4920-6f69-52a071afab00/`,
+    src: `${config.public.imageUrl}/3c03ce56-a8fd-4920-6f69-52a071afab00/`,
     slug: 'category-1',
     name: 'Doormat'
   }
@@ -103,22 +103,22 @@ const page2 = ref([
 
 const page2Mobile = ref([
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/f23b31ed-4079-439a-9f26-4ceaaf434800/`,
+    src: `${config.public.imageUrl}/f23b31ed-4079-439a-9f26-4ceaaf434800/`,
     slug: 'category-1',
     name: 'Solar Light'
   },
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/7a20bfa3-6b4a-4708-be3d-1447688aaf00/`,
+    src: `${config.public.imageUrl}/7a20bfa3-6b4a-4708-be3d-1447688aaf00/`,
     slug: 'category-1',
     name: 'Mug'
   },
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/eb0fc99c-7de9-47c8-37e1-a9f43223ab00/`,
+    src: `${config.public.imageUrl}/eb0fc99c-7de9-47c8-37e1-a9f43223ab00/`,
     slug: 'category-1',
     name: 'Ornament'
   },
   {
-    src: `${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/81cd0e9d-7ac0-4d23-7854-47913eef6000/`,
+    src: `${config.public.imageUrl}/81cd0e9d-7ac0-4d23-7854-47913eef6000/`,
     slug: 'category-1',
     name: 'T-shirt'
   }
