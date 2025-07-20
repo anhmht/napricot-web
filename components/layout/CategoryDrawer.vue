@@ -9,7 +9,7 @@
     <template #header>
       <NuxtPicture
         format="webp"
-        :src="`${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/thumbnail`"
+        :src="`${config.public.imageUrl}/8a7c1d2c-57eb-4120-5bb6-47e54128e600/thumbnail`"
         alt="Napricot"
         width="120"
         height="39"

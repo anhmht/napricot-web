@@ -16,7 +16,7 @@
       <p>Feature {{ categories[0].name }}</p>
       <div :class="$style.item">
         <NuxtPicture
-          :src="`${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/1cc99000-9c88-4668-b8d6-d5b75a70f700/medium`"
+          :src="`${config.public.imageUrl}/1cc99000-9c88-4668-b8d6-d5b75a70f700/medium`"
           alt="item"
           width="80"
           height="80"
@@ -30,7 +30,7 @@
       </div>
       <div :class="$style.item">
         <NuxtPicture
-          :src="`${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/1cc99000-9c88-4668-b8d6-d5b75a70f700/medium`"
+          :src="`${config.public.imageUrl}/1cc99000-9c88-4668-b8d6-d5b75a70f700/medium`"
           alt="item"
           width="80"
           height="80"
@@ -44,7 +44,7 @@
       </div>
       <div :class="$style.item">
         <NuxtPicture
-          :src="`${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/1cc99000-9c88-4668-b8d6-d5b75a70f700/medium`"
+          :src="`${config.public.imageUrl}/1cc99000-9c88-4668-b8d6-d5b75a70f700/medium`"
           alt="item"
           width="80"
           height="80"
@@ -59,7 +59,7 @@
     </div>
     <div :class="$style.banner">
       <NuxtPicture
-        :src="`${config.public.baseUrl}/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/2f3df36b-c256-4902-706c-19357d70d500/banner312x439`"
+        :src="`${config.public.imageUrl}/2f3df36b-c256-4902-706c-19357d70d500/banner312x439`"
         alt="banner"
         width="312"
         height="439"
