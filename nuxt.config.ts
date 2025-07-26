@@ -60,7 +60,7 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'en'
       },
-      title: 'Napricot | The best place to find gifts for your loved ones',
+      title: 'Napricot Eyelash Beauty',
       charset: 'utf-8',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },

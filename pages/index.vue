@@ -18,6 +18,17 @@
 
 <script setup lang="ts">
 defineOgImageComponent('DefaultOg')
+
+useHead({
+  title: 'Napricot Eyelash Beauty',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Napricot empowers personal expression through exquisitely crafted, personalized items.'
+    }
+  ]
+})
 </script>
 
 <style lang="postcss" module>
