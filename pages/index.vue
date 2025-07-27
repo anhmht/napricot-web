@@ -20,7 +20,7 @@
 defineOgImageComponent('DefaultOg')
 
 useServerSeoMeta({
-  title: () => `Napricot Eyelash Beauty`,
+  title: () => `Home`,
   description: () =>
     `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`,
   ogTitle: () => `Napricot Eyelash Beauty`,
