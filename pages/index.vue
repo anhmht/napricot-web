@@ -19,13 +19,35 @@
 <script setup lang="ts">
 defineOgImageComponent('DefaultOg')
 
+useServerSeoMeta({
+  title: () => `Napricot Eyelash Beauty`,
+  description: () =>
+    `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`,
+  ogTitle: () => `Napricot Eyelash Beauty`,
+  ogSiteName: () => 'Napricot Eyelash Beauty',
+  ogDescription: () =>
+    `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`
+})
+
 useHead({
-  title: 'Napricot Eyelash Beauty',
   meta: [
     {
       name: 'description',
       content:
-        'Napricot empowers personal expression through exquisitely crafted, personalized items.'
+        'Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.'
+    }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Napricot Eyelash Beauty',
+        description: `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`,
+        url: `https://napricot.com`,
+        inLanguage: 'en-US'
+      })
     }
   ]
 })

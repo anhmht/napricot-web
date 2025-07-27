@@ -109,6 +109,40 @@ const checkActive = (index: number) => {
 const moveToContact = () => {
   navigateTo('/help/contact')
 }
+
+defineOgImageComponent('DefaultOg')
+
+useServerSeoMeta({
+  title: () => `FAQs`,
+  description: () => `FAQs for Napricot`,
+  ogTitle: () => `FAQs`,
+  ogSiteName: () => 'Napricot Eyelash Beauty',
+  ogDescription: () => `FAQs for Napricot`
+})
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        name: 'Napricot Eyelash Beauty',
+        description: `FAQs for Napricot`,
+        url: `https://napricot.com/help/faq`,
+        inLanguage: 'en-US',
+        mainEntity: data.value.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer
+          }
+        }))
+      })
+    }
+  ]
+})
 </script>
 
 <style lang="postcss" module>

@@ -214,14 +214,28 @@ defineOgImageComponent('DefaultOg')
 
 useServerSeoMeta({
   title: () => `About Us | Napricot Brand Introduction`,
-  description: () => `we are dedicated to creating personalized
-          products that celebrate the most meaningful people and cherished
-          moments in your life`,
+  description: () =>
+    `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`,
   ogSiteName: () => 'Napricot Eyelash Beauty',
   ogTitle: () => `About Us | Napricot Brand Introduction`,
-  ogDescription: () => `we are dedicated to creating personalized
-          products that celebrate the most meaningful people and cherished
-          moments in your life`
+  ogDescription: () =>
+    `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`
+})
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Napricot Eyelash Beauty',
+        description: `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`,
+        url: `https://napricot.com/about-us`,
+        inLanguage: 'en-US'
+      })
+    }
+  ]
 })
 
 const config = useRuntimeConfig()
