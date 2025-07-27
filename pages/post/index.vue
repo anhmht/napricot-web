@@ -164,6 +164,22 @@ useServerSeoMeta({
           products that celebrate the most meaningful people and cherished
           moments in your life`
 })
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Napricot Eyelash Beauty',
+        description: `Discover meaningful content across multiple topics. At Napricot, we share knowledge, creativity, and inspiration — one post at a time.`,
+        url: `https://napricot.com/post`,
+        inLanguage: 'en-US'
+      })
+    }
+  ]
+})
 </script>
 
 <style lang="postcss" scoped>

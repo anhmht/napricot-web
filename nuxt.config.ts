@@ -68,7 +68,7 @@ export default defineNuxtConfig({
           key: 'description',
           name: 'description',
           content:
-            'Napricot is the best place to find gifts for your loved ones. We have a wide range of gifts for all occasions.'
+            'Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.'
         }
       ]
     },

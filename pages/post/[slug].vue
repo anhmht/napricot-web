@@ -156,13 +156,12 @@ useServerSeoMeta({
 })
 
 useHead({
-  title: () => `${title.value}`,
   script: [
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'WebPage',
+        '@type': 'WebSite',
         name: 'Napricot Eyelash Beauty',
         headline: title.value,
         keywords: Array.isArray(keywords.value) ? keywords.value.join(',') : '',
