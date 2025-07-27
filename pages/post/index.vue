@@ -154,11 +154,11 @@ if (error.value) {
 defineOgImageComponent('DefaultOg')
 
 useServerSeoMeta({
-  title: () => `Posts | Napricot Post`,
+  title: () => `Posts`,
   description: () => `we are dedicated to creating personalized
           products that celebrate the most meaningful people and cherished
           moments in your life`,
-  ogTitle: () => `Posts | Napricot Post`,
+  ogTitle: () => `Posts`,
   ogSiteName: () => 'Napricot Eyelash Beauty',
   ogDescription: () => `we are dedicated to creating personalized
           products that celebrate the most meaningful people and cherished
