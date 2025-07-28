@@ -2,6 +2,7 @@ import type { RouterConfig } from '@nuxt/schema'
 
 // https://router.vuejs.org/api/interfaces/routeroptions.html
 export default <RouterConfig>{
+  trailingSlash: false,
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
       if (from.path !== to.path) {

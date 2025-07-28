@@ -58,16 +58,23 @@ if (!config.public.isDevelopment) {
   }
 }
 
-useHead(() => ({
-  link: [
-    {
-      rel: 'canonical',
-      href: `https://napricot.com${
-        route.path === '/' ? route.path.replace(/\/$/, '') : route.path
-      }`
-    }
-  ]
-}))
+useHead(() => {
+  const canonicalPath =
+    route.path.endsWith('/') && route.path !== '/'
+      ? route.path.slice(0, -1)
+      : route.path === '/'
+      ? ''
+      : route.path
+
+  return {
+    link: [
+      {
+        rel: 'canonical',
+        href: `https://napricot.com${canonicalPath}`
+      }
+    ]
+  }
+})
 </script>
 
 <style lang="postcss" module>
