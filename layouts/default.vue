@@ -62,9 +62,7 @@ useHead(() => ({
   link: [
     {
       rel: 'canonical',
-      href: `https://napricot.com${
-        route.path === '/' ? route.path.replace(/\/$/, '') : route.path
-      }`
+      href: `https://napricot.com${route.path.replace(/\/$/, '')}`
     }
   ]
 }))
