@@ -81,7 +81,7 @@ export default defineNuxtConfig({
       '@type': ['Organization', 'Store', 'OnlineStore'],
       // Basic Information
       name: 'Napricot Eyelash Beauty',
-      logo: '	https://napricot.com/cdn-cgi/imagedelivery/veUt9Fr…kw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/thumbnail'
+      logo: 'https://napricot.com/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/large'
     })
   },
 
