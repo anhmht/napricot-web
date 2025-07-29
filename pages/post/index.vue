@@ -155,22 +155,21 @@ defineOgImageComponent('DefaultOg')
 
 useServerSeoMeta({
   title: () => `Posts`,
-  description: () => `we are dedicated to creating personalized
-          products that celebrate the most meaningful people and cherished
-          moments in your life`,
+  description: () =>
+    `Discover meaningful content across multiple topics. At Napricot, we share knowledge, creativity, and inspiration — one post at a time.`,
   ogTitle: () => `Posts`,
   ogSiteName: () => 'Napricot Eyelash Beauty',
-  ogDescription: () => `we are dedicated to creating personalized
-          products that celebrate the most meaningful people and cherished
-          moments in your life`
+  ogDescription: () =>
+    `Discover meaningful content across multiple topics. At Napricot, we share knowledge, creativity, and inspiration — one post at a time.`
 })
 
-definePageMeta({
-  schemaOrg: {
+useSchemaOrg([
+  defineWebPage({
     name: 'Napricot Eyelash Beauty',
-    description: `Discover meaningful content across multiple topics. At Napricot, we share knowledge, creativity, and inspiration — one post at a time.`
-  }
-})
+    description:
+      'Discover meaningful content across multiple topics. At Napricot, we share knowledge, creativity, and inspiration — one post at a time.'
+  })
+])
 </script>
 
 <style lang="postcss" scoped>

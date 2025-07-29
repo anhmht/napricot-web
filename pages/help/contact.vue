@@ -27,6 +27,23 @@ const isSuccess = ref<boolean>(false)
 const goBackHome = () => {
   navigateTo('/')
 }
+defineOgImageComponent('DefaultOg')
+
+useServerSeoMeta({
+  title: 'Contact us',
+  description: `Whether you have a question, need help with an order, or want to share your story, our friendly customer service team is ready to assist`,
+  ogTitle: 'Contact us',
+  ogSiteName: 'Napricot Eyelash Beauty',
+  ogUrl: 'https://napricot.com/contact',
+  ogDescription: `Whether you have a question, need help with an order, or want to share your story, our friendly customer service team is ready to assist`
+})
+
+useSchemaOrg([
+  defineWebPage({
+    name: 'Contact us',
+    description: `Whether you have a question, need help with an order, or want to share your story, our friendly customer service team is ready to assist`
+  })
+])
 </script>
 
 <style lang="postcss" module>

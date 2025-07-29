@@ -29,13 +29,6 @@ useServerSeoMeta({
     `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`
 })
 
-definePageMeta({
-  schemaOrg: {
-    name: 'Napricot Eyelash Beauty',
-    description: `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`
-  }
-})
-
 useHead({
   meta: [
     {

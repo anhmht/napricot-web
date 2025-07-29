@@ -20,6 +20,15 @@
 </template>
 <script setup lang="ts">
 const { loading } = useLoading()
+
+useSchemaOrg([
+  defineWebSite({
+    name: 'Napricot Eyelash Beauty',
+    description:
+      'Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.',
+    url: 'https://napricot.com'
+  })
+])
 </script>
 
 <style lang="postcss" module>

@@ -120,10 +120,13 @@ useServerSeoMeta({
   ogDescription: () => `FAQs for Napricot`
 })
 
-definePageMeta({
-  schemaOrg: {
+useSchemaOrg([
+  defineWebPage({
+    '@type': 'FAQPage',
     name: 'Napricot Eyelash Beauty',
     description: `FAQs for Napricot`,
+    inLanguage: 'en',
+    headline: 'Frequently Asked Questions',
     mainEntity: data.value.map((item) => ({
       '@type': 'Question',
       name: item.question,
@@ -132,8 +135,8 @@ definePageMeta({
         text: item.answer
       }
     }))
-  }
-})
+  })
+])
 </script>
 
 <style lang="postcss" module>

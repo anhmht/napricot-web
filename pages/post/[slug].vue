@@ -155,19 +155,28 @@ useServerSeoMeta({
   ogImage: () => image.value
 })
 
-definePageMeta({
-  schemaOrg: {
-    name: 'Napricot Eyelash Beauty',
-    description: desc.value,
-    headline: title.value,
-    keywords: Array.isArray(keywords.value) ? keywords.value.join(',') : '',
-    image: image.value,
+useSchemaOrg([
+  defineArticle({
+    '@type': 'BlogPosting',
+    name: title,
+    description: desc,
+    inLanguage: 'en',
+    headline: title,
+    keywords: keywords as any,
+    image: image as any,
     url: `https://napricot.com/post/${slug}`,
-    datePublished: createdDate.value,
-    dateModified: updatedDate.value,
-    inLanguage: 'en'
-  }
-})
+    datePublished: createdDate,
+    dateModified: updatedDate,
+    author: {
+      '@type': 'Person',
+      name: 'Rockie Ng'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Napricot Eyelash Beauty'
+    }
+  })
+])
 </script>
 
 <style lang="postcss" module scoped>

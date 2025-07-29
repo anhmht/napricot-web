@@ -27,12 +27,12 @@ useServerSeoMeta({
   ogDescription: () => `Sign in to your Napricot account`
 })
 
-definePageMeta({
-  schemaOrg: {
-    name: 'Napricot Eyelash Beauty',
+useSchemaOrg([
+  defineWebPage({
+    name: 'Sign in',
     description: `Sign in to your Napricot account`
-  }
-})
+  })
+])
 </script>
 
 <style lang="postcss" module>

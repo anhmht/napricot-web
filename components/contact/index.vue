@@ -137,13 +137,6 @@ useHead({
   ]
 })
 
-definePageMeta({
-  schemaOrg: {
-    name: 'Napricot Eyelash Beauty',
-    description: `Whether you have a question, need help with an order, or want to share your story, our friendly customer service team is ready to assist`
-  }
-})
-
 const recaptchaResponse = ref('')
 
 const onRecaptchaSuccess = (token: string) => {
