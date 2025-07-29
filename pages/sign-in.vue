@@ -27,21 +27,12 @@ useServerSeoMeta({
   ogDescription: () => `Sign in to your Napricot account`
 })
 
-useHead({
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'Napricot Eyelash Beauty',
-        description: `Sign in to your Napricot account`,
-        url: `https://napricot.com/sign-in`,
-        inLanguage: 'en-US'
-      })
-    }
-  ]
-})
+useSchemaOrg([
+  defineWebPage({
+    name: 'Sign in',
+    description: `Sign in to your Napricot account`
+  })
+])
 </script>
 
 <style lang="postcss" module>

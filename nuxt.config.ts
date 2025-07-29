@@ -1,4 +1,6 @@
 import { RuntimeConfig, getRunTimeConfig } from './config/RuntimeConfig'
+import { defineOrganization } from 'nuxt-schema-org/schema'
+
 // import { visualizer } from 'rollup-plugin-visualizer'
 const TARGET_ENV = process.env.TARGET_ENV ?? 'staging'
 
@@ -71,9 +73,16 @@ export default defineNuxtConfig({
             'Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.'
         }
       ]
-    },
-    // Ensure fonts are copied to the output directory
-    buildAssetsDir: '/_nuxt/'
+    }
+  },
+
+  schemaOrg: {
+    identity: defineOrganization({
+      '@type': ['Organization', 'Store', 'OnlineStore'],
+      // Basic Information
+      name: 'Napricot Eyelash Beauty',
+      logo: 'https://napricot.com/cdn-cgi/imagedelivery/veUt9FrhEFdGkfvZziYqkw/8a7c1d2c-57eb-4120-5bb6-47e54128e600/large'
+    })
   },
 
   sitemap: {

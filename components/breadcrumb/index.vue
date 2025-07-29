@@ -17,12 +17,27 @@ interface BreadCrumb {
   path: string
   name: string
 }
-defineProps({
+const props = defineProps({
   links: {
     type: Array as () => BreadCrumb[],
     required: true
   }
 })
+
+useSchemaOrg([
+  defineBreadcrumb({
+    itemListElement: [
+      {
+        name: 'Home',
+        item: '/'
+      },
+      ...props.links.map((link) => ({
+        name: link.name,
+        item: link.path
+      }))
+    ]
+  })
+])
 </script>
 
 <style lang="postcss" module scoped>

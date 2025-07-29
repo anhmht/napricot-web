@@ -155,26 +155,28 @@ useServerSeoMeta({
   ogImage: () => image.value
 })
 
-useHead({
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'Napricot Eyelash Beauty',
-        headline: title.value,
-        keywords: Array.isArray(keywords.value) ? keywords.value.join(',') : '',
-        description: desc.value,
-        image: image.value,
-        url: `https://napricot.com/post/${slug}`,
-        datePublished: createdDate.value,
-        dateModified: updatedDate.value,
-        inLanguage: 'en-US'
-      })
+useSchemaOrg([
+  defineArticle({
+    '@type': 'BlogPosting',
+    name: title,
+    description: desc,
+    inLanguage: 'en',
+    headline: title,
+    keywords: keywords as any,
+    image: image as any,
+    url: `https://napricot.com/post/${slug}`,
+    datePublished: createdDate,
+    dateModified: updatedDate,
+    author: {
+      '@type': 'Person',
+      name: 'Rockie Ng'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Napricot Eyelash Beauty'
     }
-  ]
-})
+  })
+])
 </script>
 
 <style lang="postcss" module scoped>
