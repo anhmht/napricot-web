@@ -127,9 +127,9 @@ useHead({
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
+        '@id': `https://napricot.com/help/faq`,
         name: 'Napricot Eyelash Beauty',
         description: `FAQs for Napricot`,
-        url: `https://napricot.com/help/faq`,
         inLanguage: 'en-US',
         mainEntity: data.value.map((item) => ({
           '@type': 'Question',
