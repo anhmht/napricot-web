@@ -120,28 +120,19 @@ useServerSeoMeta({
   ogDescription: () => `FAQs for Napricot`
 })
 
-useHead({
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        '@id': `https://napricot.com/help/faq`,
-        name: 'Napricot Eyelash Beauty',
-        description: `FAQs for Napricot`,
-        inLanguage: 'en-US',
-        mainEntity: data.value.map((item) => ({
-          '@type': 'Question',
-          name: item.question,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.answer
-          }
-        }))
-      })
-    }
-  ]
+definePageMeta({
+  schemaOrg: {
+    name: 'Napricot Eyelash Beauty',
+    description: `FAQs for Napricot`,
+    mainEntity: data.value.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer
+      }
+    }))
+  }
 })
 </script>
 

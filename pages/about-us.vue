@@ -222,20 +222,11 @@ useServerSeoMeta({
     `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`
 })
 
-useHead({
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'Napricot Eyelash Beauty',
-        description: `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`,
-        url: `https://napricot.com/about-us`,
-        inLanguage: 'en-US'
-      })
-    }
-  ]
+definePageMeta({
+  schemaOrg: {
+    name: 'Napricot Eyelash Beauty',
+    description: `Napricot Eyelash Beauty offers pre-made lash fans designed for perfectionists combining comfort, curl consistency, and pro-level performance.`
+  }
 })
 
 const config = useRuntimeConfig()

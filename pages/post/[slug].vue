@@ -155,25 +155,18 @@ useServerSeoMeta({
   ogImage: () => image.value
 })
 
-useHead({
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'Napricot Eyelash Beauty',
-        headline: title.value,
-        keywords: Array.isArray(keywords.value) ? keywords.value.join(',') : '',
-        description: desc.value,
-        image: image.value,
-        url: `https://napricot.com/post/${slug}`,
-        datePublished: createdDate.value,
-        dateModified: updatedDate.value,
-        inLanguage: 'en-US'
-      })
-    }
-  ]
+definePageMeta({
+  schemaOrg: {
+    name: 'Napricot Eyelash Beauty',
+    description: desc.value,
+    headline: title.value,
+    keywords: Array.isArray(keywords.value) ? keywords.value.join(',') : '',
+    image: image.value,
+    url: `https://napricot.com/post/${slug}`,
+    datePublished: createdDate.value,
+    dateModified: updatedDate.value,
+    inLanguage: 'en'
+  }
 })
 </script>
 
