@@ -1,6 +1,13 @@
 <template>
   <NuxtLink :class="$style.item" :to="`/post/${post.slug}`">
-    <NuxtImg :src="post.image?.cloudflareUrl + 'large500'" :alt="post.title" />
+    <NuxtImg
+      :src="post.image?.cloudflareUrl"
+      :alt="post.title"
+      :srcset="`${post.image?.thumbnailUrl} 398w, ${post.image?.cloudflareUrl} 1200w`"
+      sizes="(max-width: 768px) 398px, 1200px"
+      data-width="auto"
+      data-height="auto"
+    />
     <div :class="$style.info">
       <ClientOnly>
         <span>{{ formatDate(post.createdAt) }}</span>

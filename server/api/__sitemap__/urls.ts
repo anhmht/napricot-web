@@ -16,7 +16,7 @@ export default defineSitemapEventHandler(async () => {
           url: `/post/${post.slug}`,
           images: [post.image, ...post.images]
             .filter((img): img is Image => img !== undefined)
-            .map((img: Image) => img.cloudflareUrl + 'thumbnail'),
+            .map((img: Image) => img.cloudflareUrl),
           lastmod: post.updatedAt,
           publication_date: post.createdAt as string
         }
