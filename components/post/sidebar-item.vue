@@ -1,7 +1,7 @@
 <template>
   <NuxtLink :class="$style.sidebarItem" :to="`/post/${post.slug}`">
     <NuxtPicture
-      :src="post.image?.cloudflareUrl + 'hero'"
+      :src="post.image?.cloudflareUrl"
       :alt="post.title"
       width="100"
       height="100"
