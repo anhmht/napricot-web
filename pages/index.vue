@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div :class="$style.home">
+      <h1 style="display: none">Home</h1>
       <carousel />
       <sales />
       <trending />

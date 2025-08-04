@@ -1,6 +1,6 @@
 <template>
-  <div :class="$style.post">
-    <div :class="$style.breadcrumb">
+  <div class="post">
+    <div class="breadcrumb">
       <div class="container">
         <breadcrumb
           :links="[
@@ -11,14 +11,20 @@
       </div>
     </div>
     <div class="container">
-      <div :class="$style.blog">
-        <div :class="$style.content">
+      <div class="blog">
+        <div class="content">
           <article>
-            <h1>
+            <h1
+              :style="
+                isMobile
+                  ? { fontSize: '3rem', fontWeight: '700' }
+                  : { fontSize: '3.6rem', fontWeight: '700' }
+              "
+            >
               {{ title }}
             </h1>
-            <div :class="$style.info">
-              <div :class="$style.date">
+            <div class="info">
+              <div class="date">
                 <ClientOnly>
                   <span>Created: {{ formatDate(data?.createdAt) }}</span>
                   <span>Updated: {{ formatDate(data?.updatedAt) }}</span>
@@ -28,19 +34,19 @@
                 <social-share-component />
               </ClientOnly>
             </div>
-            <div :class="$style.desc">
+            <div class="desc">
               {{ data?.desc }}
             </div>
             <div class="ck-content" v-html="data?.content"></div>
           </article>
-          <post-tags :class="$style.tags" :tags="data?.tags" />
+          <post-tags class="tags" :tags="data?.tags" />
         </div>
-        <div v-if="data" :class="$style.sidebar">
+        <div v-if="data" class="sidebar">
           <nav>
             <div>
-              <div :class="$style.toc">
-                <div :class="$style.tocTitle">Table of Contents</div>
-                <div :class="$style.tocContent">
+              <div class="toc">
+                <div class="tocTitle">Table of Contents</div>
+                <div class="tocContent">
                   <table-of-content
                     :data="generateTableOfContents"
                     :active="activeId || undefined"
@@ -55,7 +61,7 @@
           </nav>
         </div>
       </div>
-      <div :class="$style.latest">
+      <div class="latest">
         <post-list title="Latest Post" :post-id="data?._id" />
       </div>
     </div>
@@ -68,6 +74,7 @@
 import { CheerioAPI, load } from 'cheerio'
 import { TableOfContentItem } from '~/components/table-of-content/index.vue'
 
+const { isMobile } = useMediaQuery()
 const route = useRoute()
 const social = !!route.query.social as boolean
 const { slug } = route.params as { slug: string }
@@ -179,7 +186,7 @@ useSchemaOrg([
 ])
 </script>
 
-<style lang="postcss" module scoped>
+<style lang="postcss" scoped>
 .post {
   position: relative;
 }
@@ -210,10 +217,6 @@ useSchemaOrg([
     display: flex;
     flex-direction: column;
     gap: 24px;
-    h1 {
-      font-size: 3.6rem;
-      font-weight: 700;
-    }
   }
 }
 .sidebar {
@@ -257,9 +260,6 @@ useSchemaOrg([
 @media (max-width: 1120px) {
   .blog {
     padding: 16px;
-    h1 {
-      font-size: 3rem;
-    }
   }
   .content {
     gap: 16px;
