@@ -1,10 +1,13 @@
 <template>
   <NuxtLink :class="$style.sidebarItem" :to="`/post/${post.slug}`">
-    <NuxtPicture
+    <NuxtImg
       :src="post.image?.cloudflareUrl"
       :alt="post.title"
-      width="100"
-      height="100"
+      :srcset="`${post.image?.thumbnailUrl} 100w, ${post.image?.cloudflareUrl} 1200w`"
+      sizes="100 md:1200"
+      loading="lazy"
+      data-width="auto"
+      data-height="auto"
     />
     <div :class="$style.info">
       <h4>{{ post.title }}</h4>
@@ -30,11 +33,13 @@ const props = defineProps({
   display: flex;
   gap: 16px;
   text-decoration: none;
-  picture {
-    display: flex;
+  img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
   }
   &:hover {
-    picture {
+    img {
       opacity: 0.8;
     }
     h4 {

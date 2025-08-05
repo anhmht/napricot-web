@@ -37,8 +37,8 @@ export const getImage: ProviderGetImage = (
   }
 
   return {
-    url,
+    url
     // This tells Nuxt Image not to process this URL through IPX
-    isStatic: true
+    // isStatic: true
   }
 }

@@ -4,7 +4,8 @@
       :src="post.image?.cloudflareUrl"
       :alt="post.title"
       :srcset="`${post.image?.thumbnailUrl} 398w, ${post.image?.cloudflareUrl} 1200w`"
-      sizes="(max-width: 768px) 398px, 1200px"
+      sizes="398 md:1200"
+      loading="lazy"
       data-width="auto"
       data-height="auto"
     />
