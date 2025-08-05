@@ -31,6 +31,7 @@ export default defineSitemapEventHandler(async () => {
         loc: p.url,
         priority: 1 as const,
         lastmod: p.lastmod,
+        changefreq: 'monthly' as const,
         images: p.images.map((img: string, index) => ({
           loc: img,
           title: p.title + index,

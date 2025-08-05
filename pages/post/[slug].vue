@@ -89,7 +89,11 @@ const { data, error, status } = useAsyncData(
   }
 )
 const title = computed(() => data?.value?.title || '')
-const image = computed(() => data.value?.image?.cloudflareUrl || '')
+const image = computed(
+  () =>
+    `https://image.napricot.com/cdn-cgi/image/format=png/${data.value?.image?.path}` ||
+    ''
+)
 const desc = computed(() => data?.value?.desc || '')
 const createdDate = computed(() => data?.value?.createdAt || '')
 const updatedDate = computed(() => data?.value?.updatedAt || '')

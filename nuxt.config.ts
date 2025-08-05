@@ -174,11 +174,21 @@ export default defineNuxtConfig({
 
   image: {
     domains: ['napricot.com'],
-    // Disable IPX to prevent /_ipx/_/ prefix in URLs
-    ipx: {
-      // Set to false to disable IPX processing entirely for your custom provider
-      modifiers: {}
+    // Nuxt Image breakpoints (default values shown)
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768, // ← This is what md: refers to
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+      '2xl': 1536
     },
+    // Disable IPX to prevent /_ipx/_/ prefix in URLs
+    // ipx: {
+    //   // Set to false to disable IPX processing entirely for your custom provider
+    //   modifiers: {}
+    // },
     providers: {
       myProvider: {
         name: 'myProvider', // optional value to overrider provider name
