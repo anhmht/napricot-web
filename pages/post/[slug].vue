@@ -25,13 +25,25 @@
             </h1>
             <div class="info">
               <div class="date">
-                <ClientOnly>
-                  <span>Created: {{ formatDate(data?.createdAt) }}</span>
-                  <span>Updated: {{ formatDate(data?.updatedAt) }}</span>
-                </ClientOnly>
+                <span class="author">
+                  <img
+                    :src="data?.authorSEO?.avatar"
+                    :alt="data?.authorSEO?.name"
+                    width="45"
+                    height="45"
+                    class="avatar"
+                  />
+                  {{ data?.authorSEO?.name }}
+                </span>
               </div>
               <ClientOnly>
                 <social-share-component />
+              </ClientOnly>
+            </div>
+            <div class="date">
+              <ClientOnly>
+                <span>Created: {{ formatDate(data?.createdAt) }}</span>
+                <span>Updated: {{ formatDate(data?.updatedAt) }}</span>
               </ClientOnly>
             </div>
             <div class="desc">
@@ -89,6 +101,7 @@ const { data, error, status } = useAsyncData(
   }
 )
 const title = computed(() => data?.value?.title || '')
+const titleSEO = computed(() => data?.value?.titleSEO || '')
 const image = computed(
   () =>
     `https://image.napricot.com/cdn-cgi/image/format=png/${data.value?.image?.path}` ||
@@ -158,9 +171,9 @@ defineOgImageComponent('BlogPost', {
 })
 
 useServerSeoMeta({
-  title: () => `${title.value}`,
+  title: () => `${titleSEO.value}`,
   description: () => desc.value,
-  ogTitle: () => `${title.value}`,
+  ogTitle: () => `${titleSEO.value}`,
   ogSiteName: () => 'Napricot Eyelash Beauty',
   ogDescription: () => desc.value,
   ogImage: () => image.value
@@ -169,10 +182,10 @@ useServerSeoMeta({
 useSchemaOrg([
   defineArticle({
     '@type': 'BlogPosting',
-    name: title,
+    name: titleSEO.value,
     description: desc,
     inLanguage: 'en',
-    headline: title,
+    headline: titleSEO.value,
     keywords: keywords as any,
     image: image as any,
     url: `https://napricot.com/post/${slug}`,
@@ -239,13 +252,25 @@ useSchemaOrg([
   align-items: center;
   justify-content: space-between;
   height: 45px;
-  .date {
-    color: var(--color-icon);
-    font-weight: 400;
-    font-size: 1.4rem;
+  .author {
     display: flex;
-    gap: 24px;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-text);
   }
+  .avatar {
+    border-radius: 50%;
+  }
+}
+.date {
+  color: var(--color-icon);
+  font-weight: 400;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 .tags {
   display: none;
@@ -272,7 +297,7 @@ useSchemaOrg([
     flex-direction: column-reverse;
     align-items: flex-start;
     gap: 16px;
-    height: 72px;
+    height: 90px;
   }
   .latest {
     padding: 16px;
