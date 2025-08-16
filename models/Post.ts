@@ -1,18 +1,26 @@
 export enum PostStatus {
   published = 'published',
   draft = 'draft',
-  deleted = 'deleted',
+  deleted = 'deleted'
+}
+
+export interface AuthorSEO {
+  authorId: string
+  name: string
+  avatar: string
 }
 
 export interface IPost {
   _id?: string
   title: string
+  titleSEO?: string
   slug: string
   desc?: string
   image?: Image
   images: Image[]
   categoryId?: string
   content: string
+  authorSEO?: AuthorSEO
   author?: string
   createdAt?: string
   updatedAt?: string
